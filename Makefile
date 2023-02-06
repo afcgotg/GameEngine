@@ -11,8 +11,8 @@ win64:
 	g++ -I ${win64src}/include -L ${win64src}/lib -o ${win64src}/bin/${gamename}64.exe main.cpp -lmingw32 -lSDL2main -lSDL2
 
 # linux32:
-#	g++ -o src/linux32/bin/${gamename}32 main.cpp -lSDL2main -lSDL2
+#	g++ -o src/linux32/${gamename}32 main.cpp -lSDL2main -lSDL2
 
 linux64:
-	g++ -o src/linux64/bin/${gamename}64 main.cpp -lSDL2main -lSDL2
+	g++ -o src/linux64/${gamename}64 main.cpp -lSDL2main -lSDL2
 	
