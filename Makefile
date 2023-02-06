@@ -19,4 +19,3 @@ win64:
 linux64:
 	g++ -o bin/linux64/${gamename}64 main.cpp ./include/*.cpp -lSDL2main -lSDL2
 	cp -r assets bin/linux64/
-	
