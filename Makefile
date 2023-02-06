@@ -16,5 +16,5 @@ win64:
 #	g++ -o src/linux32/${gamename}32 main.cpp -lSDL2main -lSDL2
 
 linux64:
-	g++ -I ${include_files} -o src/linux64/${gamename}64 main.cpp ${include_files}/*.cpp -lSDL2main -lSDL2
+	g++ -o src/linux64/${gamename}64 main.cpp ${include_files}/*.cpp -lSDL2main -lSDL2
 	
