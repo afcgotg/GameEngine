@@ -1,20 +1,22 @@
-gamename = main
-win32src = ./src/i686-w64-mingw32
-win64src = ./src/x86_64-w64-mingw32
+gamename = game
 
-include_files = ./include
+win32 = i686-w64-mingw32
+win64 = x86_64-w64-mingw32
 
 all:
 
 #win32:
-#	g++ -I ${win32src}/include -L ${win32src}/lib -o ${win32src}/bin/${gamename}32.exe main.cpp -lmingw32 -lSDL2main -lSDL2
+#	g++ -I $./src/{win32}/include -L $./src/{win32}/lib -o bin/${win32}/${gamename}32.exe main.cpp -lmingw32 -lSDL2main -lSDL2
+#	xcopy "assets" ".\bin\${win32}\assets" //e //y //q
 
 win64:
-	g++ -I ${win64src}/include -L ${win64src}/lib -o ${win64src}/bin/${gamename}64.exe main.cpp ${include_files}/*.cpp -lmingw32 -lSDL2main -lSDL2
+	g++ -I ./src/${win64}/include -L ./src/${win64}/lib -o ./bin/${win64}/${gamename}64.exe main.cpp ./include/*.cpp -lmingw32 -lSDL2main -lSDL2
+	xcopy "assets" ".\bin\${win64}\assets" //e //y //q
 
 # linux32:
 #	g++ -o src/linux32/${gamename}32 main.cpp -lSDL2main -lSDL2
 
 linux64:
-	g++ -o src/linux64/${gamename}64 main.cpp ${include_files}/*.cpp -lSDL2main -lSDL2
+	g++ -o bin/linux64/${gamename}64 main.cpp ./include/*.cpp -lSDL2main -lSDL2
+	cp -r assets bin/linux64/
 	

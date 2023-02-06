@@ -8,7 +8,7 @@ class Game{
         Game();
         ~Game();
 
-        void init(const char* title, int xpos, int ypos, int height, int width, int flags);
+        bool init(const char* title, int xpos, int ypos, int height, int width, bool fullscreen);
         void render();
         void update();
         void handleEvent();
@@ -17,8 +17,12 @@ class Game{
         bool running();
 
     private:
-        SDL_Window* g_pWindow;
-        SDL_Renderer* g_pRenderer;
+        SDL_Window* m_pWindow;
+        SDL_Renderer* m_pRenderer;
+
+        SDL_Texture* m_pTexture;
+        SDL_Rect m_sourceRectangle;
+        SDL_Rect m_destinationRectangle;
 
         bool m_bRunning;
 
