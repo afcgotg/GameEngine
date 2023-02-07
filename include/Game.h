@@ -2,6 +2,7 @@
 #define __Game__
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 class Game{
     public:
@@ -23,6 +24,8 @@ class Game{
         SDL_Texture* m_pTexture;
         SDL_Rect m_sourceRectangle;
         SDL_Rect m_destinationRectangle;
+
+        int m_nAnimationSize;
 
         bool m_bRunning;
 

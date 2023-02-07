@@ -41,19 +41,23 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
     }
     m_bRunning = true;
 
-    SDL_Surface* pTempSurface = SDL_LoadBMP("assets/img/GraveRobber/GraveRobber.bmp");
+    SDL_Surface* pTempSurface = IMG_Load("assets/img/GraveRobber/GraveRobber_idle.png");
     if(pTempSurface == NULL){
         std::cout << "Error al cargar la imagen: " << SDL_GetError() << std::endl; 
     }
+
     m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
     SDL_FreeSurface(pTempSurface);
 
     SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
+    m_nAnimationSize = m_sourceRectangle.w / 4;
+    m_sourceRectangle.w = m_nAnimationSize;
 
-    m_destinationRectangle.x = m_sourceRectangle.x = 0;
-    m_destinationRectangle.y = m_sourceRectangle.y = 0;
-    m_destinationRectangle.w = m_sourceRectangle.w;
-    m_destinationRectangle.h = m_sourceRectangle.h;
+    m_sourceRectangle.x = m_sourceRectangle.y = 0;
+    m_destinationRectangle.x = m_destinationRectangle.y = 0;
+
+    m_destinationRectangle.w = m_sourceRectangle.w * 2;
+    m_destinationRectangle.h = m_sourceRectangle.h * 2;
 
     return true;
 }
@@ -61,12 +65,15 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
 void Game::render(){
     SDL_RenderClear(m_pRenderer);
 
-    SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
+    //SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
+    SDL_RenderCopyEx(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle, 0, 0, SDL_FLIP_HORIZONTAL);
 
     SDL_RenderPresent(m_pRenderer);
 }
 
-void Game::update(){};
+void Game::update(){
+    m_sourceRectangle.x = m_nAnimationSize * (int(SDL_GetTicks() / 150) % 4);
+};
 
 void Game::handleEvent(){
     SDL_Event event;
