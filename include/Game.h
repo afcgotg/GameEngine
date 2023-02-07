@@ -1,11 +1,17 @@
 #ifndef __Game__
 #define __Game__
 
+#include <vector>
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
 #include "TextureManager.h"
 typedef TextureManager TheTextureManager;
+
+#include "GameObject.h"
+#include "Player.h"
+#include "Enemy.h"
 
 class Game{
     public:
@@ -27,6 +33,12 @@ class Game{
         int m_currentFrame;
 
         bool m_bRunning;
+
+        std::vector<GameObject*> m_gameObjects;
+
+        GameObject* m_player;
+        GameObject* m_enemy;
+        GameObject* m_go;
 
 };
 

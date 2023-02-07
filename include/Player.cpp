@@ -8,14 +8,15 @@ Player::~Player(){
 
 }
 
-void Player::draw(){
-    GameObject::draw();
-    std::cout << "draw player" << std::endl;
+void Player::load(int x, int y, int width, int height, std::string textureID){
+    GameObject::load(x, y, width, height, textureID);
+}
+
+void Player::draw(SDL_Renderer* pRenderer){
+    GameObject::draw(pRenderer);
 }
 void Player::update(){
-    std::cout << "update player" << std::endl;
-    m_x = 10;
-    m_y = 20;
+    m_x -= 1;
 }
 void Player::clean(){
     GameObject::clean();

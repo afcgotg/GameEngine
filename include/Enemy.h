@@ -1,12 +1,12 @@
-#ifndef __Player__
-#define __Player__
+#ifndef __Enemy__
+#define __Enemy__
 
 #include "GameObject.h"
 
-class Player : public GameObject{
+class Enemy : public GameObject{
     public:
-        Player();
-        ~Player();
+        Enemy();
+        ~Enemy();
 
         void load(int x, int y, int width, int height, std::string textureID);
 

@@ -45,20 +45,35 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
         return false;
     }
 
+    m_player = new Player();
+    m_enemy = new Enemy();
+    m_go = new GameObject();
+
+    m_player->load(300, 100, 48, 48, "animate");
+    m_enemy->load(100, 0, 48, 48, "animate");
+    m_go->load(0, 0, 48, 48, "animate");
+
+    m_gameObjects.push_back(m_player);
+    m_gameObjects.push_back(m_enemy);
+    m_gameObjects.push_back(m_go);
+
     return true;
 }
 
 void Game::render(){
-    SDL_RenderClear(m_pRenderer);
+    SDL_RenderClear(m_pRenderer); //clear to the draw color
 
-    TheTextureManager::Instance()->draw("animate", 0, 0, 48, 48, m_pRenderer);
-    TheTextureManager::Instance()->drawFrame("animate", 100, 100, 48, 48, 1, m_currentFrame, m_pRenderer);
+    for(std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++){
+        m_gameObjects[i]->draw(m_pRenderer);
+    }
 
-    SDL_RenderPresent(m_pRenderer);
+    SDL_RenderPresent(m_pRenderer); // draw to the screen
 }
 
 void Game::update(){
-    m_currentFrame = int(SDL_GetTicks() / 150) % 4;
+    for(std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++){
+        m_gameObjects[i]->update();
+    }
 };
 
 void Game::handleEvent(){
