@@ -1,5 +1,15 @@
 #include "TextureManager.h"
 
+TextureManager* TextureManager::s_pInstance = 0;
+
+TextureManager* TextureManager::Instance(){
+    if(s_pInstance == 0){
+        s_pInstance = new TextureManager();
+        return s_pInstance;
+    }
+    return s_pInstance;
+}
+
 TextureManager::TextureManager(){
 
 }

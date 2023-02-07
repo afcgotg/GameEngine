@@ -5,6 +5,7 @@
 #include <SDL2/SDL_image.h>
 
 #include "TextureManager.h"
+typedef TextureManager TheTextureManager;
 
 class Game{
     public:
@@ -24,7 +25,6 @@ class Game{
         SDL_Renderer* m_pRenderer;
 
         int m_currentFrame;
-        TextureManager m_textureManager;
 
         bool m_bRunning;
 

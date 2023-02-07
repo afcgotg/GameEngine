@@ -41,7 +41,9 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
     }
     m_bRunning = true;
 
-    m_textureManager.load("assets/img/GraveRobber/GraveRobber_idle.png", "animate", m_pRenderer);
+    if(!TheTextureManager::Instance()->load("assets/img/GraveRobber/GraveRobber_idle.png", "animate", m_pRenderer)){
+        return false;
+    }
 
     return true;
 }
@@ -49,8 +51,8 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
 void Game::render(){
     SDL_RenderClear(m_pRenderer);
 
-    m_textureManager.draw("animate", 0, 0, 48, 48, m_pRenderer);
-    m_textureManager.drawFrame("animate", 100, 100, 48, 48, 1, m_currentFrame, m_pRenderer);
+    TheTextureManager::Instance()->draw("animate", 0, 0, 48, 48, m_pRenderer);
+    TheTextureManager::Instance()->drawFrame("animate", 100, 100, 48, 48, 1, m_currentFrame, m_pRenderer);
 
     SDL_RenderPresent(m_pRenderer);
 }
