@@ -4,6 +4,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include "TextureManager.h"
+
 class Game{
     public:
         Game();
@@ -21,11 +23,8 @@ class Game{
         SDL_Window* m_pWindow;
         SDL_Renderer* m_pRenderer;
 
-        SDL_Texture* m_pTexture;
-        SDL_Rect m_sourceRectangle;
-        SDL_Rect m_destinationRectangle;
-
-        int m_nAnimationSize;
+        int m_currentFrame;
+        TextureManager m_textureManager;
 
         bool m_bRunning;
 
