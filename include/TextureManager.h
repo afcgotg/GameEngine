@@ -1,11 +1,11 @@
-#ifndef __TextureManafer__
-#define __TextureManager__
-
 #include <string>
 #include <map>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+
+#ifndef __TextureManager__
+#define __TextureManager__
 
 class TextureManager{
     public: 
@@ -26,5 +26,7 @@ class TextureManager{
 
         std::map<std::string, SDL_Texture*> m_textureMap;
 };
+
+typedef TextureManager TheTextureManager;
 
 #endif

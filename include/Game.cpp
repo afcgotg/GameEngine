@@ -2,8 +2,25 @@
 
 #include "Game.h"
 
-Game::Game(){};
-Game::~Game(){};
+#include "Player.h"
+#include "Enemy.h"
+
+Game* Game::s_pInstance = 0;
+
+Game* Game::Instance(){
+    if(s_pInstance == 0){
+        s_pInstance = new Game();
+    }
+    return s_pInstance;
+}
+
+Game::Game(){}
+
+Game::~Game(){}
+
+SDL_Renderer* Game::getRenderer() const{
+    return m_pRenderer;
+}
 
 bool Game::init(const char* title, int xpos, int ypos, int height, int width, bool fullscreen) {
 
@@ -45,17 +62,8 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
         return false;
     }
 
-    m_player = new Player();
-    m_enemy = new Enemy();
-    m_go = new GameObject();
-
-    m_player->load(300, 100, 48, 48, "animate");
-    m_enemy->load(100, 0, 48, 48, "animate");
-    m_go->load(0, 0, 48, 48, "animate");
-
-    m_gameObjects.push_back(m_player);
-    m_gameObjects.push_back(m_enemy);
-    m_gameObjects.push_back(m_go);
+    m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 48, 48, "animate")));
+    m_gameObjects.push_back(new Enemy(new LoaderParams(100, 100, 48, 48, "animate")));
 
     return true;
 }
@@ -64,7 +72,7 @@ void Game::render(){
     SDL_RenderClear(m_pRenderer); //clear to the draw color
 
     for(std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++){
-        m_gameObjects[i]->draw(m_pRenderer);
+        m_gameObjects[i]->draw();
     }
 
     SDL_RenderPresent(m_pRenderer); // draw to the screen
