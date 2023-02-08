@@ -3,6 +3,7 @@
 #include "Game.h"
 
 #include "TextureManager.h"
+#include "InputHandler.h"
 #include "Player.h"
 #include "Enemy.h"
 
@@ -57,7 +58,8 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
         std::cout << "Error to initialize SDL: " << SDL_GetError() << std::endl;
         return false;
     }
-    m_bRunning = true;
+
+    TheInputHandler::Instance()->initialiseJoysticks();
 
     if(!TheTextureManager::Instance()->load("assets/img/GraveRobber/GraveRobber_idle.png", "animate", m_pRenderer)){
         return false;
@@ -66,6 +68,7 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
     m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 48, 48, "animate")));
     m_gameObjects.push_back(new Enemy(new LoaderParams(100, 100, 48, 48, "animate")));
 
+    m_bRunning = true;
     return true;
 }
 
@@ -86,21 +89,13 @@ void Game::update(){
 };
 
 void Game::handleEvent(){
-    SDL_Event event;
-    if(SDL_PollEvent(&event)){
-        switch(event.type){
-            case SDL_QUIT:
-                m_bRunning = false;
-                break;
-
-            default:
-                break;
-        }
-    }
+    TheInputHandler::Instance()->update();
 }
 
 void Game::clean(){
+    m_bRunning = false;
     std::cout << "cleaning game..." << std::endl;
+    TheInputHandler::Instance()->clean();
     SDL_DestroyWindow(m_pWindow);
     SDL_DestroyRenderer(m_pRenderer);
     SDL_Quit();
