@@ -5,6 +5,7 @@
 const int WIDTH = 800, HEIGHT = 600;
 
 int main(int argc, char* argv[]){
+
     if(TheGame::Instance()->init("Game title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     WIDTH, HEIGHT, false)){
         std::cout << "game init succed" << std::endl;
