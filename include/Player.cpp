@@ -12,7 +12,9 @@ void Player::draw(){
     SDLGameObject::draw();
 }
 void Player::update(){
-    m_x -= 1;
+    m_acceleration.setX(1);
+    SDLGameObject::update();
+    m_currentFrame = int(SDL_GetTicks() / 100) % 4;
 }
 void Player::clean(){
     std::cout << "clean player" << std::endl;
