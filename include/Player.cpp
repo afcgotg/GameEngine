@@ -26,7 +26,6 @@ void Player::clean(){
 
 void Player::handleInput(){
     if(TheInputHandler::Instance()->joysticksInitialised()){
-        // m_velocity.setX(1 * TheInputHandler::Instance()->rtValue(0));
-        // m_velocity.setY((-1) * TheInputHandler::Instance()->ltValue(0));
+        m_velocity.setX(1 * TheInputHandler::Instance()->rtValue(0) - TheInputHandler::Instance()->ltValue(0));
     }
 }

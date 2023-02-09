@@ -11,6 +11,9 @@
 #define LT 4 // done
 #define RT 5 // done
 
+#define LB 4 // done
+#define RB 5 // done
+
 #define LJ_x 0 // done
 #define LJ_y 1 // done
 #define LJ_b 8 // done
@@ -32,23 +35,28 @@
 #define START 7 // done
 #define SELECT 6 // done
 
+// LINUX XBOX 360 CONTROLLER
+
 #elif __linux__
 
-#define LT 4 // done
+#define LT 2 // done
 #define RT 5 // done
+
+#define LB 4 // done
+#define RB 5 // done
 
 #define LJ_x 0 // done
 #define LJ_y 1 // done
-#define LJ_b 8 // done
+#define LJ_b 9 // done
 
-#define RJ_x 2 // done
-#define RJ_y 3 // done
-#define RJ_b 9 // done
+#define RJ_x 3 // done
+#define RJ_y 4 // done
+#define RJ_b 10 // done
 
-#define UP 5
-#define DOWN 5
-#define LEFT 5
-#define RIGHT 5
+#define UP 13 // done
+#define DOWN 14 // done
+#define LEFT 11 // done
+#define RIGHT 12 // done
 
 #define A = 0 // done
 #define B = 1 // done
@@ -170,7 +178,6 @@ void InputHandler::update(){
             // LT
             if((int)event.jaxis.axis == LT){
                 uint32_t tempValue = event.jaxis.value + pow(2, 15);
-                std::cout << tempValue << std::endl;
                 if(tempValue > m_triggerDeadZone){
                     *(m_triggerValues[whichOne].first) = 1;
                 }else{
@@ -181,7 +188,6 @@ void InputHandler::update(){
             // RT
             if((int)event.jaxis.axis == RT){
                 uint32_t tempValue = event.jaxis.value + pow(2, 15);
-                std::cout << tempValue << std::endl;
                 if(tempValue > m_triggerDeadZone){
                     *(m_triggerValues[whichOne].second) = 1;
                 }else{
@@ -204,7 +210,6 @@ void InputHandler::update(){
 
 void InputHandler::clean(){
     if(m_bJoysticksInitialised){
-//      for(unsigned int i = 0; i < SDL_NumJoysticks(); i++){
         for(unsigned int i = 0; i < m_joysticks.size(); i++){
             SDL_JoystickClose(m_joysticks[i]);
         }
@@ -243,7 +248,7 @@ int InputHandler::ltValue(int joy){
 
 int InputHandler::rtValue(int joy){
     if(m_triggerValues.size() > 0){
-        return *m_triggerValues[joy].first;
+        return *m_triggerValues[joy].second;
     }else{
         return 0;
     }
