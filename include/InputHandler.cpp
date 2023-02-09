@@ -3,6 +3,32 @@
 
 #include "InputHandler.h"
 #include "Game.h"
+
+// WINDOWS XBOX 360 CONTROLLER
+
+#define LT 4 // done
+#define RT 5 // done
+
+#define LJ_x 0 // done
+#define LJ_y 1 // done
+#define LJ_b 8 // done
+
+#define RJ_x 2 // done
+#define RJ_y 3 // done
+#define RJ_b 9 // done
+
+#define UP 5
+#define DOWN 5
+#define LEFT 5
+#define RIGHT 5
+
+#define A = 0; // done
+#define B = 1; // done
+#define X = 2; // done
+#define Y = 3; // done
+
+
+
  
 InputHandler* InputHandler::s_pInstance = 0;
  
@@ -24,6 +50,7 @@ void InputHandler::initialiseJoysticks(){
             if(joy != NULL){
                 m_joysticks.push_back(joy);
                 m_joystickValues.push_back(std::make_pair(new Vector2D(0,0), new Vector2D(0,0)));
+                m_triggerValues.push_back(std::make_pair(new int(0), new int(0)));
 
                 std::vector<bool> tempButtons;
                 for(int j = 0; j < SDL_JoystickNumButtons(joy); j++){
@@ -64,7 +91,7 @@ void InputHandler::update(){
             std::cout << (int)event.jaxis.axis << ": " << event.jaxis.value << std::endl;
 
             // left stick move left or right
-            if((int)event.jaxis.axis == 0){
+            if((int)event.jaxis.axis == LJ_x){
                 if(event.jaxis.value > m_joystickDeadZone){
                     m_joystickValues[whichOne].first->setX(1);
                 }else if(event.jaxis.value < -m_joystickDeadZone){
@@ -75,7 +102,7 @@ void InputHandler::update(){
             }
 
             // left stick move up or down
-            if((int)event.jaxis.axis == 1){
+            if((int)event.jaxis.axis == LJ_y){
                 if(event.jaxis.value > m_joystickDeadZone){
                     m_joystickValues[whichOne].first->setY(1);
                 }else if(event.jaxis.value < -m_joystickDeadZone){
@@ -85,8 +112,8 @@ void InputHandler::update(){
                 }
             }
 
-            // left stick move left or right
-            if((int)event.jaxis.axis == 2){
+            // right stick move left or right
+            if((int)event.jaxis.axis == RJ_x){
                 if(event.jaxis.value > m_joystickDeadZone){
                     m_joystickValues[whichOne].second->setX(1);
                 }else if(event.jaxis.value < -m_joystickDeadZone){
@@ -96,8 +123,8 @@ void InputHandler::update(){
                 }
             }
 
-            // left stick move up or down
-            if((int)event.jaxis.axis == 3){
+            // right stick move up or down
+            if((int)event.jaxis.axis == RJ_y){
                 if(event.jaxis.value > m_joystickDeadZone){
                     m_joystickValues[whichOne].second->setY(1);
                 }else if(event.jaxis.value < -m_joystickDeadZone){
@@ -108,20 +135,22 @@ void InputHandler::update(){
             }
 
             // LT
-            if((int)event.jaxis.axis == 4){
+            if((int)event.jaxis.axis == LT){
                 uint32_t tempValue = event.jaxis.value + pow(2, 15);
+                std::cout << tempValue << std::endl;
                 if(tempValue > m_triggerDeadZone){
-                    *(m_triggerValues[whichOne].first) = tempValue;
+                    *(m_triggerValues[whichOne].first) = 1;
                 }else{
                     *(m_triggerValues[whichOne].first) = 0;
                 }
             }
 
             // RT
-            if((int)event.jaxis.axis == 5){
+            if((int)event.jaxis.axis == RT){
                 uint32_t tempValue = event.jaxis.value + pow(2, 15);
+                std::cout << tempValue << std::endl;
                 if(tempValue > m_triggerDeadZone){
-                    *(m_triggerValues[whichOne].second) = tempValue;
+                    *(m_triggerValues[whichOne].second) = 1;
                 }else{
                     *(m_triggerValues[whichOne].second) = 0;
                 }
