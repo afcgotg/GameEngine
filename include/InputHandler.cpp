@@ -3,73 +3,6 @@
 
 #include "InputHandler.h"
 #include "Game.h"
-
-// WINDOWS XBOX 360 CONTROLLER
-
-#if _WIN32
-
-#define LT 4 // done
-#define RT 5 // done
-
-#define LB 4 // done
-#define RB 5 // done
-
-#define LJ_x 0 // done
-#define LJ_y 1 // done
-#define LJ_b 8 // done
-
-#define RJ_x 2 // done
-#define RJ_y 3 // done
-#define RJ_b 9 // done
-
-#define UP 5
-#define DOWN 5
-#define LEFT 5
-#define RIGHT 5
-
-#define A = 0 // done
-#define B = 1 // done
-#define X = 2 // done
-#define Y = 3 // done
-
-#define START 7 // done
-#define SELECT 6 // done
-
-// LINUX XBOX 360 CONTROLLER
-
-#elif __linux__
-
-#define LT 2 // done
-#define RT 5 // done
-
-#define LB 4 // done
-#define RB 5 // done
-
-#define LJ_x 0 // done
-#define LJ_y 1 // done
-#define LJ_b 9 // done
-
-#define RJ_x 3 // done
-#define RJ_y 4 // done
-#define RJ_b 10 // done
-
-#define UP 13 // done
-#define DOWN 14 // done
-#define LEFT 11 // done
-#define RIGHT 12 // done
-
-#define A = 0 // done
-#define B = 1 // done
-#define X = 2 // done
-#define Y = 3 // done
-
-#define START 7 // done
-#define SELECT 6 // done
-
-#endif
-
-
-
  
 InputHandler* InputHandler::s_pInstance = 0;
  
@@ -92,12 +25,15 @@ void InputHandler::initialiseJoysticks(){
                 m_joysticks.push_back(joy);
                 m_joystickValues.push_back(std::make_pair(new Vector2D(0,0), new Vector2D(0,0)));
                 m_triggerValues.push_back(std::make_pair(new int(0), new int(0)));
+                m_dpadValues.push_back(std::make_pair(new int(0), new int(0)));
 
                 std::vector<bool> tempButtons;
                 for(int j = 0; j < SDL_JoystickNumButtons(joy); j++){
                     tempButtons.push_back(false);
                 }
                 m_buttonStates.push_back(tempButtons);
+
+                std::cout << "Joystick " << i + 1 << " has " << SDL_JoystickNumButtons(joy) << " buttons." << std::endl;
             }else{
                 std::cout << "Error to add a controler: " << SDL_GetError() << std::endl;
             }
@@ -129,10 +65,10 @@ void InputHandler::update(){
         if(event.type == SDL_JOYAXISMOTION){
 
             int whichOne = event.jaxis.which; //get which controller
-            std::cout << (int)event.jaxis.axis << ": " << event.jaxis.value << std::endl;
+            // std::cout << (int)event.jaxis.axis << ": " << event.jaxis.value << std::endl;
 
             // left stick move left or right
-            if((int)event.jaxis.axis == LJ_x){
+            if((int)event.jaxis.axis == SDL_CONTROLLER_AXIS_LEFTX){
                 if(event.jaxis.value > m_joystickDeadZone){
                     m_joystickValues[whichOne].first->setX(1);
                 }else if(event.jaxis.value < -m_joystickDeadZone){
@@ -143,7 +79,7 @@ void InputHandler::update(){
             }
 
             // left stick move up or down
-            if((int)event.jaxis.axis == LJ_y){
+            if((int)event.jaxis.axis == SDL_CONTROLLER_AXIS_LEFTY){
                 if(event.jaxis.value > m_joystickDeadZone){
                     m_joystickValues[whichOne].first->setY(1);
                 }else if(event.jaxis.value < -m_joystickDeadZone){
@@ -154,7 +90,7 @@ void InputHandler::update(){
             }
 
             // right stick move left or right
-            if((int)event.jaxis.axis == RJ_x){
+            if((int)event.jaxis.axis == SDL_CONTROLLER_AXIS_RIGHTX){
                 if(event.jaxis.value > m_joystickDeadZone){
                     m_joystickValues[whichOne].second->setX(1);
                 }else if(event.jaxis.value < -m_joystickDeadZone){
@@ -165,7 +101,7 @@ void InputHandler::update(){
             }
 
             // right stick move up or down
-            if((int)event.jaxis.axis == RJ_y){
+            if((int)event.jaxis.axis == SDL_CONTROLLER_AXIS_RIGHTY){
                 if(event.jaxis.value > m_joystickDeadZone){
                     m_joystickValues[whichOne].second->setY(1);
                 }else if(event.jaxis.value < -m_joystickDeadZone){
@@ -176,7 +112,7 @@ void InputHandler::update(){
             }
 
             // LT
-            if((int)event.jaxis.axis == LT){
+            if((int)event.jaxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT){
                 uint32_t tempValue = event.jaxis.value + pow(2, 15);
                 if(tempValue > m_triggerDeadZone){
                     *(m_triggerValues[whichOne].first) = 1;
@@ -186,7 +122,7 @@ void InputHandler::update(){
             }
 
             // RT
-            if((int)event.jaxis.axis == RT){
+            if((int)event.jaxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT){
                 uint32_t tempValue = event.jaxis.value + pow(2, 15);
                 if(tempValue > m_triggerDeadZone){
                     *(m_triggerValues[whichOne].second) = 1;
@@ -196,14 +132,57 @@ void InputHandler::update(){
             }
         }
 
+        if(event.type == SDL_JOYHATMOTION){
+            int whichOne = event.jhat.which;
+            switch (event.jhat.value){
+                case SDL_HAT_LEFT:
+                    *(m_dpadValues[whichOne].first) = -1;
+                    *(m_dpadValues[whichOne].second) = 0;
+                    break;
+                case SDL_HAT_LEFTDOWN:
+                    *(m_dpadValues[whichOne].first) = -1;
+                    *(m_dpadValues[whichOne].second) = 1;
+                    break;
+                case SDL_HAT_DOWN:
+                    *(m_dpadValues[whichOne].first) = 0;
+                    *(m_dpadValues[whichOne].second) = 1;
+                    break;
+                case SDL_HAT_RIGHTDOWN:
+                    *(m_dpadValues[whichOne].first) = 1;
+                    *(m_dpadValues[whichOne].second) = 1;
+                    break;
+                case SDL_HAT_RIGHT:
+                    *(m_dpadValues[whichOne].first) = 1;
+                    *(m_dpadValues[whichOne].second) = 0;
+                    break;
+                case SDL_HAT_RIGHTUP:
+                    *(m_dpadValues[whichOne].first) = 1;
+                    *(m_dpadValues[whichOne].second) = -1;
+                    break;
+                case SDL_HAT_UP:
+                    *(m_dpadValues[whichOne].first) = 0;
+                    *(m_dpadValues[whichOne].second) = -1;
+                    break;
+                case SDL_HAT_LEFTUP:
+                    *(m_dpadValues[whichOne].first) = 0;
+                    *(m_dpadValues[whichOne].second) = -1;
+                    break;
+                case SDL_HAT_CENTERED:
+                    *(m_dpadValues[whichOne].first) = 0;
+                    *(m_dpadValues[whichOne].second) = 0;
+                    break;
+
+            }
+        }
+
         if(event.type == SDL_JOYBUTTONDOWN){
             std::cout << "Button donw: " << (int)event.jbutton.button << std::endl;
-            m_buttonStates[event.jaxis.which][(int)event.jbutton.button] = true;
+            m_buttonStates[event.jbutton.which][(int)event.jbutton.button] = true;
         }
 
         if(event.type == SDL_JOYBUTTONUP){
             std::cout << "Button up: " << (int)event.jbutton.button << std::endl;
-            m_buttonStates[event.jaxis.which][(int)event.jbutton.button] = false;
+            m_buttonStates[event.jbutton.which][(int)event.jbutton.button] = false;
         }
     }
 }
@@ -233,6 +212,20 @@ int InputHandler::yValue(int joy, int stick){
         }else if(stick == 2){
             return m_joystickValues[joy].second->getY();
         }
+    }
+    return 0;
+}
+
+int InputHandler::dpad_xValue(int joy){
+    if(m_joystickValues.size() > 0){
+        return *m_dpadValues[joy].first;
+    }
+    return 0;
+}
+
+int InputHandler::dpad_yValue(int joy){
+    if(m_joystickValues.size() > 0){
+        return *m_dpadValues[joy].second;
     }
     return 0;
 }

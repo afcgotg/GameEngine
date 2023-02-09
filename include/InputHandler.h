@@ -18,8 +18,13 @@ class InputHandler{
         int xValue(int joy, int stick);
         int yValue(int joy, int stick);
 
+        int dpad_xValue(int joy);
+        int dpad_yValue(int joy);
+
         int ltValue(int joy);
         int rtValue(int joy);
+
+
 
     private:
 
@@ -34,6 +39,8 @@ class InputHandler{
 
         std::vector<std::pair<int*, int*>> m_triggerValues;
         const int m_triggerDeadZone = 10000;
+
+        std::vector<std::pair<int*, int*>> m_dpadValues;
 
         std::vector<std::vector<bool>> m_buttonStates;
 
