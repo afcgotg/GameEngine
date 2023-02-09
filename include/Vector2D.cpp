@@ -1,3 +1,5 @@
+#include <math.h>
+
 #include "Vector2D.h"
 
 float Vector2D::getX(){

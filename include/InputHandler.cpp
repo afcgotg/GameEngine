@@ -1,7 +1,8 @@
-#include <iostream> 
+#include <iostream>
+#include <math.h>
 
- #include "InputHandler.h"
- #include "Game.h"
+#include "InputHandler.h"
+#include "Game.h"
  
 InputHandler* InputHandler::s_pInstance = 0;
  
@@ -20,11 +21,17 @@ void InputHandler::initialiseJoysticks(){
     if(SDL_NumJoysticks() > 0){
         for(int i = 0; i < SDL_NumJoysticks(); i++){
             SDL_Joystick* joy = SDL_JoystickOpen(i);
-            if(joy == NULL){
-                std::cout << "Error to add a controler: " << SDL_GetError() << std::endl;
-            }else{
+            if(joy != NULL){
                 m_joysticks.push_back(joy);
                 m_joystickValues.push_back(std::make_pair(new Vector2D(0,0), new Vector2D(0,0)));
+
+                std::vector<bool> tempButtons;
+                for(int j = 0; j < SDL_JoystickNumButtons(joy); j++){
+                    tempButtons.push_back(false);
+                }
+                m_buttonStates.push_back(tempButtons);
+            }else{
+                std::cout << "Error to add a controler: " << SDL_GetError() << std::endl;
             }
         }
         SDL_JoystickEventState(SDL_ENABLE);
@@ -40,6 +47,10 @@ bool InputHandler::joysticksInitialised(){
     return m_bJoysticksInitialised;
 }
 
+bool InputHandler::getButtonState(int joy, int buttonNumber){
+    return m_buttonStates[joy][buttonNumber];
+}
+
 void InputHandler::update(){
     SDL_Event event;
     while(SDL_PollEvent(&event)){
@@ -48,6 +59,7 @@ void InputHandler::update(){
         }
 
         if(event.type == SDL_JOYAXISMOTION){
+
             int whichOne = event.jaxis.which; //get which controller
             std::cout << (int)event.jaxis.axis << ": " << event.jaxis.value << std::endl;
 
@@ -94,6 +106,36 @@ void InputHandler::update(){
                     m_joystickValues[whichOne].second->setY(0);
                 }
             }
+
+            // LT
+            if((int)event.jaxis.axis == 4){
+                uint32_t tempValue = event.jaxis.value + pow(2, 15);
+                if(tempValue > m_triggerDeadZone){
+                    *(m_triggerValues[whichOne].first) = tempValue;
+                }else{
+                    *(m_triggerValues[whichOne].first) = 0;
+                }
+            }
+
+            // RT
+            if((int)event.jaxis.axis == 5){
+                uint32_t tempValue = event.jaxis.value + pow(2, 15);
+                if(tempValue > m_triggerDeadZone){
+                    *(m_triggerValues[whichOne].second) = tempValue;
+                }else{
+                    *(m_triggerValues[whichOne].second) = 0;
+                }
+            }
+        }
+
+        if(event.type == SDL_JOYBUTTONDOWN){
+            std::cout << "Button donw: " << (int)event.jbutton.button << std::endl;
+            m_buttonStates[event.jaxis.which][(int)event.jbutton.button] = true;
+        }
+
+        if(event.type == SDL_JOYBUTTONUP){
+            std::cout << "Button up: " << (int)event.jbutton.button << std::endl;
+            m_buttonStates[event.jaxis.which][(int)event.jbutton.button] = false;
         }
     }
 }
@@ -126,6 +168,23 @@ int InputHandler::yValue(int joy, int stick){
         }
     }
     return 0;
+}
+
+int InputHandler::ltValue(int joy){
+    if(m_triggerValues.size() > 0){
+        return *m_triggerValues[joy].first;
+    }else{
+        return 0;
+    }
+}
+
+
+int InputHandler::rtValue(int joy){
+    if(m_triggerValues.size() > 0){
+        return *m_triggerValues[joy].first;
+    }else{
+        return 0;
+    }
 }
 
 InputHandler::InputHandler(){

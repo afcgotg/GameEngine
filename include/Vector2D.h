@@ -1,4 +1,3 @@
-#include <math.h>
 #include <iostream>
 
 #ifndef __Vector2D__
