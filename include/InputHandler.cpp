@@ -6,6 +6,8 @@
 
 // WINDOWS XBOX 360 CONTROLLER
 
+#if _WIN32
+
 #define LT 4 // done
 #define RT 5 // done
 
@@ -22,10 +24,41 @@
 #define LEFT 5
 #define RIGHT 5
 
-#define A = 0; // done
-#define B = 1; // done
-#define X = 2; // done
-#define Y = 3; // done
+#define A = 0 // done
+#define B = 1 // done
+#define X = 2 // done
+#define Y = 3 // done
+
+#define START 7 // done
+#define SELECT 6 // done
+
+#elif __linux__
+
+#define LT 4 // done
+#define RT 5 // done
+
+#define LJ_x 0 // done
+#define LJ_y 1 // done
+#define LJ_b 8 // done
+
+#define RJ_x 2 // done
+#define RJ_y 3 // done
+#define RJ_b 9 // done
+
+#define UP 5
+#define DOWN 5
+#define LEFT 5
+#define RIGHT 5
+
+#define A = 0 // done
+#define B = 1 // done
+#define X = 2 // done
+#define Y = 3 // done
+
+#define START 7 // done
+#define SELECT 6 // done
+
+#endif
 
 
 
