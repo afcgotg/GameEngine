@@ -38,6 +38,12 @@ void InputHandler::initialiseJoysticks(){
                 std::cout << "Error to add a controler: " << SDL_GetError() << std::endl;
             }
         }
+
+        for(int i = 0; i < 3; i++){
+            m_mouseButtonStates.push_back(false);
+        }
+
+
         SDL_JoystickEventState(SDL_ENABLE);
         m_bJoysticksInitialised = true;
 
@@ -184,6 +190,34 @@ void InputHandler::update(){
             std::cout << "Button up: " << (int)event.jbutton.button << std::endl;
             m_buttonStates[event.jbutton.which][(int)event.jbutton.button] = false;
         }
+
+        if(event.type == SDL_MOUSEBUTTONDOWN){
+            if(event.button.button == SDL_BUTTON_LEFT){
+                m_mouseButtonStates[LEFT] = true;
+            }
+
+            if(event.button.button == SDL_BUTTON_MIDDLE){
+                m_mouseButtonStates[MIDDLE] = true;
+            }
+            
+            if(event.button.button == SDL_BUTTON_RIGHT){
+                m_mouseButtonStates[RIGHT] = true;
+            }
+        }
+
+                if(event.type == SDL_MOUSEBUTTONUP){
+            if(event.button.button == SDL_BUTTON_LEFT){
+                m_mouseButtonStates[LEFT] = false;
+            }
+
+            if(event.button.button == SDL_BUTTON_MIDDLE){
+                m_mouseButtonStates[MIDDLE] = false;
+            }
+            
+            if(event.button.button == SDL_BUTTON_RIGHT){
+                m_mouseButtonStates[RIGHT] = false;
+            }
+        }
     }
 }
 
@@ -245,6 +279,10 @@ int InputHandler::rtValue(int joy){
     }else{
         return 0;
     }
+}
+
+bool InputHandler::getMouseButtonState(int buttonNumber){
+    return m_mouseButtonStates[buttonNumber];
 }
 
 InputHandler::InputHandler(){

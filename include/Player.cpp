@@ -25,8 +25,13 @@ void Player::clean(){
 }
 
 void Player::handleInput(){
-    if(TheInputHandler::Instance()->joysticksInitialised()){
-        m_velocity.setX(1 * TheInputHandler::Instance()->dpad_xValue(0));
-        m_velocity.setY(1 * TheInputHandler::Instance()->dpad_yValue(0));
+    // if(TheInputHandler::Instance()->joysticksInitialised()){
+    //     m_velocity.setX(1 * TheInputHandler::Instance()->dpad_xValue(0));
+    //     m_velocity.setY(1 * TheInputHandler::Instance()->dpad_yValue(0));
+    // }
+    if(TheInputHandler::Instance()->getMouseButtonState(LEFT)){
+        m_velocity.setX(1);
+    }else{
+        m_velocity.setX(0);
     }
 }

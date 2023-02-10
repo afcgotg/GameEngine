@@ -3,6 +3,12 @@
 
 #include "Vector2D.h"
 
+enum mouse_buttons{
+    LEFT = 0,
+    MIDDLE = 1,
+    RIGHT = 2
+};
+
 class InputHandler{
     public:
         static InputHandler* Instance();
@@ -24,7 +30,7 @@ class InputHandler{
         int ltValue(int joy);
         int rtValue(int joy);
 
-
+        bool getMouseButtonState(int buttonNumber);
 
     private:
 
@@ -44,7 +50,10 @@ class InputHandler{
 
         std::vector<std::vector<bool>> m_buttonStates;
 
+        std::vector<bool> m_mouseButtonStates;
+
         static InputHandler* s_pInstance;
 };
 
 typedef InputHandler TheInputHandler;
+
