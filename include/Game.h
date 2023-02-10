@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 
 #include "GameObject.h"
+#include "GameStateMachine.h"
 
 #ifndef __Game__
 #define __Game__
@@ -26,12 +27,13 @@ class Game{
         Game();
 
         static Game* s_pInstance;
-        typedef Game TheGame;
 
         SDL_Window* m_pWindow;
         SDL_Renderer* m_pRenderer;
 
         bool m_bRunning;
+
+        GameStateMachine* m_pGameStateMachine;
 
         std::vector<GameObject*> m_gameObjects;
 };

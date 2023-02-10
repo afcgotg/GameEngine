@@ -14,8 +14,8 @@ class GameObject{
         virtual void clean() = 0;
 
     protected:
-        GameObject(const LoaderParams* pParams);
-        virtual ~GameObject();
+        GameObject(const LoaderParams* pParams){}
+        virtual ~GameObject(){}
 };
 
 #endif

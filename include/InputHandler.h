@@ -32,6 +32,10 @@ class InputHandler{
 
         bool getMouseButtonState(int buttonNumber);
 
+        Vector2D* getMousePosition();
+
+        bool isKeyDown(SDL_Scancode key);
+
     private:
 
         InputHandler();
@@ -51,6 +55,27 @@ class InputHandler{
         std::vector<std::vector<bool>> m_buttonStates;
 
         std::vector<bool> m_mouseButtonStates;
+
+        Vector2D* m_mousePosition;
+
+        const Uint8* m_keystates;
+
+        // functions to handle different event types
+
+        // keyboard events
+        // void onkeyDown();
+        // void onKeyUp();
+
+        // mouse events
+        void onMouseMove(SDL_Event& event);
+        void onMouseButtonDown(SDL_Event& event);
+        void onMouseButtonUp(SDL_Event& event);
+
+        // joysticks events
+        void onJoystickAxisMove(SDL_Event& event);
+        void onJoystickHatMove(SDL_Event& event);
+        void onJoystickButtonDown(SDL_Event& event);
+        void onJoystickButtonUp(SDL_Event& event);
 
         static InputHandler* s_pInstance;
 };

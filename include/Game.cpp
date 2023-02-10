@@ -4,8 +4,12 @@
 
 #include "TextureManager.h"
 #include "InputHandler.h"
+
 #include "Player.h"
 #include "Enemy.h"
+
+#include "MenuState.h"
+#include "PlayState.h"
 
 Game* Game::s_pInstance = 0;
 
@@ -65,6 +69,9 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
         return false;
     }
 
+    m_pGameStateMachine = new GameStateMachine();
+    m_pGameStateMachine->changeState(new MenuState());
+
     m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 48, 48, "animate")));
 
     m_bRunning = true;
@@ -89,6 +96,10 @@ void Game::update(){
 
 void Game::handleEvent(){
     TheInputHandler::Instance()->update();
+
+    if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RETURN)){
+        m_pGameStateMachine->changeState(new PlayState());
+    }
 }
 
 void Game::clean(){

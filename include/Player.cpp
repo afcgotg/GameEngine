@@ -29,9 +29,33 @@ void Player::handleInput(){
     //     m_velocity.setX(1 * TheInputHandler::Instance()->dpad_xValue(0));
     //     m_velocity.setY(1 * TheInputHandler::Instance()->dpad_yValue(0));
     // }
-    if(TheInputHandler::Instance()->getMouseButtonState(LEFT)){
-        m_velocity.setX(1);
+    
+    
+    // if(TheInputHandler::Instance()->getMouseButtonState(LEFT)){
+    //     m_velocity.setX(1);
+    // }else{
+    //     m_velocity.setX(0);
+    // }
+
+    // Vector2D* vec = TheInputHandler::Instance()->getMousePosition();
+    // m_velocity = (*vec - m_position) / 100;
+
+    // https://wiki.libsdl.org/SDL2/SDL_Keycode
+
+    if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)){
+        m_velocity.setX(2);
+    }else if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)){
+        m_velocity.setX(-2);
     }else{
         m_velocity.setX(0);
     }
+
+    if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)){
+        m_velocity.setY(-2);
+    }else if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)){
+        m_velocity.setY(2);
+    }else{
+         m_velocity.setY(0);
+    }
+
 }
