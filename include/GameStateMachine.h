@@ -11,6 +11,9 @@ class GameStateMachine{
         void changeState(GameState* pState);
         void popState();
 
+        void update();
+        void render();
+
     private:
         std::vector<GameState*> m_gameStates;
 };

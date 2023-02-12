@@ -19,6 +19,8 @@ class TextureManager{
 
         void drawFrame(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* pRenderer, SDL_RendererFlip flip=SDL_FLIP_NONE);
 
+        void clearFromTextureMap(std::string id);
+
     private:
         TextureManager();
 
