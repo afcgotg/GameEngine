@@ -13,7 +13,6 @@ int main(int argc, char* argv[]){
 
     if(TheGame::Instance()->init("Game title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     WIDTH, HEIGHT, false)){
-        std::cout << "game init succed" << std::endl;
         while(TheGame::Instance()->running()){
 
             frameStart = SDL_GetTicks();
