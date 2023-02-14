@@ -1,5 +1,7 @@
 #include "GameStateMachine.h"
 
+#include <iostream>
+
 void GameStateMachine::pushState(GameState* pState){
     m_gameStates.push_back(pState);
     m_gameStates.back()->onEnter();
@@ -31,7 +33,9 @@ void GameStateMachine::update(){
 }
 
 void GameStateMachine::render(){
- if(!m_gameStates.empty()){
-    m_gameStates.back()->render();
- }
+    if(!m_gameStates.empty()){
+        if(m_gameStates.back()->getStateID() == "PLAY"){
+        }
+        m_gameStates.back()->render();
+    }
 }

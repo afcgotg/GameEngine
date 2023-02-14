@@ -24,6 +24,8 @@ class MenuState : public GameState{
 
         static void s_menuToPlay();
         static void s_exitFromMenu();
+
+        bool m_bComingOut;
 };
 
 

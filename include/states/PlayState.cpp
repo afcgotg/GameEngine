@@ -27,7 +27,7 @@ bool PlayState::onEnter(){
     GameObject* player = new Player(new LoaderParams(100, 100, 48, 48, "player"));
 
     m_gameObjects.push_back(player);
-
+    
     return true;
 }
 
