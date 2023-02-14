@@ -39,3 +39,10 @@ void GameStateMachine::render(){
         m_gameStates.back()->render();
     }
 }
+
+void GameStateMachine::setStateChanged(bool change){
+    m_bStateChanged = change;
+}
+bool GameStateMachine::getStateChanged(){
+    return m_bStateChanged;
+}

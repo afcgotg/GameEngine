@@ -10,21 +10,19 @@ const std::string MenuState::s_menuID = "MENU";
 
 void MenuState::update(){
     for(int i = 0; i < m_gameObjects.size(); i++){
-        if(!m_bComingOut){
+        if(!TheGame::Instance()->getStateMachine()->getStateChanged()){
             m_gameObjects[i]->update();
         }else{
+            TheGame::Instance()->getStateMachine()->setStateChanged(false);
             break;
         }
+            
     }
 }
 
 void MenuState::render(){
     for(int i = 0; i < m_gameObjects.size(); i++){
-        if(!m_bComingOut){
-            m_gameObjects[i]->draw();
-        }else{
-            break;
-        }
+        m_gameObjects[i]->draw();
     }
 }
 
@@ -43,8 +41,6 @@ bool MenuState::onEnter(){
     m_gameObjects.push_back(playbutton);
     m_gameObjects.push_back(exitbutton);
 
-    m_bComingOut = false;
-
     return true;
 }
 
@@ -56,7 +52,7 @@ bool MenuState::onExit(){
     TheTextureManager::Instance()->clearFromTextureMap("playbutton");
     TheTextureManager::Instance()->clearFromTextureMap("exitbutton");
 
-    m_bComingOut = true;
+    TheGame::Instance()->getStateMachine()->setStateChanged(true);
 
     return true;
 }

@@ -14,8 +14,13 @@ class GameStateMachine{
         void update();
         void render();
 
+        void setStateChanged(bool change);
+        bool getStateChanged();
+
     private:
         std::vector<GameState*> m_gameStates;
+
+        bool m_bStateChanged;
 };
 
 #endif
