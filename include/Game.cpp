@@ -49,7 +49,7 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
             m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
             if(m_pRenderer != 0){
                 std::cout << "Renderer creation succed" << std::endl;
-                SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
+                SDL_SetRenderDrawColor(m_pRenderer, 136, 230, 232, 255);
             }else{
                 std::cout << "Error when create the renderer: " << SDL_GetError() << std::endl;
                 return false;
