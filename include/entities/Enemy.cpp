@@ -1,3 +1,4 @@
+#include <SDL2/SDL.h>
 #include "Enemy.h"
 
 Enemy::Enemy(const LoaderParams* pParams):

@@ -31,6 +31,7 @@ class InputHandler{
         int rtValue(int joy);
 
         bool getMouseButtonState(int buttonNumber);
+        void reset();
 
         Vector2D* getMousePosition();
 

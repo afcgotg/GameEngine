@@ -161,6 +161,10 @@ bool InputHandler::getMouseButtonState(int buttonNumber){
     return m_mouseButtonStates[buttonNumber];
 }
 
+void InputHandler::reset(){
+
+}
+
 Vector2D* InputHandler::getMousePosition(){
     return m_mousePosition;
 }
