@@ -1,6 +1,6 @@
 #include <vector>
 
-#include "GameState.h"
+#include "../states/GameState.h"
 
 #ifndef __GameStateMachine__
 #define __GameStateMachine__

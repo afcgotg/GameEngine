@@ -1,5 +1,5 @@
 #include "SDLGameObject.h"
-#include "LoaderParams.h"
+#include "../gears/LoaderParams.h"
 
 #ifndef __Player__
 #define __Player__

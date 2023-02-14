@@ -1,7 +1,7 @@
 #include "SDLGameObject.h"
 
-#include "Game.h"
-#include "TextureManager.h"
+#include "../Game.h"
+#include "../gears/TextureManager.h"
 
 SDLGameObject::SDLGameObject (const LoaderParams* pParams) :
     GameObject(pParams), m_position(pParams->getX(), pParams->getY()), m_velocity(0,0), m_acceleration(0,0){
@@ -22,4 +22,5 @@ void SDLGameObject::update(){
     m_position += m_velocity;
     m_velocity += m_acceleration;
 }
+
 void SDLGameObject::clean(){}

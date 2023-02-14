@@ -2,14 +2,14 @@
 
 #include "Game.h"
 
-#include "TextureManager.h"
-#include "InputHandler.h"
+#include "gears/TextureManager.h"
+#include "gears/InputHandler.h"
 
-#include "Player.h"
-#include "Enemy.h"
+#include "entities/Player.h"
+#include "entities/Enemy.h"
 
-#include "MenuState.h"
-#include "PlayState.h"
+#include "states/MenuState.h"
+#include "states/PlayState.h"
 
 Game* Game::s_pInstance = 0;
 
@@ -109,4 +109,8 @@ void Game::clean(){
 
 bool Game::running() {
     return m_bRunning;
+}
+
+GameStateMachine* Game::getStateMachine(){
+    return m_pGameStateMachine;
 }

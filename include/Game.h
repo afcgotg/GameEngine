@@ -2,8 +2,8 @@
 
 #include <SDL2/SDL.h>
 
-#include "GameObject.h"
-#include "GameStateMachine.h"
+#include "entities/GameObject.h"
+#include "gears/GameStateMachine.h"
 
 #ifndef __Game__
 #define __Game__
@@ -22,6 +22,8 @@ class Game{
         void clean();
 
         bool running();
+
+        GameStateMachine* getStateMachine();
 
     private:
         Game();

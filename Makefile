@@ -3,6 +3,8 @@ gamename = game
 win32 = i686-w64-mingw32
 win64 = x86_64-w64-mingw32
 
+include_directories = ./include/*.cpp ./include/assistant/*.cpp ./include/entities/*.cpp ./include/gears/*.cpp ./include/states/*.cpp
+
 all:
 
 #win32:
@@ -10,12 +12,12 @@ all:
 #	xcopy "assets" ".\bin\${win32}\assets" //e //y //q
 
 win64:
-	g++ -I ./src/${win64}/include -L ./src/${win64}/lib -o ./bin/${win64}/${gamename}64.exe main.cpp ./include/*.cpp -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+	g++ -I ./src/${win64}/include -L ./src/${win64}/lib -o ./bin/${win64}/${gamename}64.exe main.cpp ${include_directories} -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 	xcopy "assets" ".\bin\${win64}\assets" //e //y //q
 
 # linux32:
 #	g++ -o src/linux32/${gamename}32 main.cpp -lSDL2main -lSDL2 -lSDL2_image
 
 linux64:
-	g++ -o bin/linux64/${gamename}64 main.cpp ./include/*.cpp -lSDL2main -lSDL2 -lSDL2_image
+	g++ -o bin/linux64/${gamename}64 main.cpp ${include_directories} -lSDL2main -lSDL2 -lSDL2_image
 	cp -r assets bin/linux64/

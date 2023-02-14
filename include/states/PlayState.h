@@ -1,6 +1,8 @@
 #include <string>
+#include <vector>
 
 #include "GameState.h"
+#include "../entities/GameObject.h"
 
 #ifndef __PlayState__
 #define __PlayState__
@@ -17,6 +19,8 @@ class PlayState : public GameState{
 
     private:
         static const std::string s_playID;
+
+        std::vector<GameObject*> m_gameObjects;
 };
 
 

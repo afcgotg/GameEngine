@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "GameState.h"
-#include "GameObject.h"
+#include "../entities/GameObject.h"
 
 #ifndef __MenuState__
 #define __MenuState__
@@ -21,6 +21,9 @@ class MenuState : public GameState{
         static const std::string s_menuID;
 
         std::vector<GameObject*> m_gameObjects;
+
+        static void s_menuToPlay();
+        static void s_exitFromMenu();
 };
 
 

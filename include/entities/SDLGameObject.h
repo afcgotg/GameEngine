@@ -1,8 +1,8 @@
 #include <string>
 
 #include "GameObject.h"
-#include "LoaderParams.h"
-#include "Vector2D.h"
+#include "../gears/LoaderParams.h"
+#include "../assistant/Vector2D.h"
 
 #ifndef __SDLGameObject__
 #define __SDLGameObject__

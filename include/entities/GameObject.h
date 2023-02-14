@@ -1,7 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
-#include "LoaderParams.h"
+#include "../gears/LoaderParams.h"
 
 #ifndef __GameObject__
 #define __GameObject__

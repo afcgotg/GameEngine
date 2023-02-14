@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "InputHandler.h"
+#include "../gears/InputHandler.h"
 #include "MenuButton.h"
 
 MenuButton::MenuButton(const LoaderParams* pParams, void (*callback)()) :
