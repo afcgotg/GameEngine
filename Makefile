@@ -19,10 +19,10 @@ win64:
 	xcopy "assets" ".\bin\${win64}\assets" //e //y //q
 
 
-# linux32:
-#	g++ -o src/linux32/${gamename}32 main.cpp -lSDL2main -lSDL2 -lSDL2_image -m32 `sdl2-config --static-libs` -static
+#linux32:
+#	g++ -o bin/linux32/${gamename}32 main.cpp ${include_directories} -lSDL2_image -m32 `sdl2-config --static-libs --cflags`
 #	cp -r assets bin/linux32/
 
 linux64:
-	g++ -o bin/linux64/${gamename}64 main.cpp ${include_directories} -lSDL2main -lSDL2 -lSDL2_image -m64 `sdl2-config --static-libs` -static
+	g++ -o bin/linux64/${gamename}64 main.cpp ${include_directories} -lSDL2_image -m64 `sdl2-config --static-libs --cflags`
 	cp -r assets bin/linux64/
