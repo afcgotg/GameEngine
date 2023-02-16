@@ -3,6 +3,7 @@
 
 #include "GameState.h"
 #include "../entities/GameObject.h"
+#include "../entities/SDLGameObject.h"
 
 #ifndef __PlayState__
 #define __PlayState__
@@ -21,6 +22,8 @@ class PlayState : public GameState{
         static const std::string s_playID;
 
         std::vector<GameObject*> m_gameObjects;
+
+        bool checkCollision(SDLGameObject* p1, SDLGameObject* p2);
 };
 
 
