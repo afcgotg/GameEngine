@@ -1,6 +1,6 @@
 #include "GameObjectFactory.h"
-#include "../entities/Player.h"
-#include "../entities/Enemy.h"
+#include "../game_objects/Player.h"
+#include "../game_objects/Enemy.h"
 
 GameObject* GameObjectFactory::createGameObject(ID id){
     switch(id){

@@ -4,7 +4,7 @@
 #include "PlayState.h"
 #include "../Game.h"
 #include "../gears//TextureManager.h"
-#include "../entities/MenuButton.h"
+#include "../game_objects/MenuButton.h"
 
 const std::string MenuState::s_menuID = "MENU";
 

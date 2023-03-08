@@ -1,4 +1,4 @@
-#include "../entities/GameObject.h"
+#include "../game_objects/GameObject.h"
 
 #ifndef __GAMEOBJECTFACTORY__
 #define __GAMEOBJECTFACTORY__

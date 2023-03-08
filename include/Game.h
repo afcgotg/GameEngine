@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "entities/GameObject.h"
+#include "game_objects/GameObject.h"
 #include "gears/GameStateMachine.h"
 
 #ifndef __Game__

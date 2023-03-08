@@ -2,8 +2,8 @@
 #include <vector>
 
 #include "GameState.h"
-#include "../entities/GameObject.h"
-#include "../entities/SDLGameObject.h"
+#include "../game_objects/GameObject.h"
+#include "../game_objects/SDLGameObject.h"
 
 #ifndef __PlayState__
 #define __PlayState__

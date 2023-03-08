@@ -3,7 +3,7 @@
 #include "MenuState.h"
 #include "../gears/TextureManager.h"
 #include "../gears/InputHandler.h"
-#include "../entities/MenuButton.h"
+#include "../game_objects/MenuButton.h"
 
 const std::string PauseState::s_pauseID = "PAUSE";
 

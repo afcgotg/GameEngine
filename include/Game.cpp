@@ -5,8 +5,8 @@
 #include "gears/TextureManager.h"
 #include "gears/InputHandler.h"
 
-#include "entities/Player.h"
-#include "entities/Enemy.h"
+#include "game_objects/Player.h"
+#include "game_objects/Enemy.h"
 
 #include "states/MenuState.h"
 #include "states/PlayState.h"

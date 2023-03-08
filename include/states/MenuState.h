@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "GameState.h"
-#include "../entities/GameObject.h"
+#include "../game_objects/GameObject.h"
 
 #ifndef __MenuState__
 #define __MenuState__

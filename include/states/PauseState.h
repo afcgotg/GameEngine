@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 
-#include "../entities/GameObject.h"
+#include "../game_objects/GameObject.h"
 #include "GameState.h"
 
 class PauseState : public GameState{

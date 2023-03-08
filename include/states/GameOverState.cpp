@@ -4,8 +4,8 @@
 
 #include "../gears/TextureManager.h"
 #include "../gears/LoaderParams.h"
-#include "../entities/AnimatedGraphic.h"
-#include "../entities/MenuButton.h"
+#include "../game_objects/AnimatedGraphic.h"
+#include "../game_objects/MenuButton.h"
 
 #include "../Game.h"
 
