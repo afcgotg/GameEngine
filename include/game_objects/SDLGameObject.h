@@ -9,7 +9,9 @@
 
 class SDLGameObject : public GameObject{
     public:
-        SDLGameObject (const LoaderParams* pParams);
+        SDLGameObject ();
+
+        void load(const LoaderParams* pParams);
 
         virtual void draw();
         virtual void update();
@@ -29,6 +31,7 @@ class SDLGameObject : public GameObject{
         int m_height;
         int m_currentRow;
         int m_currentFrame;
+        int m_numFrames;
 
         std::string m_textureID;
 };

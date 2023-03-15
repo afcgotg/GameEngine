@@ -1,11 +1,15 @@
 #include "LoaderParams.h"
 
-LoaderParams::LoaderParams(int x, int y, int width, int height, std::string textureID):
-    m_x(x), m_y(y), m_width(width), m_height(height), m_textureID(textureID){
-}
-
-LoaderParams::LoaderParams(int x, int y, int width, int height, std::string textureID, int frames):
-    m_x(x), m_y(y), m_width(width), m_height(height), m_textureID(textureID), m_numFrames(frames){
+LoaderParams::LoaderParams(int x, int y, int width, int height, int textureID, int numFrames = 0, int callbackID = 0, int animSpeed = 0):
+    m_x(x),
+    m_y(y),
+    m_width(width),
+    m_height(height),
+    m_textureID(textureID),
+    m_numFrames(numFrames),
+    m_callbackID(callbackID),
+    m_animSpeed(animSpeed)
+{
 }
 
 int LoaderParams::getX() const{
@@ -24,7 +28,7 @@ int LoaderParams::getHeight() const{
     return m_height;
 }
 
-std::string LoaderParams::getTextureID() const{
+int LoaderParams::getTextureID() const{
     return m_textureID;
 }
 

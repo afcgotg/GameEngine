@@ -6,8 +6,10 @@
 
 class Player : public SDLGameObject{
     public:
-        Player(const LoaderParams* pParams);
+        Player();
         ~Player();
+
+        void load(const LoaderParams* pParams);
 
         virtual void draw();
         virtual void update();
@@ -15,6 +17,14 @@ class Player : public SDLGameObject{
 
     private:
         void handleInput();
+};
+
+class PlayerCreator : public BaseCreator
+{
+    GameObject* createGameObject() const
+    {
+        return new Player();
+    }
 };
 
 #endif
