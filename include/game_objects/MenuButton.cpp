@@ -13,7 +13,7 @@ void MenuButton::load(const LoaderParams* pParams){
     m_bPressed = false;
 }
 
-void MenuButton::setCallback(void(*callback) ()){
+void MenuButton::setCallback(Callback callback){
     m_callback = callback;
 }
 
