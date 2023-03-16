@@ -2,6 +2,7 @@
 
 #include "Game.h"
 
+#include "gears/GameObjectFactory.h"
 #include "gears/TextureManager.h"
 #include "gears/InputHandler.h"
 
@@ -69,10 +70,7 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
         return false;
     }
 
-    m_pGameStateMachine = new GameStateMachine();
-    m_pGameStateMachine->changeState(new MenuState());
-
-    m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 48, 48, "animate")));
+    TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
 
     m_bRunning = true;
     return true;
