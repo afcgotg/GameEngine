@@ -6,6 +6,7 @@
 #include "../gears//TextureManager.h"
 #include "../game_objects/MenuButton.h"
 #include "StateParser.h"
+#include "../common/Callback.h"
 
 const std::string MainMenuState::s_menuID = "MENU";
 
