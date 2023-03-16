@@ -32,6 +32,7 @@ class SDLGameObject : public GameObject{
         int m_currentRow;
         int m_currentFrame;
         int m_numFrames;
+        int m_callbackID;
 
         std::string m_textureID;
 };

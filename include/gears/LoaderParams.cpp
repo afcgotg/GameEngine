@@ -35,3 +35,7 @@ int LoaderParams::getTextureID() const{
 int LoaderParams::getNumFrames() const{
     return m_numFrames;
 }
+
+int LoaderParams::getCallbackID() const{
+    return m_callbackID;
+}

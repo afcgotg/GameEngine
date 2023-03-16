@@ -5,7 +5,7 @@
 
 class LoaderParams{
     public:
-        LoaderParams(int x, int y, int width, int height, int textureID, int numFrames, int callbackID, int animSpeed);
+        LoaderParams(int x, int y, int width, int height, std::string textureID, int numFrames, int callbackID, int animSpeed);
 
         int getX() const;
         int getY() const;
@@ -13,6 +13,7 @@ class LoaderParams{
         int getHeight() const;
         int getTextureID() const;
         int getNumFrames() const;
+        int getCallbackID() const;
 
     private:
         int m_x;

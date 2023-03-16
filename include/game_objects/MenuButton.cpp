@@ -3,10 +3,22 @@
 #include "../gears/InputHandler.h"
 #include "MenuButton.h"
 
-MenuButton::MenuButton(const LoaderParams* pParams, void (*callback)()) :
-    SDLGameObject(pParams), m_callback(callback){
-        m_currentFrame = MOUSE_OUT;
-        m_bPressed = false;
+MenuButton::MenuButton(): SDLGameObject(){
+}
+
+void MenuButton::load(const LoaderParams* pParams){
+    SDLGameObject::load(pParams);
+    m_callbackID = pParams->getCallbackID();
+    m_currentFrame = MOUSE_OUT;
+    m_bPressed = false;
+}
+
+void MenuButton::setCallback(void(*callback) ()){
+    m_callback = callback;
+}
+
+int MenuButton::getCallbackID(){
+    return m_callbackID;
 }
 
 

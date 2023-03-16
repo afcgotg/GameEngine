@@ -1,4 +1,5 @@
 #include <string>
+#include<vector>
 
 #ifndef __GameState__
 #define __GameState__
@@ -12,6 +13,9 @@ class GameState{
         virtual bool onExit() = 0;
 
         virtual std::string getStateID() const = 0;
+    
+    protected:
+        std::vector<std::string> m_textureIDList;
 
 };
 
