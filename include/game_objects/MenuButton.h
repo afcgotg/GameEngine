@@ -1,5 +1,6 @@
 #include "SDLGameObject.h"
 #include "../common/Callback.h"
+#include "../gears/GameObjectFactory.h"
 
 #ifndef __MenuButton__
 #define __MenuButton__
@@ -8,13 +9,15 @@ class MenuButton : public SDLGameObject{
     public:
         MenuButton();
 
+        virtual ~MenuButton();
+
         virtual void load(const LoaderParams* pParams);
 
         virtual void draw();
         virtual void update();
         virtual void clean();
 
-        virtual void setCallbacks(const std::vector<Callback>& callbacks) = 0;
+        void setCallback(void(*callback)());
         int getCallbackID();
 
     private:
@@ -27,6 +30,13 @@ class MenuButton : public SDLGameObject{
         void (*m_callback)();
 
         bool m_bPressed;
+};
+
+class MenuButtonCreator : public BaseCreator
+{
+    GameObject* createGameObject() const{
+        return new MenuButton();
+    }
 };
 
 #endif
