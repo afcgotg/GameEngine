@@ -12,6 +12,8 @@
 #include "states/MenuState.h"
 #include "states/PlayState.h"
 
+#include "game_objects/MenuButton.h"
+
 Game* Game::s_pInstance = 0;
 
 Game* Game::Instance(){
@@ -66,11 +68,9 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
 
     TheInputHandler::Instance()->initialiseJoysticks();
 
-    if(!TheTextureManager::Instance()->load("assets/img/GraveRobber/GraveRobber_idle.png", "animate", m_pRenderer)){
-        return false;
-    }
-
     TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
+    TheGameObjectFactory::Instance()->registerType("player", new PlayerCreator());
+    TheGameObjectFactory::Instance()->registerType("enemy", new EnemyCreator());
 
     m_bRunning = true;
     return true;

@@ -39,3 +39,7 @@ int LoaderParams::getNumFrames() const{
 int LoaderParams::getCallbackID() const{
     return m_callbackID;
 }
+
+int LoaderParams::getAnimSpeed() const{
+    return m_animSpeed;
+}

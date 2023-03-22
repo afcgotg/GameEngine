@@ -1,11 +1,12 @@
 #include "GameOverState.h"
-#include "MenuState.h"
+#include "MainMenuState.h"
 #include "PlayState.h"
 
 #include "../gears/TextureManager.h"
 #include "../gears/LoaderParams.h"
 #include "../game_objects/AnimatedGraphic.h"
 #include "../game_objects/MenuButton.h"
+#include "StateParser.h"
 
 #include "../Game.h"
 
@@ -29,39 +30,24 @@ void GameOverState::render(){
 }
 
 bool GameOverState::onEnter(){
-    if(!TheTextureManager::Instance()->load("assets/img/gameover.png", "gameovertext", TheGame::Instance()->getRenderer())){
-        return false;
-    }
-    if(!TheTextureManager::Instance()->load("assets/img/mainmenubutton.png", "mainmenubutton", TheGame::Instance()->getRenderer())){
-        return false;
-    }
-    if(!TheTextureManager::Instance()->load("assets/img/restartbutton.png", "restartbutton", TheGame::Instance()->getRenderer())){
-        return false;
-    }
+    StateParser stateParser;
+    stateParser.parseState("test.xml", s_gameOverID, &m_gameObjects, &m_textureIDList);
 
-    GameObject* gameOverText = new AnimatedGraphic(new LoaderParams(292, 228, 216, 48, "gameovertext", 2), 2);
-    GameObject* menubutton = new MenuButton(new LoaderParams(328, 300, 144, 48, "mainmenubutton"), s_gameOverToMain);
-    GameObject* restartbutton = new MenuButton(new LoaderParams(328, 372, 144, 48, "restartbutton"), s_restartPlay);
+    m_callbacks.push_back(0);
+    m_callbacks.push_back(s_gameOverToMain);
+    m_callbacks.push_back(s_restartPlay);
 
-    m_gameObjects.push_back(gameOverText);
-    m_gameObjects.push_back(menubutton);
-    m_gameObjects.push_back(restartbutton);
+    setCallbacks(m_callbacks);
 
-    return true;
-
+    std::cout << "entering gameOver State" << std::endl;
     
+    return true;
 }
+
 bool GameOverState::onExit(){
-    for(int i = 0; i < m_gameObjects.size(); i++){
-        m_gameObjects[i]->clean();
+        for(int i = 0; i < m_textureIDList.size(); i++){
+        TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
     }
-    m_gameObjects.clear();
-    TheTextureManager::Instance()->clearFromTextureMap("gameovertext");
-    TheTextureManager::Instance()->clearFromTextureMap("mainmenubutton");
-    TheTextureManager::Instance()->clearFromTextureMap("restartbutton");
-
-    TheGame::Instance()->getStateMachine()->setStateChanged(true);
-
     return true;
 }
 
@@ -70,9 +56,18 @@ std::string GameOverState::getStateID() const{
 }
 
 void GameOverState::s_gameOverToMain(){
-    TheGame::Instance()->getStateMachine()->changeState(new MenuState());
+    TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
 }
 
 void GameOverState::s_restartPlay(){
     TheGame::Instance()->getStateMachine()->changeState(new PlayState());
+}
+
+void GameOverState::setCallbacks(const std::vector<Callback>& callbacks){
+    for(int i = 0; i < m_gameObjects.size(); i++){
+        if(dynamic_cast<MenuButton*>(m_gameObjects[i])){
+            MenuButton* pButton = dynamic_cast<MenuButton*>(m_gameObjects[i]);
+            pButton->setCallback(callbacks[pButton->getCallbackID()]);
+        }
+    }
 }

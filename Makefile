@@ -6,7 +6,7 @@ w32 = i686-w64-mingw32
 g++64 = x86_64-w64-mingw32-g++
 w64 = x86_64-w64-mingw32
 
-include_directories = ./include/*.cpp ./include/assistant/*.cpp ./include/entities/*.cpp ./include/gears/*.cpp ./include/states/*.cpp
+include_directories = ./include/*.cpp ./include/common/*.cpp ./include/game_objects/*.cpp ./include/gears/*.cpp ./include/states/*.cpp
 
 all:
 

@@ -2,13 +2,16 @@
 
 #include "Enemy.h"
 
-Enemy::Enemy(const LoaderParams* pParams): SDLGameObject(pParams){
-    m_velocity.setY(2);
-    m_velocity.setX(0.05);
+Enemy::Enemy(): SDLGameObject(){
 }
     
 Enemy::~Enemy(){
 
+}
+
+void Enemy::load(const LoaderParams* pParams){
+    SDLGameObject::load(pParams);
+    m_velocity.setY(2);
 }
 
 void Enemy::draw(){

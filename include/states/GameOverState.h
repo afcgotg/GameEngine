@@ -4,7 +4,7 @@
 #include "../game_objects/GameObject.h"
 #include "GameState.h"
 
-class GameOverState : public GameState{
+class GameOverState : public MenuState{
     public:
         virtual void update();
         virtual void render();
@@ -13,6 +13,8 @@ class GameOverState : public GameState{
         virtual bool onExit();
 
         virtual std::string getStateID() const;
+
+        virtual void setCallbacks(const std::vector<Callback>& callbacks);
 
     private:
         static void s_gameOverToMain();
