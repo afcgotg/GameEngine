@@ -3,6 +3,9 @@
 
 #include "../common/Vector2D.h"
 
+#ifndef __InputHandler__
+#define __InputHandler__
+
 enum mouse_buttons{
     LEFT = 0,
     MIDDLE = 1,
@@ -82,4 +85,6 @@ class InputHandler{
 };
 
 typedef InputHandler TheInputHandler;
+
+#endif
 

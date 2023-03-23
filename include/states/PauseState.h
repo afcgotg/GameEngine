@@ -1,3 +1,6 @@
+#ifndef __PauseState__
+#define __PauseState__
+
 #include <vector>
 #include <string>
 
@@ -26,3 +29,5 @@ class PauseState : public MenuState{
 
         std::vector<GameObject*> m_gameObjects;
 };
+
+#endif

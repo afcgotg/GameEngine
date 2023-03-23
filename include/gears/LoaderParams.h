@@ -5,7 +5,7 @@
 
 class LoaderParams{
     public:
-        LoaderParams(int x, int y, int width, int height, int textureID, int numFrames = 0, int callbackID = 0, int animSpeed = 0);
+        LoaderParams(int x, int y, int width, int height, int textureID, int numFrames, int callbackID, int animSpeed);
 
         int getX() const;
         int getY() const;

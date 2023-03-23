@@ -1,10 +1,12 @@
+#ifndef __ManuState__
+#define __MenuState__
+
 #include <vector>
 
 #include "GameState.h"
 #include "../common/Callback.h"
 
-#ifndef __ManuState__
-#define __MenuState__
+
 
 class MenuState : public GameState{
     protected:
@@ -14,6 +16,5 @@ class MenuState : public GameState{
 
     std::vector<Callback> m_callbacks;
 };
-
 
 #endif

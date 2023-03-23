@@ -1,5 +1,6 @@
 #include "SDLGameObject.h"
 #include "../gears/LoaderParams.h"
+#include "../gears/GameObjectFactory.h"
 
 #ifndef __Player__
 #define __Player__

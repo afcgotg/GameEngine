@@ -1,12 +1,12 @@
+#ifndef __PlayState__
+#define __PlayState__
+
 #include <string>
 #include <vector>
 
 #include "GameState.h"
 #include "../game_objects/GameObject.h"
 #include "../game_objects/SDLGameObject.h"
-
-#ifndef __PlayState__
-#define __PlayState__
 
 class PlayState : public GameState{
     public:

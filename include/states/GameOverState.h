@@ -1,10 +1,15 @@
+#ifndef __GameOverState__
+#define __GameOverState__
+
 #include <vector>
 #include <string>
 
 #include "../game_objects/GameObject.h"
 #include "GameState.h"
+#include "MenuState.h"
+#include "../common/Callback.h"
 
-class GameOverState : public MenuState{
+class GameOverState : public MenuState {
     public:
         virtual void update();
         virtual void render();
@@ -24,3 +29,5 @@ class GameOverState : public MenuState{
 
         std::vector<GameObject*> m_gameObjects;
 };
+
+#endif

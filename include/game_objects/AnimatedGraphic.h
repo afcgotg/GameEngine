@@ -1,5 +1,6 @@
 #include "SDLGameObject.h"
 #include "../gears/LoaderParams.h"
+#include "../gears/GameObjectFactory.h"
 
 #ifndef __AnimatedGraphic__
 #define __AnimatedGraphic__
@@ -21,8 +22,7 @@ class AnimatedGraphic : public SDLGameObject{
         int m_numFrames = 2;
 };
 
-class AnimatedGraphicCreator : public BaseCreator
-{
+class AnimatedGraphicCreator : public BaseCreator {
     GameObject* createGameObject() const{
         return new AnimatedGraphic();
     }
