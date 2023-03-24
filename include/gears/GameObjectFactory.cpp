@@ -11,6 +11,10 @@ GameObjectFactory* GameObjectFactory::Instance(){
     return s_pInstance;
 }
 
+GameObjectFactory::GameObjectFactory()
+{
+}
+
 GameObjectFactory::~GameObjectFactory()
 {
 }

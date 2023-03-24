@@ -1,6 +1,3 @@
-#ifndef __GameOverState__
-#define __GameOverState__
-
 #include <vector>
 #include <string>
 
@@ -8,6 +5,9 @@
 #include "GameState.h"
 #include "MenuState.h"
 #include "../common/Callback.h"
+
+#ifndef __GameOverState__
+#define __GameOverState__
 
 class GameOverState : public MenuState {
     public:

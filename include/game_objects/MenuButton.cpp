@@ -3,7 +3,10 @@
 #include "../gears/InputHandler.h"
 #include "MenuButton.h"
 
-MenuButton::MenuButton(): SDLGameObject(){
+MenuButton::MenuButton() : SDLGameObject(){
+}
+
+MenuButton::~MenuButton(){
 }
 
 void MenuButton::load(const LoaderParams* pParams){

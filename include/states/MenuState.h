@@ -1,12 +1,10 @@
-#ifndef __ManuState__
-#define __MenuState__
-
 #include <vector>
 
 #include "GameState.h"
 #include "../common/Callback.h"
 
-
+#ifndef __MenuState__
+#define __MenuState__
 
 class MenuState : public GameState{
     protected:

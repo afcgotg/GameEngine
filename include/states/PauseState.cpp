@@ -53,6 +53,7 @@ bool PauseState::onExit(){
     for(int i = 0; i < m_textureIDList.size(); i++){
         TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
     }
+    return true;
 }
 
 std::string PauseState::getStateID() const{

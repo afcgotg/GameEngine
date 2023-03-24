@@ -54,7 +54,7 @@ std::string MainMenuState::getStateID() const{
     return s_menuID;
 }
 
-void setCallbacks(const std::vector<Callback> &callbacks){
+void MainMenuState::setCallbacks(const std::vector<Callback> &callbacks){
     for(int i = 0; i < m_gameObjects.size(); i++){
         if(dynamic_cast<MenuButton*>(m_gameObjects[i])){
             MenuButton* pButton = dynamic_cast<MenuButton*>(m_gameObjects[i]);
