@@ -17,10 +17,14 @@ class GameStateMachine{
         void setStateChanged(bool change);
         bool getStateChanged();
 
+        void setPath(const char* path);
+
     private:
         std::vector<GameState*> m_gameStates;
 
         bool m_bStateChanged;
+
+        char* m_path;
 };
 
 #endif

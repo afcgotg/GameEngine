@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include "include/Game.h"
 
 const int FPS = 60;
@@ -12,7 +11,7 @@ int main(int argc, char* argv[]){
     Uint32 frameStart, frameTime;
 
     if(TheGame::Instance()->init("Game title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-    WIDTH, HEIGHT, false)){
+    WIDTH, HEIGHT, false, argv)){
         while(TheGame::Instance()->running()){
 
             frameStart = SDL_GetTicks();
@@ -27,13 +26,10 @@ int main(int argc, char* argv[]){
                 SDL_Delay((int)(DELAY_TIME - frameTime));
             }
         }
-        
     }else{
         std::cout << "fail to init game: " << SDL_GetError() << std::endl;
         return -1;
     }
-
-    // TheGame::Instance()->clean();
 
     return 0;
 }

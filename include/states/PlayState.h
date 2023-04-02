@@ -13,7 +13,7 @@ class PlayState : public GameState{
         virtual void update();
         virtual void render();
 
-        virtual bool onEnter();
+        virtual bool onEnter(const char* filePath);
         virtual bool onExit();
 
         virtual std::string getStateID() const;

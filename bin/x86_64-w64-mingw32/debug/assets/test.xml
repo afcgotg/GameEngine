@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<STATES>
+    <!-- The Menu State-->
+    <MENU>
+        <TEXTURES>
+            <texture filename="assets\img\playbutton.png" ID="playbutton"/>
+            <texture filename="assets\img\exitbutton.png" ID="exitbutton"/>
+        </TEXTURES>
+
+        <OBJECTS>
+            <object type="MenuButton" x="100" y="100" width="400" height="100" textureID="playbutton"/>
+            <object type="MenuButton" x="100" y="300" width="400" height="100" textureID="exitbutton"/>
+        </OBJECTS>
+    </MENU>
+    <!--The Play State-->
+    <PLAY>
+        <TEXTURES>
+            <texture filename="assets\img\GraveRobber\GraveRobber_idle.png" ID="player"/>
+            <texture filename="assets\img\Woodcutter\Woodcutter_idle.png" ID="enemy"/>
+        </TEXTURES>
+        <OBJECTS>
+            <object type="Player" x="100" y="100" width="48" height="48" textureID="player" numFrames="4"/>
+            <object type="Enemy" x="300" y="100" width="48" height="48" textureID="enemy" numFrames="4"/>
+        </OBJECTS>
+    </PLAY>
+    <PAUSE>
+        <TEXTURES>
+            <texture filename="assets/img/mainmenubutton.png" ID="mainmenubutton"/>
+            <texture filename="assets/img/resumebutton.png" ID="resumebutton"/>
+        </TEXTURES>
+        <OBJECTS>
+            <object type="MenuButton" x="328" y="300" width="144" height="48" textureID="resumebutton" numFrames="4"/>
+            <object type="MenuButton" x="328" y="372" width="144" height="48" textureID="mainmenubutton" numFrames="4"/>
+        </OBJECTS>
+    </PAUSE>
+    <!--The GameOver State-->
+    <GAMEOVER>
+        <TEXTURES>
+            <texture filename="assets/img/gameover.png" ID="gameovertext"/>
+            <texture filename="assets/img/mainmenubutton.png" ID="mainmenubutton"/>
+            <texture filename="assets/img/restartbutton.png" ID="restartbutton"/>
+        </TEXTURES>
+        <OBJECTS>
+            <object type="AnimatedGraphic" x="292" y="228" width="216" height="48" textureID="gameovertext" numFrames="2" animSpeed="2"/>
+            <object type="MenuButton" x="328" y="300" width="144" height="48" textureID="mainmenubutton" numFrames="0"/>
+            <object type="MenuButton" x="328" y="372" width="144" height="48" textureID="restartbutton" numFrames="0"/>
+        </OBJECTS>
+    </GAMEOVER>
+</STATES>

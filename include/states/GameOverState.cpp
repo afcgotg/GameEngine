@@ -28,9 +28,15 @@ void GameOverState::render(){
     }
 }
 
-bool GameOverState::onEnter(){
+bool GameOverState::onEnter(const char* filePath){
     StateParser stateParser;
-    stateParser.parseState("test.xml", s_gameOverID, &m_gameObjects, &m_textureIDList);
+
+    char* fullPath;
+    fullPath = (char*) calloc(strlen(filePath) + strlen("/test.xml") + 1, sizeof(char));
+    strcpy(fullPath, filePath);
+    strcat(fullPath, "/test.xml");
+
+    stateParser.parseState("assets/test.xml", s_gameOverID, &m_gameObjects, &m_textureIDList);
 
     m_callbacks.push_back(0);
     m_callbacks.push_back(s_gameOverToMain);

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 
 #include "PlayState.h"
 #include "../gears/TextureManager.h"
@@ -33,9 +34,15 @@ void PlayState::render(){
     }
 }
 
-bool PlayState::onEnter(){
+bool PlayState::onEnter(const char* filePath){
     StateParser stateParser;
-    stateParser.parseState("test.xml", s_playID, &m_gameObjects, &m_textureIDList);
+
+    char* fullPath;
+    fullPath = (char*) calloc(strlen(filePath) + strlen("/test.xml") + 1, sizeof(char));
+    strcpy(fullPath, filePath);
+    strcat(fullPath, "/test.xml");
+
+    stateParser.parseState(fullPath, s_playID, &m_gameObjects, &m_textureIDList);
 
     std::cout << "entering PlayState" << std::endl;
     return true;

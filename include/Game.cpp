@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 
 #include "Game.h"
 
@@ -8,11 +9,18 @@
 
 #include "game_objects/Player.h"
 #include "game_objects/Enemy.h"
+#include "game_objects/AnimatedGraphic.h"
 
-#include "states/MenuState.h"
+#include "states/MainMenuState.h"
 #include "states/PlayState.h"
 
 #include "game_objects/MenuButton.h"
+
+#if defined(_WIN64)
+    const char* slash = "\\";
+#elif defined(__unix__) && defined(__x86_64__)
+    const char* slash = "/";
+#endif
 
 Game* Game::s_pInstance = 0;
 
@@ -31,9 +39,10 @@ SDL_Renderer* Game::getRenderer() const{
     return m_pRenderer;
 }
 
-bool Game::init(const char* title, int xpos, int ypos, int height, int width, bool fullscreen) {
+bool Game::init(const char* title, int xpos, int ypos, int height, int width, bool fullscreen, char** argv) {
 
     m_bRunning = false;
+    m_argv = argv;
 
     if(SDL_Init(SDL_INIT_EVERYTHING) == 0){
         std::cout << "SDL init succed" << std::endl;
@@ -69,9 +78,11 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
     TheInputHandler::Instance()->initialiseJoysticks();
 
     TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
-    TheGameObjectFactory::Instance()->registerType("player", new PlayerCreator());
-    TheGameObjectFactory::Instance()->registerType("enemy", new EnemyCreator());
+    TheGameObjectFactory::Instance()->registerType("Player", new PlayerCreator());
+    TheGameObjectFactory::Instance()->registerType("Enemy", new EnemyCreator());
+    TheGameObjectFactory::Instance()->registerType("AnimatedGraphic", new AnimatedGraphicCreator());
 
+    TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
     m_bRunning = true;
     return true;
 }
@@ -106,5 +117,10 @@ bool Game::running() {
 }
 
 GameStateMachine* Game::getStateMachine(){
+    if(m_pGameStateMachine == NULL){
+        m_pGameStateMachine = new GameStateMachine();
+        *strrchr(m_argv[0], slash[0]) = '\0';    
+        m_pGameStateMachine->setPath(m_argv[0]);
+    }
     return m_pGameStateMachine;
 }

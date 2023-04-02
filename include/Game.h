@@ -15,7 +15,7 @@ class Game{
 
         SDL_Renderer* getRenderer() const;
 
-        bool init(const char* title, int xpos, int ypos, int height, int width, bool fullscreen);
+        bool init(const char* title, int xpos, int ypos, int height, int width, bool fullscreen, char** argv);
         void render();
         void update();
         void handleEvent();
@@ -29,6 +29,8 @@ class Game{
         Game();
 
         static Game* s_pInstance;
+
+        char** m_argv;
 
         SDL_Window* m_pWindow;
         SDL_Renderer* m_pRenderer;
