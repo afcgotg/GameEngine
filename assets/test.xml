@@ -16,11 +16,11 @@
     <PLAY>
         <TEXTURES>
             <texture filename="assets\img\GraveRobber\GraveRobber_idle.png" ID="player"/>
-            <texture filename="assets\img\Woodcutter\Woodcutter_idle.png" ID="enemy"/>
+            <texture filename="assets\img\BelkarBarbarian\BelkarBarbarian_attack1.png" ID="enemy"/>
         </TEXTURES>
         <OBJECTS>
             <object type="Player" x="100" y="100" width="48" height="48" textureID="player" numFrames="4"/>
-            <object type="Enemy" x="300" y="100" width="48" height="48" textureID="enemy" numFrames="4"/>
+            <object type="Enemy" x="300" y="100" width="48" height="48" textureID="enemy" numFrames="6"/>
         </OBJECTS>
     </PLAY>
     <PAUSE>
