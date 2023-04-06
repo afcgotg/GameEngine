@@ -2,8 +2,8 @@
 
 #include <SDL2/SDL.h>
 
-#include "game_objects/GameObject.h"
-#include "gears/GameStateMachine.h"
+#include "GameObject.h"
+#include "GameStateMachine.h"
 
 #ifndef __Game__
 #define __Game__

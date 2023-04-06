@@ -30,6 +30,6 @@ int main(int argc, char* argv[]){
         std::cout << "fail to init game: " << SDL_GetError() << std::endl;
         return -1;
     }
-
+    
     return 0;
 }

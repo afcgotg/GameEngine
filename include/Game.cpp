@@ -3,18 +3,18 @@
 
 #include "Game.h"
 
-#include "gears/GameObjectFactory.h"
-#include "gears/TextureManager.h"
-#include "gears/InputHandler.h"
+#include "GameObjectFactory.h"
+#include "TextureManager.h"
+#include "InputHandler.h"
 
-#include "game_objects/Player.h"
-#include "game_objects/Enemy.h"
-#include "game_objects/AnimatedGraphic.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "AnimatedGraphic.h"
 
-#include "states/MainMenuState.h"
-#include "states/PlayState.h"
+#include "MainMenuState.h"
+#include "PlayState.h"
 
-#include "game_objects/MenuButton.h"
+#include "MenuButton.h"
 
 #if defined(_WIN64)
     const char* slash = "\\";

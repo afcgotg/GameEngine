@@ -8,8 +8,8 @@
         </TEXTURES>
 
         <OBJECTS>
-            <object type="MenuButton" x="100" y="100" width="400" height="100" textureID="playbutton"/>
-            <object type="MenuButton" x="100" y="300" width="400" height="100" textureID="exitbutton"/>
+            <object type="MenuButton" x="100" y="300" width="144" height="48" textureID="playbutton" callbackID="1"/>
+            <object type="MenuButton" x="100" y="372" width="144" height="48" textureID="exitbutton" callbackID="2"/>
         </OBJECTS>
     </MENU>
     <!--The Play State-->
