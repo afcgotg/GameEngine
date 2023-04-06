@@ -32,11 +32,11 @@ bool GameOverState::onEnter(const char* filePath){
     StateParser stateParser;
 
     char* fullPath;
-    fullPath = (char*) calloc(strlen(filePath) + strlen("/test.xml") + 1, sizeof(char));
+    fullPath = (char*) calloc(strlen(filePath) + strlen("/states.xml") + 1, sizeof(char));
     strcpy(fullPath, filePath);
-    strcat(fullPath, "/test.xml");
+    strcat(fullPath, "/states.xml");
 
-    stateParser.parseState("assets/test.xml", s_gameOverID, &m_gameObjects, &m_textureIDList);
+    stateParser.parseState(fullPath, s_gameOverID, &m_gameObjects, &m_textureIDList);
 
     m_callbacks.push_back(0);
     m_callbacks.push_back(s_gameOverToMain);

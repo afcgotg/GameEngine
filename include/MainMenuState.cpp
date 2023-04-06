@@ -34,9 +34,9 @@ bool MainMenuState::onEnter(const char* filePath){
     StateParser stateParser;
 
     char* fullPath;
-    fullPath = (char*) calloc(strlen(filePath) + strlen("/test.xml") + 1, sizeof(char));
+    fullPath = (char*) calloc(strlen(filePath) + strlen("/states.xml") + 1, sizeof(char));
     strcpy(fullPath, filePath);
-    strcat(fullPath, "/test.xml");
+    strcat(fullPath, "/states.xml");
     
     if(!stateParser.parseState(fullPath, s_menuID,  &m_gameObjects, &m_textureIDList)){
         std::cout << "Error" << std::endl;     

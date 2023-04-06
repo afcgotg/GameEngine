@@ -27,7 +27,7 @@ debug64:
 	${g++64} -I ./src/${w64}/include -L ./src/${w64}/lib -o ./debug/${w64}/${gamename}64.exe main.cpp ${include_directories} -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -m64
 	xcopy "assets" ".\debug\${w64}\assets" //e //y //q //A
 	xcopy "src\${w64}\SDL2.dll" ".\debug\${w64}" //D
-	xcopy "src\${w64}\SDL2_image.dll" ".\debug\${w64}"" //D
+	xcopy "src\${w64}\SDL2_image.dll" ".\debug\${w64}" //D
 
 #linux32:
 #	g++ -o bin/linux32/${gamename}32 main.cpp ${include_directories} -lSDL2_image -m32 `sdl2-config --static-libs --cflags`

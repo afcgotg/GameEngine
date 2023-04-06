@@ -39,9 +39,9 @@ bool PauseState::onEnter(const char* filePath){
     StateParser stateParser;
 
     char* fullPath;
-    fullPath = (char*) calloc(strlen(filePath) + strlen("/test.xml") + 1, sizeof(char));
+    fullPath = (char*) calloc(strlen(filePath) + strlen("/states.xml") + 1, sizeof(char));
     strcpy(fullPath, filePath);
-    strcat(fullPath, "/test.xml");
+    strcat(fullPath, "/states.xml");
 
     stateParser.parseState(fullPath, s_pauseID, &m_gameObjects, &m_textureIDList);
 
