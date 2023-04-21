@@ -14,7 +14,7 @@
                 "name": "Debug (Windows)",
                 "type": "cppdbg",
                 "request": "launch",
-                "program": "${workspaceFolder}\\windows\\game64.exe",
+                "program": "${workspaceFolder}\\bin\\windows\\game64.exe",
             },
             "linux": {
                 "name": "Debug (Linux)",
