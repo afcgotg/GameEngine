@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+
+    "version": "0.2.0",
+    "configurations":[
+        {
+            "name": "Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "",
+            "windows": {
+                "name": "Debug (Windows)",
+                "type": "cppdbg",
+                "request": "launch",
+                "program": "${workspaceFolder}\\windows\\game64.exe",
+            },
+            "linux": {
+                "name": "Debug (Linux)",
+                "type": "cppdbg",
+                "request": "launch",
+                "program": "${workspaceFolder}/linux/game64.exe",
+            },
+            "args": [],
+            "environment": [{ "name": "config", "value": "Debug" }],
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false
+        }
+    ]
+}
