@@ -16,6 +16,10 @@ win32:
 
 win64:
 	${g++64} -I ${include_directories}/${w64}/include -L ${include_directories}/${w64}/lib -o ./bin/windows/${gamename}64.exe main.cpp ${src_directories} -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows -m64 `sdl2-config --static-libs` -static
+debug_win64:
+	${g++64} -I ${include_directories}/${w64}/include -L ${include_directories}/${w64}/lib -o ./bin/windows/debug/${gamename}64.exe main.cpp ${src_directories} -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows -m64 `sdl2-config --static-libs` -static -g
 
 linux64:
 	g++ -o bin/linux/${gamename}64 main.cpp ${src_directories} -lSDL2_image -m64 `sdl2-config --static-libs --cflags`
+debug_linux64:
+	g++ -o bin/linux/debug/${gamename}64 main.cpp ${src_directories} -lSDL2_image -m64 `sdl2-config --static-libs --cflags` -g
