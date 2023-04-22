@@ -20,7 +20,7 @@
                 "name": "Debug (Linux)",
                 "type": "cppdbg",
                 "request": "launch",
-                "program": "${workspaceFolder}/linux/debug/game64.exe",
+                "program": "${workspaceFolder}/bin/linux/debug/game64",
             },
             "args": [],
             "environment": [{ "name": "config", "value": "Debug" }],
