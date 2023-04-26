@@ -51,7 +51,7 @@ windows_x64_release: ../$(NAME)
 windows_x64_debug: CC = x86_64-w64-mingw32-g++
 windows_x64_debug: LIBFLAGS = -L ../include/SDL/x64/lib
 windows_x64_debug: INCFLAGS += -I ../include/SDL/x64/include
-windows_x64_debug: CFLAGS += -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows -m64 `sdl2-config --static-libs` -static
+windows_x64_debug: CFLAGS += -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows -m64 `sdl2-config --static-libs` -static -g
 windows_x64_debug: ../debug/$(NAME)_debug
 windows_x64_debug: 
 	xcopy "..\assets" "..\debug\assets" //e //y //q //A

@@ -5,11 +5,11 @@
 			"type": "shell",
 			"label": "Build Release_x64",
 			"windows":{
-				"command": "cd ./.vscode && make windows_x64",
+				"command": "cd ./.vscode && make windows_x64_release",
 				"args": []
 			},
 			"linux":{
-				"command": "cd ./.vscode && make linux_x64",
+				"command": "cd ./.vscode && make linux_x64_release",
 				"args": []
 			},
 			"group": "build",
@@ -20,11 +20,11 @@
 			"type": "shell",
 			"label": "Build Debug_x64",
 			"windows":{
-				"command": "cd ./.vscode && make windows_x64_d",
+				"command": "cd ./.vscode && make windows_x64_debug",
 				"args": []
 			},
 			"linux":{
-				"command": "cd ./.vscode && make linux_x64_d",
+				"command": "cd ./.vscode && make linux_x64_debug",
 				"args": []
 			},
 			"group": "build",
