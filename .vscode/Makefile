@@ -17,9 +17,11 @@ OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
 
 # Rule for compiling source files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	mkdir -p ../obj
 	$(CC) $(INCFLAGS) -c $< -o $@
 
 $(OBJ_DIR)/main.o: ../main.cpp
+	mkdir -p ../obj
 	$(CC) $(INCFLAGS) -c $< -o $@
 
 ##################################################
@@ -65,7 +67,7 @@ linux_x64_release: ../$(NAME)
 # Debug
 linux_x64_debug: CC = g++
 linux_x64_debug: CFLAGS += -lSDL2_image -m64 `sdl2-config --static-libs --cflags` -g
-linux_x64_debug: ../debug/$(NAME)_d
+linux_x64_debug: ../debug/$(NAME)_debug
 linux_x64_debug: cp -r ../assets ../debug/
 
 
