@@ -29,10 +29,10 @@ class SDLGameObject : public GameObject{
 
         int m_width;
         int m_height;
-        int m_currentRow;
-        int m_currentFrame;
-        int m_numFrames;
-        int m_callbackID;
+        uint32_t m_currentRow;
+        uint32_t m_currentFrame;
+        uint32_t m_numFrames;
+        uint64_t m_callbackID;
 
         std::string m_textureID;
 };

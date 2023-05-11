@@ -2,8 +2,7 @@
 #include "include/Game.h"
 
 const int FPS = 60;
-const int DELAY_TIME = 1000.0f / FPS;
-
+const Uint32 DELAY_TIME = 1000.0f / FPS;
 const int WIDTH = 800, HEIGHT = 600;
 
 int main(int argc, char* argv[]){
@@ -23,7 +22,7 @@ int main(int argc, char* argv[]){
             frameTime = SDL_GetTicks() - frameStart;
 
             if(frameTime < DELAY_TIME){
-                SDL_Delay((int)(DELAY_TIME - frameTime));
+                SDL_Delay(DELAY_TIME - frameTime);
             }
         }
     }else{

@@ -14,7 +14,7 @@ class LoaderParams{
         std::string getTextureID() const;
         int getNumFrames() const;
         int getCallbackID() const;
-        int getAnimSpeed() const;
+        uint32_t getAnimSpeed() const;
 
     private:
         int m_x;
@@ -26,7 +26,7 @@ class LoaderParams{
         std::string m_textureID;
 
         int m_numFrames;
-        int m_animSpeed;
+        uint32_t m_animSpeed;
 
         int m_callbackID;
 };

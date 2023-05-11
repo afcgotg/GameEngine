@@ -10,16 +10,16 @@ class AnimatedGraphic : public SDLGameObject{
         AnimatedGraphic();
         ~AnimatedGraphic();
 
-        virtual void load(const LoaderParams* pParams, int animSpeed);
+        virtual void load(const LoaderParams* pParams);
 
         virtual void draw();
         virtual void update();
         virtual void clean();
 
     private:
-        int m_animSpeed;
+        uint32_t m_animSpeed;
 
-        int m_numFrames = 2;
+        uint32_t m_numFrames = 2;
 };
 
 class AnimatedGraphicCreator : public BaseCreator {

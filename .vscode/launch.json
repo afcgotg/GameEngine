@@ -10,6 +10,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "",
+            "preLaunchTask": "Build Debug_x64",
             "windows": {
                 "name": "Debug (Windows)",
                 "type": "cppdbg",
@@ -25,7 +26,11 @@
             "args": [],
             "environment": [{ "name": "config", "value": "Debug" }],
             "cwd": "${workspaceFolder}",
-            "externalConsole": false
+            "externalConsole": false,
+            "sourceFileMap": {
+                "/path/to/source/files/on/debug/machine": "${workspaceFolder}"
+            }
         }
+        
     ]
 }
