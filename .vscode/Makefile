@@ -19,6 +19,7 @@ $(DEB_DIR)/$(NAME)_debug: $(OBJECTS:$(OBJ_DIR)/%.o=$(DEBUG_OBJ_DIR)/%.o)
 
 # Rule for compiling source files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	mkdir -p ../obj
 	$(CC) $(INCFLAGS) -c $< -o $@
 
 $(OBJ_DIR)/main.o: ../main.cpp
