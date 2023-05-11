@@ -2,12 +2,12 @@
 #include "include/Game.h"
 
 const int FPS = 60;
-const Uint32 DELAY_TIME = 1000.0f / FPS;
+const uint32_t DELAY_TIME = 1000.0f / FPS;
 const int WIDTH = 800, HEIGHT = 600;
 
 int main(int argc, char* argv[]){
 
-    Uint32 frameStart, frameTime;
+    uint32_t frameStart, frameTime;
 
     if(TheGame::Instance()->init("Game title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     WIDTH, HEIGHT, false, argv)){
