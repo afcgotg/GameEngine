@@ -49,6 +49,7 @@ void GameStateMachine::setPath(const char* path){
     m_path = static_cast<char*>(calloc(strlen(path) + strlen("/assets") + 1, sizeof(char)));
     strcpy(m_path, path);
     strcat(m_path, "/assets");
+    
 }
 
 bool GameStateMachine::getStateChanged(){return m_bStateChanged;}
