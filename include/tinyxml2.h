@@ -202,7 +202,7 @@ private:
 	Has a small initial memory pool, so that low or no usage will not
 	cause a call to new/delete
 */
-template <class T, int INITIAL_SIZE>
+template <class T, uint64_t INITIAL_SIZE>
 class DynArray
 {
 public:
@@ -300,7 +300,7 @@ private:
     DynArray( const DynArray& ); // not supported
     void operator=( const DynArray& ); // not supported
 
-    void EnsureCapacity( int cap ) {
+    void EnsureCapacity( uint64_t cap ) {
         TIXMLASSERT( cap > 0 );
         if ( cap > _allocated ) {
             TIXMLASSERT( cap <= INT_MAX / 2 );
@@ -318,8 +318,8 @@ private:
 
     T*  _mem;
     T   _pool[INITIAL_SIZE];
-    int _allocated;		// objects allocated
-    int _size;			// number objects in use
+    uint64_t _allocated;		// objects allocated
+    uint64_t _size;			// number objects in use
 };
 
 
@@ -343,7 +343,7 @@ public:
 /*
 	Template child class to create pools of the correct type.
 */
-template< int ITEM_SIZE >
+template< uint64_t ITEM_SIZE >
 class MemPoolT : public MemPool
 {
 public:
@@ -596,7 +596,7 @@ public:
         return p && *p == '0' && ( *(p + 1) == 'x' || *(p + 1) == 'X');
     }
 
-    inline static bool StringEqual( const char* p, const char* q, int nChar=INT_MAX )  {
+    inline static bool StringEqual( const char* p, const char* q, uint64_t nChar=INT_MAX )  {
         if ( p == q ) {
             return true;
         }
@@ -1977,11 +1977,11 @@ private:
 	void PushDepth();
 	void PopDepth();
 
-    template<class NodeType, int PoolElementSize>
+    template<class NodeType, uint64_t PoolElementSize>
     NodeType* CreateUnlinkedNode( MemPoolT<PoolElementSize>& pool );
 };
 
-template<class NodeType, int PoolElementSize>
+template<class NodeType, uint64_t PoolElementSize>
 inline NodeType* XMLDocument::CreateUnlinkedNode( MemPoolT<PoolElementSize>& pool )
 {
     TIXMLASSERT( sizeof( NodeType ) == PoolElementSize );
