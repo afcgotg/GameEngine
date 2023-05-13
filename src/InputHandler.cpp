@@ -52,7 +52,7 @@ bool InputHandler::joysticksInitialised(){
     return m_bJoysticksInitialised;
 }
 
-bool InputHandler::getButtonState(int joy, int buttonNumber){
+bool InputHandler::getButtonState(size_t joy, size_t buttonNumber){
     return m_buttonStates[joy][buttonNumber];
 }
 
@@ -92,6 +92,8 @@ void InputHandler::update(){
             case SDL_MOUSEMOTION:
                 onMouseMove(event);
                 break;
+            default:
+                break;
         }
 
     }
@@ -105,7 +107,7 @@ void InputHandler::clean(){
     }
 }
 
-int InputHandler::xValue(int joy, int stick){
+int InputHandler::xValue(size_t joy, int stick){
     if(m_joystickValues.size() > 0){
         if(stick == 1){
             return m_joystickValues[joy].first->getX();
@@ -115,7 +117,7 @@ int InputHandler::xValue(int joy, int stick){
     }
     return 0;
 }
-int InputHandler::yValue(int joy, int stick){
+int InputHandler::yValue(size_t joy, int stick){
     if(m_joystickValues.size() > 0){
         if(stick == 1){
             return m_joystickValues[joy].first->getY();
@@ -126,21 +128,21 @@ int InputHandler::yValue(int joy, int stick){
     return 0;
 }
 
-int InputHandler::dpad_xValue(int joy){
+int InputHandler::dpad_xValue(size_t joy){
     if(m_joystickValues.size() > 0){
         return *m_dpadValues[joy].first;
     }
     return 0;
 }
 
-int InputHandler::dpad_yValue(int joy){
+int InputHandler::dpad_yValue(size_t joy){
     if(m_joystickValues.size() > 0){
         return *m_dpadValues[joy].second;
     }
     return 0;
 }
 
-int InputHandler::ltValue(int joy){
+int InputHandler::ltValue(size_t joy){
     if(m_triggerValues.size() > 0){
         return *m_triggerValues[joy].first;
     }else{
@@ -149,7 +151,7 @@ int InputHandler::ltValue(int joy){
 }
 
 
-int InputHandler::rtValue(int joy){
+int InputHandler::rtValue(size_t joy){
     if(m_triggerValues.size() > 0){
         return *m_triggerValues[joy].second;
     }else{
@@ -157,7 +159,7 @@ int InputHandler::rtValue(int joy){
     }
 }
 
-bool InputHandler::getMouseButtonState(int buttonNumber){
+bool InputHandler::getMouseButtonState(size_t buttonNumber){
     return m_mouseButtonStates[buttonNumber];
 }
 
@@ -210,11 +212,11 @@ void InputHandler::onMouseButtonUp(SDL_Event& event){
 }
 
 void InputHandler::onJoystickAxisMove(SDL_Event& event){
-    int whichOne = event.jaxis.which; //get which controller
+    size_t whichOne = static_cast<size_t>(event.jaxis.which); //get which controller
     // std::cout << (int)event.jaxis.axis << ": " << event.jaxis.value << std::endl;
 
     // left stick move left or right
-    if((int)event.jaxis.axis == SDL_CONTROLLER_AXIS_LEFTX){
+    if(static_cast<size_t>(event.jaxis.axis) == SDL_CONTROLLER_AXIS_LEFTX){
         if(event.jaxis.value > m_joystickDeadZone){
             m_joystickValues[whichOne].first->setX(1);
         }else if(event.jaxis.value < -m_joystickDeadZone){
@@ -225,7 +227,7 @@ void InputHandler::onJoystickAxisMove(SDL_Event& event){
     }
 
     // left stick move up or down
-    if((int)event.jaxis.axis == SDL_CONTROLLER_AXIS_LEFTY){
+    if(static_cast<int>(event.jaxis.axis) == SDL_CONTROLLER_AXIS_LEFTY){
         if(event.jaxis.value > m_joystickDeadZone){
             m_joystickValues[whichOne].first->setY(1);
         }else if(event.jaxis.value < -m_joystickDeadZone){
@@ -236,7 +238,7 @@ void InputHandler::onJoystickAxisMove(SDL_Event& event){
     }
 
     // right stick move left or right
-    if((int)event.jaxis.axis == SDL_CONTROLLER_AXIS_RIGHTX){
+    if(static_cast<int>(event.jaxis.axis) == SDL_CONTROLLER_AXIS_RIGHTX){
         if(event.jaxis.value > m_joystickDeadZone){
             m_joystickValues[whichOne].second->setX(1);
         }else if(event.jaxis.value < -m_joystickDeadZone){
@@ -247,7 +249,7 @@ void InputHandler::onJoystickAxisMove(SDL_Event& event){
     }
 
     // right stick move up or down
-    if((int)event.jaxis.axis == SDL_CONTROLLER_AXIS_RIGHTY){
+    if(static_cast<int>(event.jaxis.axis) == SDL_CONTROLLER_AXIS_RIGHTY){
         if(event.jaxis.value > m_joystickDeadZone){
             m_joystickValues[whichOne].second->setY(1);
         }else if(event.jaxis.value < -m_joystickDeadZone){
@@ -258,7 +260,7 @@ void InputHandler::onJoystickAxisMove(SDL_Event& event){
     }
 
     // LT
-    if((int)event.jaxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT){
+    if(static_cast<int>(event.jaxis.axis) == SDL_CONTROLLER_AXIS_TRIGGERLEFT){
         Uint32 tempValue = event.jaxis.value + pow(2, 15);
         if(tempValue > m_triggerDeadZone){
             *(m_triggerValues[whichOne].first) = 1;
@@ -268,8 +270,8 @@ void InputHandler::onJoystickAxisMove(SDL_Event& event){
     }
 
     // RT
-    if((int)event.jaxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT){
-        Uint32 tempValue = event.jaxis.value + pow(2, 15);
+    if(static_cast<int>(event.jaxis.axis) == SDL_CONTROLLER_AXIS_TRIGGERRIGHT){
+        uint32_t tempValue = event.jaxis.value + pow(2, 15);
         if(tempValue > m_triggerDeadZone){
             *(m_triggerValues[whichOne].second) = 1;
         }else{
@@ -279,7 +281,7 @@ void InputHandler::onJoystickAxisMove(SDL_Event& event){
 }
 
 void InputHandler::onJoystickHatMove(SDL_Event& event){
-    int whichOne = event.jhat.which;
+    size_t whichOne = static_cast<size_t>(event.jhat.which);
     switch (event.jhat.value){
         case SDL_HAT_LEFT:
             *(m_dpadValues[whichOne].first) = -1;
@@ -317,18 +319,19 @@ void InputHandler::onJoystickHatMove(SDL_Event& event){
             *(m_dpadValues[whichOne].first) = 0;
             *(m_dpadValues[whichOne].second) = 0;
             break;
-
+        default:
+            break;
     }
 }
 
 void InputHandler::onJoystickButtonDown(SDL_Event& event){
     // std::cout << "Button down: " << (int)event.jbutton.button << std::endl;
-    m_buttonStates[event.jbutton.which][(int)event.jbutton.button] = true;
+    m_buttonStates[static_cast<size_t>(event.jbutton.which)][static_cast<size_t>(event.jbutton.button)] = true;
 }
 
 void InputHandler::onJoystickButtonUp(SDL_Event& event){
     // std::cout << "Button up: " << (int)event.jbutton.button << std::endl;
-    m_buttonStates[event.jbutton.which][(int)event.jbutton.button] = false;
+    m_buttonStates[static_cast<size_t>(event.jbutton.which)][static_cast<size_t>(event.jbutton.button)] = false;
 }
 
 InputHandler::InputHandler(){

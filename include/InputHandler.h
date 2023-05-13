@@ -22,18 +22,18 @@ class InputHandler{
         void initialiseJoysticks();
         bool joysticksInitialised();
 
-        bool getButtonState(int joy, int buttonNumber);
+        bool getButtonState(size_t joy, size_t buttonNumber);
 
-        int xValue(int joy, int stick);
-        int yValue(int joy, int stick);
+        int xValue(size_t joy, int stick);
+        int yValue(size_t joy, int stick);
 
-        int dpad_xValue(int joy);
-        int dpad_yValue(int joy);
+        int dpad_xValue(size_t joy);
+        int dpad_yValue(size_t joy);
 
-        int ltValue(int joy);
-        int rtValue(int joy);
+        int ltValue(size_t joy);
+        int rtValue(size_t joy);
 
-        bool getMouseButtonState(int buttonNumber);
+        bool getMouseButtonState(size_t buttonNumber);
         void reset();
 
         Vector2D* getMousePosition();
@@ -52,7 +52,7 @@ class InputHandler{
         const int m_joystickDeadZone = 10000;
 
         std::vector<std::pair<int*, int*>> m_triggerValues;
-        const int m_triggerDeadZone = 10000;
+        const uint32_t m_triggerDeadZone = 10000;
 
         std::vector<std::pair<int*, int*>> m_dpadValues;
 

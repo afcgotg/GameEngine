@@ -23,7 +23,7 @@ void GameStateMachine::changeState(GameState* pState){
 void GameStateMachine::popState(){
     if(!m_gameStates.empty()){
         if(m_gameStates.back()->onExit()){
-            delete m_gameStates.back();
+            //delete m_gameStates.back();
             m_gameStates.pop_back();
         }
     }
@@ -49,7 +49,7 @@ void GameStateMachine::setPath(const char* path){
     m_path = static_cast<char*>(calloc(strlen(path) + strlen("/assets") + 1, sizeof(char)));
     strcpy(m_path, path);
     strcat(m_path, "/assets");
-    
+
 }
 
 bool GameStateMachine::getStateChanged(){return m_bStateChanged;}
