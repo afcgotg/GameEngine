@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstring>
 
+GameStateMachine::~GameStateMachine(){}
 
 void GameStateMachine::pushState(GameState* pState){
     m_gameStates.push_back(pState);
@@ -45,7 +46,7 @@ void GameStateMachine::setStateChanged(bool change){
 }
 
 void GameStateMachine::setPath(const char* path){
-    m_path = (char *)calloc(strlen(path) + strlen("/assets") + 1, sizeof(char));
+    m_path = static_cast<char*>(calloc(strlen(path) + strlen("/assets") + 1, sizeof(char)));
     strcpy(m_path, path);
     strcat(m_path, "/assets");
 }
