@@ -20,7 +20,7 @@ void MenuButton::setCallback(void(*callback)()){
     m_callback = callback;
 }
 
-int MenuButton::getCallbackID(){
+uint64_t MenuButton::getCallbackID(){
     return m_callbackID;
 }
 

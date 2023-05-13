@@ -40,6 +40,6 @@ int LoaderParams::getCallbackID() const{
     return m_callbackID;
 }
 
-int LoaderParams::getAnimSpeed() const{
+uint32_t LoaderParams::getAnimSpeed() const{
     return m_animSpeed;
 }

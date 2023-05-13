@@ -1,0 +1,15 @@
+{
+    "configurations": [
+      {
+        "name": "SDLTemplate configuration",
+        "includePath": [
+          "${workspaceFolder}/include",
+          "include/SDL/x64/include",
+          "include/SDL/x32/include"
+        ],
+        "defines": [],
+        "intelliSenseMode": "clang-x64"
+      }
+    ],
+    "version": 4
+  }

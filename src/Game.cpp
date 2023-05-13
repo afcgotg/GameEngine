@@ -48,7 +48,7 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
         std::cout << "SDL init succed" << std::endl;
         // if succeeded create a window
 
-        int flags = 0;
+        uint32_t flags = 0;
 
         if(fullscreen){
             flags = SDL_WINDOW_FULLSCREEN;
