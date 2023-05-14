@@ -143,7 +143,7 @@ namespace tinyxml2
 
 struct Entity {
     const char* pattern;
-    int length;
+    size_t length;
     char value;
 };
 
@@ -242,13 +242,13 @@ char* StrPair::ParseName( char* p )
     if ( !p || !(*p) ) {
         return 0;
     }
-    if ( !XMLUtil::IsNameStartChar( (unsigned char) *p ) ) {
+    if ( !XMLUtil::IsNameStartChar( static_cast<unsigned char>(*p)) ) {
         return 0;
     }
 
     char* const start = p;
     ++p;
-    while ( *p && XMLUtil::IsNameChar( (unsigned char) *p ) ) {
+    while ( *p && XMLUtil::IsNameChar( static_cast<unsigned char>(*p) ) ) {
         ++p;
     }
 
@@ -331,7 +331,7 @@ const char* StrPair::GetStr()
                     if ( *(p+1) == '#' ) {
                         const int buflen = 10;
                         char buf[buflen] = { 0 };
-                        int len = 0;
+                        size_t len = 0;
                         const char* adjusted = const_cast<char*>( XMLUtil::GetCharacterRef( p, buf, &len ) );
                         if ( adjusted == 0 ) {
                             *q = *p;
@@ -422,7 +422,7 @@ const char* XMLUtil::ReadBOM( const char* p, bool* bom )
 }
 
 
-void XMLUtil::ConvertUTF32ToUTF8( unsigned long input, char* output, int* length )
+void XMLUtil::ConvertUTF32ToUTF8( unsigned long input, char* output, size_t* length )
 {
     const unsigned long BYTE_MASK = 0xBF;
     const unsigned long BYTE_MARK = 0x80;
@@ -475,7 +475,7 @@ void XMLUtil::ConvertUTF32ToUTF8( unsigned long input, char* output, int* length
 }
 
 
-const char* XMLUtil::GetCharacterRef( const char* p, char* value, int* length )
+const char* XMLUtil::GetCharacterRef( const char* p, char* value, size_t* length )
 {
     // Presume an entity, and pull it out.
     *length = 0;
@@ -508,13 +508,13 @@ const char* XMLUtil::GetCharacterRef( const char* p, char* value, int* length )
                 unsigned int digit = 0;
 
                 if ( *q >= '0' && *q <= '9' ) {
-                    digit = *q - '0';
+                    digit = static_cast<unsigned int>(*q - '0');
                 }
                 else if ( *q >= 'a' && *q <= 'f' ) {
-                    digit = *q - 'a' + 10;
+                    digit = static_cast<unsigned int>(*q - 'a' + 10);
                 }
                 else if ( *q >= 'A' && *q <= 'F' ) {
-                    digit = *q - 'A' + 10;
+                    digit = static_cast<unsigned int>(*q - 'A' + 10);
                 }
                 else {
                     return 0;
@@ -548,7 +548,7 @@ const char* XMLUtil::GetCharacterRef( const char* p, char* value, int* length )
 
             while ( *q != '#' ) {
                 if ( *q >= '0' && *q <= '9' ) {
-                    const unsigned int digit = *q - '0';
+                    const unsigned int digit = static_cast<unsigned int>(*q - '0');
                     TIXMLASSERT( digit < 10 );
                     TIXMLASSERT( digit == 0 || mult <= UINT_MAX / digit );
                     const unsigned int digitScaled = mult * digit;
@@ -571,19 +571,19 @@ const char* XMLUtil::GetCharacterRef( const char* p, char* value, int* length )
 }
 
 
-void XMLUtil::ToStr( int v, char* buffer, int bufferSize )
+void XMLUtil::ToStr( int v, char* buffer, size_t bufferSize )
 {
     TIXML_SNPRINTF( buffer, bufferSize, "%d", v );
 }
 
 
-void XMLUtil::ToStr( unsigned v, char* buffer, int bufferSize )
+void XMLUtil::ToStr( unsigned v, char* buffer, size_t bufferSize )
 {
     TIXML_SNPRINTF( buffer, bufferSize, "%u", v );
 }
 
 
-void XMLUtil::ToStr( bool v, char* buffer, int bufferSize )
+void XMLUtil::ToStr( bool v, char* buffer, size_t bufferSize )
 {
     TIXML_SNPRINTF( buffer, bufferSize, "%s", v ? writeBoolTrue : writeBoolFalse);
 }
@@ -592,28 +592,28 @@ void XMLUtil::ToStr( bool v, char* buffer, int bufferSize )
 	ToStr() of a number is a very tricky topic.
 	https://github.com/leethomason/tinyxml2/issues/106
 */
-void XMLUtil::ToStr( float v, char* buffer, int bufferSize )
+void XMLUtil::ToStr( float v, char* buffer, size_t bufferSize )
 {
     TIXML_SNPRINTF( buffer, bufferSize, "%.8g", v );
 }
 
 
-void XMLUtil::ToStr( double v, char* buffer, int bufferSize )
+void XMLUtil::ToStr( double v, char* buffer, size_t bufferSize )
 {
     TIXML_SNPRINTF( buffer, bufferSize, "%.17g", v );
 }
 
 
-void XMLUtil::ToStr( int64_t v, char* buffer, int bufferSize )
+void XMLUtil::ToStr( int64_t v, char* buffer, size_t bufferSize )
 {
 	// horrible syntax trick to make the compiler happy about %lld
 	TIXML_SNPRINTF(buffer, bufferSize, "%lld", static_cast<long long>(v));
 }
 
-void XMLUtil::ToStr( uint64_t v, char* buffer, int bufferSize )
+void XMLUtil::ToStr( uint64_t v, char* buffer, size_t bufferSize )
 {
     // horrible syntax trick to make the compiler happy about %llu
-    TIXML_SNPRINTF(buffer, bufferSize, "%llu", (long long)v);
+    TIXML_SNPRINTF(buffer, bufferSize, "%llu", static_cast<long long>(v));
 }
 
 bool XMLUtil::ToInt(const char* str, int* value)
@@ -708,7 +708,7 @@ bool XMLUtil::ToInt64(const char* str, int64_t* value)
 bool XMLUtil::ToUnsigned64(const char* str, uint64_t* value) {
     unsigned long long v = 0;	// horrible syntax trick to make the compiler happy about %llu
     if(TIXML_SSCANF(str, IsPrefixHex(str) ? "%llx" : "%llu", &v) == 1) {
-        *value = (uint64_t)v;
+        *value = static_cast<uint64_t>(v);
         return true;
     }
     return false;
@@ -1945,7 +1945,7 @@ char* XMLElement::ParseAttributes( char* p, int* curLineNumPtr )
         }
 
         // attribute.
-        if (XMLUtil::IsNameStartChar( (unsigned char) *p ) ) {
+        if (XMLUtil::IsNameStartChar( static_cast<unsigned char>(*p) ) ) {
             XMLAttribute* attrib = CreateAttribute();
             TIXMLASSERT( attrib );
             attrib->_parseLineNum = _document->_parseCurLineNum;
@@ -2595,8 +2595,8 @@ void XMLPrinter::Print( const char* format, ... )
         TIXMLASSERT( len >= 0 );
         va_start( va, format );
         TIXMLASSERT( _buffer.Size() > 0 && _buffer[_buffer.Size() - 1] == 0 );
-        char* p = _buffer.PushArr( len ) - 1;	// back up over the null terminator.
-		TIXML_VSNPRINTF( p, len+1, format, va );
+        char* p = _buffer.PushArr( static_cast<uint64_t>(len) ) - 1;	// back up over the null terminator.
+		TIXML_VSNPRINTF( p, static_cast<size_t>(len+1), format, va );
     }
     va_end( va );
 }
@@ -2608,7 +2608,7 @@ void XMLPrinter::Write( const char* data, size_t size )
         fwrite ( data , sizeof(char), size, _fp);
     }
     else {
-        char* p = _buffer.PushArr( static_cast<int>(size) ) - 1;   // back up over the null terminator.
+        char* p = _buffer.PushArr( size ) - 1;   // back up over the null terminator.
         memcpy( p, data, size );
         p[size] = 0;
     }
@@ -2652,8 +2652,8 @@ void XMLPrinter::PrintString( const char* p, bool restricted )
                 // entity, and keep looking.
                 if ( flag[static_cast<unsigned char>(*q)] ) {
                     while ( p < q ) {
-                        const size_t delta = q - p;
-                        const int toPrint = ( INT_MAX < delta ) ? INT_MAX : static_cast<int>(delta);
+                        const size_t delta = static_cast<size_t>(q - p);
+                        const size_t toPrint = ( INT_MAX < delta ) ? INT_MAX : delta;
                         Write( p, toPrint );
                         p += toPrint;
                     }
@@ -2680,8 +2680,8 @@ void XMLPrinter::PrintString( const char* p, bool restricted )
         // Flush the remaining string. This will be the entire
         // string if an entity wasn't found.
         if ( p < q ) {
-            const size_t delta = q - p;
-            const int toPrint = ( INT_MAX < delta ) ? INT_MAX : static_cast<int>(delta);
+            const size_t delta = static_cast<size_t>(q - p);
+            const size_t toPrint = ( INT_MAX < delta ) ? INT_MAX : delta;
             Write( p, toPrint );
         }
     }

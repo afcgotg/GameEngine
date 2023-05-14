@@ -19,7 +19,7 @@ void PauseState::s_resumePlay(){
 }
 
 void PauseState::update(){
-    for(int i = 0; i < m_gameObjects.size(); i++){
+    for(uint64_t i = 0; i < m_gameObjects.size(); i++){
         if(!TheGame::Instance()->getStateMachine()->getStateChanged()){
             m_gameObjects[i]->update();
         }else{
@@ -30,7 +30,7 @@ void PauseState::update(){
 }
 
 void PauseState::render(){
-    for(int i = 0; i < m_gameObjects.size(); i++){
+    for(uint64_t i = 0; i < m_gameObjects.size(); i++){
         m_gameObjects[i]->draw();
     }
 }
@@ -39,7 +39,7 @@ bool PauseState::onEnter(const char* filePath){
     StateParser stateParser;
 
     char* fullPath;
-    fullPath = (char*) calloc(strlen(filePath) + strlen("/states.xml") + 1, sizeof(char));
+    fullPath = static_cast<char*>( calloc(strlen(filePath) + strlen("/states.xml") + 1, sizeof(char)));
     strcpy(fullPath, filePath);
     strcat(fullPath, "/states.xml");
 
@@ -57,7 +57,7 @@ bool PauseState::onEnter(const char* filePath){
 }
 
 bool PauseState::onExit(){
-    for(int i = 0; i < m_textureIDList.size(); i++){
+    for(uint64_t i = 0; i < m_textureIDList.size(); i++){
         TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
     }
     return true;
@@ -68,7 +68,7 @@ std::string PauseState::getStateID() const{
 }
 
 void PauseState::setCallbacks(const std::vector<Callback>& callbacks){
-    for(int i = 0; i < m_gameObjects.size(); i++){
+    for(uint64_t i = 0; i < m_gameObjects.size(); i++){
         if(dynamic_cast<MenuButton*>(m_gameObjects[i])){
             MenuButton* pButton = dynamic_cast<MenuButton*>(m_gameObjects[i]);
             pButton->setCallback(callbacks[pButton->getCallbackID()]);

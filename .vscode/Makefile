@@ -20,11 +20,11 @@ $(DEB_DIR)/$(NAME)_debug: $(OBJECTS:$(OBJ_DIR)/%.o=$(DEBUG_OBJ_DIR)/%.o)
 # Rule for compiling source files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	mkdir -p ../obj
-	$(CC) $(INCFLAGS) -c $< -o $@
+	$(CC) $(INCFLAGS) -c $< -o $@ $(CFLAGS)
 
 $(OBJ_DIR)/main.o: ../main.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(INCFLAGS) -c $< -o $@
+	$(CC) $(INCFLAGS) -c $< -o $@ $(CFLAGS)
 
 $(DEBUG_OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	mkdir -p $(DEBUG_OBJ_DIR)

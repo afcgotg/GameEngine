@@ -12,7 +12,7 @@
 const std::string MainMenuState::s_menuID = "MENU";
 
 void MainMenuState::update(){
-    for(int i = 0; i < m_gameObjects.size(); i++){
+    for(size_t i = 0; i < m_gameObjects.size(); i++){
         if(!TheGame::Instance()->getStateMachine()->getStateChanged()){
             m_gameObjects[i]->update();
         }else{
@@ -24,7 +24,7 @@ void MainMenuState::update(){
 }
 
 void MainMenuState::render(){
-    for(int i = 0; i < m_gameObjects.size(); i++){
+    for(size_t i = 0; i < m_gameObjects.size(); i++){
         m_gameObjects[i]->draw();
     }
 }
@@ -34,7 +34,7 @@ bool MainMenuState::onEnter(const char* filePath){
     StateParser stateParser;
 
     char* fullPath;
-    fullPath = (char*) calloc(strlen(filePath) + strlen("/states.xml") + 1, sizeof(char));
+    fullPath = static_cast<char*>(calloc(strlen(filePath) + strlen("/states.xml") + 1, sizeof(char)));
     strcpy(fullPath, filePath);
     strcat(fullPath, "/states.xml");
     
@@ -54,7 +54,7 @@ bool MainMenuState::onEnter(const char* filePath){
 }
 
 bool MainMenuState::onExit(){
-    for(int i = 0; i > m_textureIDList.size(); i++){
+    for(size_t i = 0; i > m_textureIDList.size(); i++){
         TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
     }
     return true;
@@ -65,7 +65,7 @@ std::string MainMenuState::getStateID() const{
 }
 
 void MainMenuState::setCallbacks(const std::vector<Callback> &callbacks){
-    for(int i = 0; i < m_gameObjects.size(); i++){
+    for(size_t i = 0; i < m_gameObjects.size(); i++){
         if(dynamic_cast<MenuButton*>(m_gameObjects[i])){
             MenuButton* pButton = dynamic_cast<MenuButton*>(m_gameObjects[i]);
             std::cout << pButton->getCallbackID() << std::endl;

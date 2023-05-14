@@ -1,19 +1,20 @@
 #include <string>
+#include <cstdint>
 
 #ifndef __LoaderParams__
 #define __LoaderParams__
 
 class LoaderParams{
     public:
-        LoaderParams(int x, int y, int width, int height, std::string textureID, int numFrames, int callbackID, int animSpeed);
+        LoaderParams(int x, int y, int width, int height, std::string textureID, uint32_t numFrames = 0, uint64_t callbackID = 0, uint32_t animSpeed = 0);
 
         int getX() const;
         int getY() const;
         int getWidth() const;
         int getHeight() const;
         std::string getTextureID() const;
-        int getNumFrames() const;
-        int getCallbackID() const;
+        uint32_t getNumFrames() const;
+        uint64_t getCallbackID() const;
         uint32_t getAnimSpeed() const;
 
     private:
@@ -25,10 +26,10 @@ class LoaderParams{
 
         std::string m_textureID;
 
-        int m_numFrames;
+        uint32_t m_numFrames;
         uint32_t m_animSpeed;
 
-        int m_callbackID;
+        uint64_t m_callbackID;
 };
 
 #endif

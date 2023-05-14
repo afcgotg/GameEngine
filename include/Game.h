@@ -1,7 +1,10 @@
 #include <vector>
 
-#include "SDL2/SDL.h"
-
+#if __SIZEOF_POINTER__ == 4
+    #include "SDL/x32/include/SDL2/SDL.h"
+#elif __SIZEOF_POINTER__ == 8
+    #include "SDL/x64/include/SDL2/SDL.h"
+#endif
 
 #include "GameObject.h"
 #include "GameStateMachine.h"

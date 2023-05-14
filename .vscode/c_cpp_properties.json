@@ -4,8 +4,8 @@
         "name": "SDLTemplate configuration",
         "includePath": [
           "${workspaceFolder}/include",
-          "include/SDL/x64/include",
-          "include/SDL/x32/include"
+          "include/SDL/x64/include"
+          // need to declare "include/SDL/x64/include" for 32-bits
         ],
         "defines": [],
         "intelliSenseMode": "clang-x64"

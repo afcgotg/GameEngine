@@ -19,7 +19,7 @@ void PlayState::update(){
         TheGame::Instance()->getStateMachine()->pushState(new PauseState());
     }
 
-    for(int i = 0; i < m_gameObjects.size(); i++){
+    for(uint64_t i = 0; i < m_gameObjects.size(); i++){
         m_gameObjects[i]->update();
     }
 
@@ -29,7 +29,7 @@ void PlayState::update(){
 }
 
 void PlayState::render(){
-    for(int i = 0; i < m_gameObjects.size(); i++){
+    for(uint64_t i = 0; i < m_gameObjects.size(); i++){
         m_gameObjects[i]->draw();
     }
 }
@@ -38,7 +38,7 @@ bool PlayState::onEnter(const char* filePath){
     StateParser stateParser;
 
     char* fullPath;
-    fullPath = (char*) calloc(strlen(filePath) + strlen("/states.xml") + 1, sizeof(char));
+    fullPath = static_cast<char*>(calloc(strlen(filePath) + strlen("/states.xml") + 1, sizeof(char)));
     strcpy(fullPath, filePath);
     strcat(fullPath, "/states.xml");
 
@@ -49,7 +49,7 @@ bool PlayState::onEnter(const char* filePath){
 }
 
 bool PlayState::onExit(){
-    for(int i = 0; i < m_textureIDList.size(); i++){
+    for(uint64_t i = 0; i < m_textureIDList.size(); i++){
         TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
     }
 

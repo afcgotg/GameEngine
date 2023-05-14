@@ -58,16 +58,18 @@ void StateParser::parseTextures(tinyxml2::XMLElement* pTextureRoot, std::vector<
 
 void StateParser::parseObjects(tinyxml2::XMLElement* pObjectRoot, std::vector<GameObject*>* pObjects){
     for(tinyxml2::XMLElement* e = pObjectRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement()){
-        int x, y, width, height, numFrames, callbackID, animSpeed;
+        int x, y, width, height;
+        uint32_t numFrames, callbackID, animSpeed;
         std::string textureID;
 
         e->QueryIntAttribute("x", &x);
         e->QueryIntAttribute("y", &y);
         e->QueryIntAttribute("width", &width);
         e->QueryIntAttribute("height", &height);
-        e->QueryIntAttribute("numFrames", &numFrames);
-        e->QueryIntAttribute("callbackID", &callbackID);
-        e->QueryIntAttribute("animSpeed", &animSpeed);
+        e->QueryUnsignedAttribute("numFrames", &numFrames);
+        e->QueryUnsignedAttribute("callbackID", &callbackID);
+        e->QueryUnsignedAttribute("animSpeed", &animSpeed);
+
         textureID = e->Attribute("textureID");
 
         GameObject* pGameObject = TheGameObjectFactory::Instance()->createGameObject(e->Attribute("type"));

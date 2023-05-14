@@ -230,7 +230,7 @@ public:
         ++_size;
     }
 
-    T* PushArr( int count ) {
+    T* PushArr( uint64_t count ) {
         TIXMLASSERT( count >= 0 );
         TIXMLASSERT( _size <= INT_MAX - count );
         EnsureCapacity( _size+count );
@@ -613,17 +613,17 @@ public:
     static const char* ReadBOM( const char* p, bool* hasBOM );
     // p is the starting location,
     // the UTF-8 value of the entity will be placed in value, and length filled in.
-    static const char* GetCharacterRef( const char* p, char* value, int* length );
-    static void ConvertUTF32ToUTF8( unsigned long input, char* output, int* length );
+    static const char* GetCharacterRef( const char* p, char* value, size_t* length );
+    static void ConvertUTF32ToUTF8( unsigned long input, char* output, size_t* length );
 
     // converts primitive types to strings
-    static void ToStr( int v, char* buffer, int bufferSize );
-    static void ToStr( unsigned v, char* buffer, int bufferSize );
-    static void ToStr( bool v, char* buffer, int bufferSize );
-    static void ToStr( float v, char* buffer, int bufferSize );
-    static void ToStr( double v, char* buffer, int bufferSize );
-	static void ToStr(int64_t v, char* buffer, int bufferSize);
-    static void ToStr(uint64_t v, char* buffer, int bufferSize);
+    static void ToStr( int v, char* buffer, size_t bufferSize );
+    static void ToStr( unsigned v, char* buffer, size_t bufferSize );
+    static void ToStr( bool v, char* buffer, size_t bufferSize );
+    static void ToStr( float v, char* buffer, size_t bufferSize );
+    static void ToStr( double v, char* buffer, size_t bufferSize );
+	static void ToStr(int64_t v, char* buffer, size_t bufferSize);
+    static void ToStr(uint64_t v, char* buffer, size_t bufferSize);
 
     // converts strings to primitive types
     static bool	ToInt( const char* str, int* value );
