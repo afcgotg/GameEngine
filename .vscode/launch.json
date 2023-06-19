@@ -12,15 +12,9 @@
             "program": "",
             "preLaunchTask": "Build Debug_x64",
             "windows": {
-                "name": "Debug (Windows)",
-                "type": "cppdbg",
-                "request": "launch",
                 "program": "${workspaceFolder}\\debug\\game_debug.exe",
             },
             "linux": {
-                "name": "Debug (Linux)",
-                "type": "cppdbg",
-                "request": "launch",
                 "program": "${workspaceFolder}/debug/game_debug",
             },
             "args": [],
@@ -31,6 +25,5 @@
                 "/path/to/source/files/on/debug/machine": "${workspaceFolder}"
             }
         }
-        
     ]
 }

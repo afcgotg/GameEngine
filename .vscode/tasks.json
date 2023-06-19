@@ -30,6 +30,21 @@
 			"group": "build",
 			"problemMatcher": [],
 			"detail": "CMake template build task"
-		}
+		},
+		{
+		"type": "shell",
+		"label": "Clean",
+		"windows":{
+			"command": "cd ./.vscode && make clean",
+			"args": []
+		},
+		"linux":{
+			"command": "cd ./.vscode && make clean",
+			"args": []
+		},
+		"group": "build",
+		"problemMatcher": [],
+		"detail": "CMake template build task"
+	}
 	]
 }

@@ -75,17 +75,17 @@ windows_x64_debug:
 	xcopy "..\assets" "..\debug\assets" //e //y //q //A
 
 linux_x64_debug: CC = g++
-linux_x64_debug: CFLAGS += -lSDL2_image -m64 `sdl2-config --static-libs --cflags`
+linux_x64_debug: CFLAGS += -lSDL2_image -m64 `sdl2-config --static-libs --cflags` -g
 linux_x64_debug: $(DEB_DIR)/$(NAME)_debug
 linux_x64_debug: 
-	cp -r ../assets ../debug/assets
+	cp -r ../assets ../debug
 
 
 ##################################################
 
 ##################################################
 copy: 
-	rsync -r --update ../assets $(DEB_DIR)/assets
+	rsync -r --update ../assets $(DEB_DIR)
 
 clean:
 	rm -f $(OBJ_DIR)/*.o $(DEBUG_OBJ_DIR)/*.o ../$(NAME) $(DEB_DIR)/* 2>/dev/null || :
