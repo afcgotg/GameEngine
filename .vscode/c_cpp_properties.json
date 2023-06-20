@@ -10,6 +10,16 @@
           "intelliSenseMode": "clang-x64",
           "cppStandard": "c++23",
           "compilerPath": "C:/msys64/mingw64/bin/g++.exe"
+      },
+      {
+        "name": "linux",
+        "includePath": [
+            "${workspaceFolder}/include",
+        ],
+        "defines": [],
+        "intelliSenseMode": "${default}",
+        "cppStandard": "c++23",
+        "compilerPath": "/usr/bin/g++"
       }
     ],
     "version": 4
