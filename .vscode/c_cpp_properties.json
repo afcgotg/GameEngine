@@ -1,15 +1,16 @@
 {
     "configurations": [
       {
-        "name": "SDLTemplate configuration",
-        "includePath": [
-          "${workspaceFolder}/include",
-          "include/SDL/x64/include"
-          // need to declare "include/SDL/x64/include" for 32-bits
-        ],
-        "defines": [],
-        "intelliSenseMode": "clang-x64"
+          "name": "Win64",
+          "includePath": [
+              "${workspaceFolder}/include",
+              "include/SDL/x64/include"
+          ],
+          "defines": [],
+          "intelliSenseMode": "clang-x64",
+          "cppStandard": "c++23",
+          "compilerPath": "C:/msys64/mingw64/bin/g++.exe"
       }
     ],
     "version": 4
-  }
+}

@@ -9,21 +9,23 @@
             "name": "Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "",
             "preLaunchTask": "Build Debug_x64",
-            "windows": {
-                "program": "${workspaceFolder}\\debug\\game_debug.exe",
-            },
-            "linux": {
-                "program": "${workspaceFolder}/debug/game_debug",
-            },
+            "program": "${workspaceFolder}/debug/game_debug.exe",
             "args": [],
-            "environment": [{ "name": "config", "value": "Debug" }],
+            "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "externalConsole": false,
-            "sourceFileMap": {
-                "/path/to/source/files/on/debug/machine": "${workspaceFolder}"
-            }
+            "environment": [],
+            "externalConsole": false
+        },
+        {
+            "name": "Release",
+            "type": "cppdbg",
+            "request": "launch",
+            "preLaunchTask": "Build Release_x64",
+            "program": "${workspaceFolder}/game.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "environment": [],
         }
     ]
 }
