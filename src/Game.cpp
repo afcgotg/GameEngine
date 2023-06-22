@@ -74,9 +74,9 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
         std::cout << "Error to initialize SDL: " << SDL_GetError() << std::endl;
         return false;
     }
-
+    
     TheInputHandler::Instance()->initialiseJoysticks();
-
+    
     TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
     TheGameObjectFactory::Instance()->registerType("Player", new PlayerCreator());
     TheGameObjectFactory::Instance()->registerType("Enemy", new EnemyCreator());
@@ -86,6 +86,7 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
     m_bRunning = true;
     return true;
 }
+
 
 void Game::render(){
     SDL_RenderClear(m_pRenderer); //clear to the draw color
@@ -97,7 +98,7 @@ void Game::render(){
 
 void Game::update(){
     m_pGameStateMachine->update();
-};
+}
 
 void Game::handleEvent(){
     TheInputHandler::Instance()->update();
