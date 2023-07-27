@@ -12,10 +12,10 @@ OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
 # Default target
 ../$(NAME): $(OBJECTS)
 	mkdir  -p $(DEB_DIR)
-	$(CC) $^ -o $@ $(LIBFLAGS) $(CFLAGS)
+	$(CC) $^ -o $@ $(INCFLAGS) $(LIBFLAGS) $(CFLAGS)
 
 $(DEB_DIR)/$(NAME)_debug: $(OBJECTS:$(OBJ_DIR)/%.o=$(DEBUG_OBJ_DIR)/%.o)
-	$(CC) $^ -o $@ $(LIBFLAGS) $(CFLAGS)
+	$(CC) $^ -o $@ $(INCFLAGS) $(LIBFLAGS) $(CFLAGS)
 
 # Rule for compiling source files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp

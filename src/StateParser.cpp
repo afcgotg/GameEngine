@@ -48,7 +48,7 @@ void StateParser::parseTextures(tinyxml2::XMLElement* pTextureRoot, std::vector<
         std::string filenameAttribute = e->Attribute("filename");
         std::string idAttribute = e->Attribute("ID");
         pTextureIDs->push_back(idAttribute);
-        if(!TheTextureManager::Instance()->load(filenameAttribute, idAttribute, TheGame::Instance()->getRenderer())){
+        if(!TheTextureManager::Instance()->load(filenameAttribute, idAttribute, TheGameWindow::Instance()->GetRenderer())){
             std::cout << "Error al cargar la textura " << idAttribute << " located in: " << filenameAttribute << std::endl;
         }else{
             pTextureIDs->push_back(idAttribute);

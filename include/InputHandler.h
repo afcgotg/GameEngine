@@ -16,10 +16,10 @@ class InputHandler{
     public:
         static InputHandler* Instance();
 
-        void update();
+        void HandleEvent();
         void clean();
 
-        void initialiseJoysticks();
+        void InitialiseJoysticks();
         bool joysticksInitialised();
 
         bool getButtonState(size_t joy, size_t buttonNumber);

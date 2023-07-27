@@ -13,10 +13,10 @@ const std::string MainMenuState::s_menuID = "MENU";
 
 void MainMenuState::update(){
     for(size_t i = 0; i < m_gameObjects.size(); i++){
-        if(!TheGame::Instance()->getStateMachine()->getStateChanged()){
+        if(!TheGame::Instance()->GetStateMachine()->getStateChanged()){
             m_gameObjects[i]->update();
         }else{
-            TheGame::Instance()->getStateMachine()->setStateChanged(false);
+            TheGame::Instance()->GetStateMachine()->setStateChanged(false);
             break;
         }
             
@@ -77,9 +77,9 @@ void MainMenuState::setCallbacks(const std::vector<Callback> &callbacks){
 }
 
 void MainMenuState::s_menuToPlay(){
-    TheGame::Instance()->getStateMachine()->changeState(new PlayState());
+    TheGame::Instance()->GetStateMachine()->changeState(new PlayState());
 }
 
 void MainMenuState::s_exitFromMenu(){
-    TheGame::Instance()->clean();
+    TheGame::Instance()->Clean();
 }

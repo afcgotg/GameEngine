@@ -22,106 +22,95 @@
     const char* slash = "/";
 #endif
 
-Game* Game::s_pInstance = 0;
+Game* Game::_instance = 0;
 
 Game* Game::Instance(){
-    if(s_pInstance == 0){
-        s_pInstance = new Game();
+    if(_instance == 0){
+        _instance = new Game();
     }
-    return s_pInstance;
+    return _instance;
 }
 
-Game::Game(){}
+bool Game::Init() {
 
-Game::~Game(){}
+    _isRunning = false;
 
-SDL_Renderer* Game::getRenderer() const{
-    return m_pRenderer;
-}
-
-bool Game::init(const char* title, int xpos, int ypos, int height, int width, bool fullscreen, char** argv) {
-
-    m_bRunning = false;
-    m_argv = argv;
-
-    if(SDL_Init(SDL_INIT_EVERYTHING) == 0){
-        std::cout << "SDL init succed" << std::endl;
-        // if succeeded create a window
-
-        uint32_t flags = 0;
-
-        if(fullscreen){
-            flags = SDL_WINDOW_FULLSCREEN;
-        }
-        m_pWindow = SDL_CreateWindow(title, xpos, ypos, height, width, flags);
-
-        // if the window creation succeeded create our render
-        if(m_pWindow != 0){
-            std::cout << "Window creation succed" << std::endl;
-            m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
-            if(m_pRenderer != 0){
-                std::cout << "Renderer creation succed" << std::endl;
-                SDL_SetRenderDrawColor(m_pRenderer, 110, 160, 180, 255);
-            }else{
-                std::cout << "Error when create the renderer: " << SDL_GetError() << std::endl;
-                return false;
-            }
-        }else{
-            std::cout << "Error when create the window: " << SDL_GetError() << std::endl;
-            return false;
-        }
-    }else{
-        std::cout << "Error to initialize SDL: " << SDL_GetError() << std::endl;
+    if(!InitSDL())
         return false;
-    }
+
+    if(!TheGameWindow::Instance()->Create())
+        return false;
     
-    TheInputHandler::Instance()->initialiseJoysticks();
+    TheInputHandler::Instance()->InitialiseJoysticks();
     
     TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
     TheGameObjectFactory::Instance()->registerType("Player", new PlayerCreator());
     TheGameObjectFactory::Instance()->registerType("Enemy", new EnemyCreator());
     TheGameObjectFactory::Instance()->registerType("AnimatedGraphic", new AnimatedGraphicCreator());
 
-    TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
-    m_bRunning = true;
+    TheGame::Instance()->GetStateMachine()->changeState(new MainMenuState());
+    _isRunning = true;
     return true;
 }
 
-
-void Game::render(){
-    SDL_RenderClear(m_pRenderer); //clear to the draw color
-
-    m_pGameStateMachine->render();
-
-    SDL_RenderPresent(m_pRenderer); // draw to the screen
+bool Game::InitSDL()
+{
+    if(SDL_Init(SDL_INIT_EVERYTHING) == 0)
+    {
+        std::cout << "SDL init succed" << std::endl;
+        return true;
+    }
+    else
+    {
+        std::cout << "Error to initialize SDL: " << SDL_GetError() << std::endl;
+        return false;
+    }
 }
 
-void Game::update(){
-    m_pGameStateMachine->update();
+void Game::GameLoop()
+{
+    uint32_t frameStart, frameTime;
+    while(_isRunning)
+    {
+        frameStart = SDL_GetTicks();
+
+        HandleEvent();
+        Update();
+        Render();
+
+        frameTime = SDL_GetTicks() - frameStart;
+        if(frameTime < TheGameWindow::Instance()->GetDelayTime())
+            SDL_Delay(TheGameWindow::Instance()->GetDelayTime() - frameTime);
+    }
 }
 
-void Game::handleEvent(){
-    TheInputHandler::Instance()->update();
+void Game::Render(){
+    SDL_RenderClear(TheGameWindow::Instance()->GetRenderer()); //clear to the draw color
+    _gameStateMachine->render();
+    SDL_RenderPresent(TheGameWindow::Instance()->GetRenderer()); // draw to the screen
 }
 
-void Game::clean(){
-    m_bRunning = false;
+void Game::Update(){
+    _gameStateMachine->update();
+}
+
+void Game::HandleEvent(){
+    TheInputHandler::Instance()->HandleEvent();
+}
+
+void Game::Clean(){
+    _isRunning = false;
     std::cout << "cleaning game..." << std::endl;
     TheInputHandler::Instance()->clean();
-    SDL_DestroyWindow(m_pWindow);
-    SDL_DestroyRenderer(m_pRenderer);
+    TheGameWindow::Instance()->Destroy();
     SDL_Quit();
 }
 
-bool Game::running() {
-    return m_bRunning;
-}
-
-GameStateMachine* Game::getStateMachine(){
-    if(m_pGameStateMachine == NULL){
-        m_pGameStateMachine = new GameStateMachine();
-        *strrchr(m_argv[0], slash[0]) = '\0';    
-        m_pGameStateMachine->setPath(m_argv[0]);
+GameStateMachine* Game::GetStateMachine(){
+    if(_gameStateMachine == NULL){
+        _gameStateMachine = new GameStateMachine();
+        *strrchr(_argv[0], slash[0]) = '\0';    
+        _gameStateMachine->setPath(_argv[0]);
     }
-    return m_pGameStateMachine;
+    return _gameStateMachine;
 }

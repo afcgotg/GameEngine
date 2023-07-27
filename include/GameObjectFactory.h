@@ -18,7 +18,7 @@ class GameObjectFactory{
     public:
         static GameObjectFactory* Instance();
         
-        ~GameObjectFactory();
+        ~GameObjectFactory(){};
 
         GameObject* createGameObject(std::string typeID);
         bool registerType(std::string typeID, BaseCreator* pCreator);
@@ -27,7 +27,7 @@ class GameObjectFactory{
     private: 
         static GameObjectFactory* s_pInstance;
 
-        GameObjectFactory();
+        GameObjectFactory(){};
         std::map<std::string, BaseCreator*> m_creators;
 };
 

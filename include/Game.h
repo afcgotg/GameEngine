@@ -6,44 +6,45 @@
     #include "SDL/x64/include/SDL2/SDL.h"
 #endif
 
+#include "GameWindow.h"
 #include "GameObject.h"
 #include "GameStateMachine.h"
 
 #ifndef __Game__
 #define __Game__
 
-class Game{
+class Game
+{
     public:
         static Game* Instance();
-        ~Game();
+        ~Game(){};
 
-        SDL_Renderer* getRenderer() const;
+        void GameLoop();
 
-        bool init(const char* title, int xpos, int ypos, int height, int width, bool fullscreen, char** argv);
-        void render();
-        void update();
-        void handleEvent();
-        void clean();
+        bool Init();
+        
+        void Clean();
 
-        bool running();
-
-        GameStateMachine* getStateMachine();
+        GameStateMachine* GetStateMachine();
 
     private:
-        Game();
+        Game(){};
 
-        static Game* s_pInstance;
+        void Render();
+        void Update();
+        void HandleEvent();
 
-        char** m_argv;
+        bool InitSDL();
 
-        SDL_Window* m_pWindow;
-        SDL_Renderer* m_pRenderer;
+        static Game* _instance;
 
-        bool m_bRunning;
+        char** _argv;
 
-        GameStateMachine* m_pGameStateMachine;
+        bool _isRunning;
 
-        std::vector<GameObject*> m_gameObjects;
+        GameStateMachine* _gameStateMachine;
+
+        std::vector<GameObject*> _gameObjects;
 };
 
 typedef Game TheGame;

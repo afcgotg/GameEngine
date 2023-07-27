@@ -3,6 +3,11 @@
 #include <iostream>
 #include <cstring>
 
+GameStateMachine::GameStateMachine()
+{
+    
+}
+
 GameStateMachine::~GameStateMachine(){}
 
 void GameStateMachine::pushState(GameState* pState){

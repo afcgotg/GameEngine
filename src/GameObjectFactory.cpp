@@ -10,15 +10,6 @@ GameObjectFactory* GameObjectFactory::Instance(){
     }
     return s_pInstance;
 }
-
-GameObjectFactory::GameObjectFactory()
-{
-}
-
-GameObjectFactory::~GameObjectFactory()
-{
-}
-
 GameObject* GameObjectFactory::createGameObject(std::string typeID)
 {
     std::map<std::string, BaseCreator*>::iterator it = m_creators.find(typeID);

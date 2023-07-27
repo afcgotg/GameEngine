@@ -13,7 +13,7 @@ InputHandler* InputHandler::Instance(){
     return s_pInstance;
 }
 
-void InputHandler::initialiseJoysticks(){
+void InputHandler::InitialiseJoysticks(){
     if(SDL_WasInit(SDL_INIT_JOYSTICK) == 0){
         SDL_InitSubSystem(SDL_INIT_JOYSTICK);
     }
@@ -56,13 +56,13 @@ bool InputHandler::getButtonState(size_t joy, size_t buttonNumber){
     return m_buttonStates[joy][buttonNumber];
 }
 
-void InputHandler::update(){
+void InputHandler::HandleEvent(){
     SDL_Event event;
     while(SDL_PollEvent(&event)){
         
         switch(event.type){
             case SDL_QUIT:
-                TheGame::Instance()->clean();
+                TheGame::Instance()->Clean();
                 break;
 
             case SDL_JOYAXISMOTION:

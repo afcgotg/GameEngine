@@ -8,6 +8,8 @@
 class GameStateMachine{
     public:
 
+        GameStateMachine();
+        
         virtual ~GameStateMachine();
 
         void pushState(GameState* pState);
