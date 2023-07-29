@@ -16,12 +16,6 @@
 
 #include "MenuButton.h"
 
-#if defined(_WIN64)
-    const char* slash = "\\";
-#elif defined(__unix__) && defined(__x86_64__)
-    const char* slash = "/";
-#endif
-
 Game* Game::_instance = 0;
 
 Game* Game::Instance(){
@@ -29,6 +23,22 @@ Game* Game::Instance(){
         _instance = new Game();
     }
     return _instance;
+}
+
+void Game::SetExecutionPath(const char* path){
+#if defined(_WIN64)
+    const char* slash = "\\";
+#elif defined(__unix__) && defined(__x86_64__)
+    const char* slash = "/";
+#endif
+    *strrchr(path, slash[0]) = '\0';
+    _executionPath = static_cast<char*>(calloc(strlen(path) + 1, sizeof(char)));
+    strcpy(_executionPath, path);
+}
+
+const char* Game::GetExecutionPath() const
+{
+    return _executionPath;
 }
 
 bool Game::Init() {
@@ -48,8 +58,10 @@ bool Game::Init() {
     TheGameObjectFactory::Instance()->registerType("Enemy", new EnemyCreator());
     TheGameObjectFactory::Instance()->registerType("AnimatedGraphic", new AnimatedGraphicCreator());
 
-    TheGame::Instance()->GetStateMachine()->changeState(new MainMenuState());
+    TheGameStateMachine::Instance()->changeState(new MainMenuState());
+
     _isRunning = true;
+
     return true;
 }
 
@@ -86,12 +98,12 @@ void Game::GameLoop()
 
 void Game::Render(){
     SDL_RenderClear(TheGameWindow::Instance()->GetRenderer()); //clear to the draw color
-    _gameStateMachine->render();
+    TheGameStateMachine::Instance()->render();
     SDL_RenderPresent(TheGameWindow::Instance()->GetRenderer()); // draw to the screen
 }
 
 void Game::Update(){
-    _gameStateMachine->update();
+    TheGameStateMachine::Instance()->update();
 }
 
 void Game::HandleEvent(){
@@ -104,13 +116,4 @@ void Game::Clean(){
     TheInputHandler::Instance()->clean();
     TheGameWindow::Instance()->Destroy();
     SDL_Quit();
-}
-
-GameStateMachine* Game::GetStateMachine(){
-    if(_gameStateMachine == NULL){
-        _gameStateMachine = new GameStateMachine();
-        *strrchr(_argv[0], slash[0]) = '\0';    
-        _gameStateMachine->setPath(_argv[0]);
-    }
-    return _gameStateMachine;
 }

@@ -342,6 +342,3 @@ InputHandler::InputHandler(){
 
     m_keystates = SDL_GetKeyboardState(0);
 }
-
-InputHandler::~InputHandler(){
-}

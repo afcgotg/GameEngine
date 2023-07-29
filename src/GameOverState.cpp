@@ -13,10 +13,10 @@ const std::string GameOverState::s_gameOverID = "GAMEOVER";
 
 void GameOverState::update(){
     for(size_t i = 0; i < m_gameObjects.size(); i++){
-        if(!TheGame::Instance()->GetStateMachine()->getStateChanged()){
+        if(!TheGameStateMachine::Instance()->getStateChanged()){
             m_gameObjects[i]->update();
         }else{
-            TheGame::Instance()->GetStateMachine()->setStateChanged(false);
+            TheGameStateMachine::Instance()->setStateChanged(false);
             break;
         }    
     }
@@ -61,11 +61,11 @@ std::string GameOverState::getStateID() const{
 }
 
 void GameOverState::s_gameOverToMain(){
-    TheGame::Instance()->GetStateMachine()->changeState(new MainMenuState());
+    TheGameStateMachine::Instance()->changeState(new MainMenuState());
 }
 
 void GameOverState::s_restartPlay(){
-    TheGame::Instance()->GetStateMachine()->changeState(new PlayState());
+    TheGameStateMachine::Instance()->changeState(new PlayState());
 }
 
 void GameOverState::setCallbacks(const std::vector<Callback>& callbacks){

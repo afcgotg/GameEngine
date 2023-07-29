@@ -11,19 +11,19 @@
 const std::string PauseState::s_pauseID = "PAUSE";
 
 void PauseState::s_pauseToMain(){
-    TheGame::Instance()->GetStateMachine()->changeState(new MainMenuState());
+    TheGameStateMachine::Instance()->changeState(new MainMenuState());
 }
 
 void PauseState::s_resumePlay(){
-    TheGame::Instance()->GetStateMachine()->popState();
+    TheGameStateMachine::Instance()->popState();
 }
 
 void PauseState::update(){
     for(uint64_t i = 0; i < m_gameObjects.size(); i++){
-        if(!TheGame::Instance()->GetStateMachine()->getStateChanged()){
+        if(!TheGameStateMachine::Instance()->getStateChanged()){
             m_gameObjects[i]->update();
         }else{
-            TheGame::Instance()->GetStateMachine()->setStateChanged(false);
+            TheGameStateMachine::Instance()->setStateChanged(false);
             break;
         }
     }

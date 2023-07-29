@@ -43,7 +43,7 @@ class InputHandler{
     private:
 
         InputHandler();
-        ~InputHandler();
+        ~InputHandler(){};
 
         std::vector<SDL_Joystick*> m_joysticks;
         bool m_bJoysticksInitialised;

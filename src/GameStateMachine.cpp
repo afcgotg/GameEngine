@@ -1,18 +1,25 @@
 #include "GameStateMachine.h"
+#include "Game.h"
 
 #include <iostream>
 #include <cstring>
 
-GameStateMachine::GameStateMachine()
-{
-    
-}
+GameStateMachine* GameStateMachine::_instance = nullptr;
+std::vector<GameState*> GameStateMachine::m_gameStates;
 
-GameStateMachine::~GameStateMachine(){}
+GameStateMachine* GameStateMachine::Instance()
+{
+    if(_instance == nullptr)
+        _instance = new GameStateMachine();
+    return _instance;
+}
 
 void GameStateMachine::pushState(GameState* pState){
     m_gameStates.push_back(pState);
-    m_gameStates.back()->onEnter(m_path);
+    char* assetsPath = static_cast<char*>(calloc(strlen(TheGame::Instance()->GetExecutionPath()) + strlen("/assets") + 1, sizeof(char)));
+    strcpy(assetsPath, TheGame::Instance()->GetExecutionPath());
+    strcat(assetsPath, "/assets");
+    m_gameStates.back()->onEnter(assetsPath);
 }
 
 void GameStateMachine::changeState(GameState* pState){
@@ -48,13 +55,6 @@ void GameStateMachine::render(){
 
 void GameStateMachine::setStateChanged(bool change){
     m_bStateChanged = change;
-}
-
-void GameStateMachine::setPath(const char* path){
-    m_path = static_cast<char*>(calloc(strlen(path) + strlen("/assets") + 1, sizeof(char)));
-    strcpy(m_path, path);
-    strcat(m_path, "/assets");
-
 }
 
 bool GameStateMachine::getStateChanged(){return m_bStateChanged;}

@@ -2,7 +2,11 @@
 #include <string>
 #include <iostream>
 
-#include <SDL2/SDL.h>
+#if __SIZEOF_POINTER__ == 4
+    #include "SDL/x32/include/SDL2/SDL.h"
+#elif __SIZEOF_POINTER__ == 8
+    #include "SDL/x64/include/SDL2/SDL.h"
+#endif
 
 #ifndef __GameWindow__
 #define __GameWindow__
@@ -10,6 +14,9 @@
 class GameWindow
 {
     private:
+        GameWindow(){};
+        static GameWindow* _instance;
+
         std::string _title;
         int _xpos;
         int _ypos;
@@ -21,13 +28,10 @@ class GameWindow
         uint8_t _fps;
         uint32_t _delayTime;
 
-        SDL_Window* _window;
-        SDL_Renderer* _renderer;
+        static SDL_Window* _window;
+        static SDL_Renderer* _renderer;
 
         void ApplyFlags();
-
-        GameWindow();
-        static GameWindow* _instance;
 
     public:
         ~GameWindow(){};
@@ -39,8 +43,8 @@ class GameWindow
 
         uint32_t GetDelayTime() const;
         
+        SDL_Window* GetWindow() const;
         SDL_Renderer* GetRenderer() const;
-
 };
 
 typedef GameWindow TheGameWindow;

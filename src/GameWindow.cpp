@@ -1,26 +1,16 @@
 #include "GameWindow.h"
 
 GameWindow* GameWindow::_instance = nullptr;
+SDL_Window* GameWindow::_window = nullptr;
+SDL_Renderer* GameWindow::_renderer = nullptr;
 
 GameWindow* GameWindow::Instance()
 {
     if(_instance == nullptr)
+    {
         _instance = new GameWindow();
+    }
     return _instance;
-}
-
-GameWindow::GameWindow()
-{
-    _title = "Game title";
-    _xpos, _ypos = SDL_WINDOWPOS_CENTERED;
-    _width = 800;
-    _height = 600;
-    _isFullScreen = false;
-
-    _fps = 60;
-    _delayTime = 1000 / _fps;
-
-    ApplyFlags();
 }
 
 void GameWindow::ApplyFlags()
@@ -36,6 +26,17 @@ SDL_Renderer* GameWindow::GetRenderer() const{
 
 bool GameWindow::Create()
 {
+    _title = "Game title";
+    _xpos, _ypos = SDL_WINDOWPOS_CENTERED;
+    _width = 800;
+    _height = 600;
+    _isFullScreen = false;
+
+    _fps = 60;
+    _delayTime = 1000 / _fps;
+
+    ApplyFlags();
+
     _window = SDL_CreateWindow(_title.c_str(), _xpos, _ypos, _height, _width, _flags);
 
     if(_window != nullptr)

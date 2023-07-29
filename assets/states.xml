@@ -15,11 +15,11 @@
     <!--The Play State-->
     <PLAY>
         <TEXTURES>
-            <texture filename="assets\img\GraveRobber\GraveRobber_idle.png" ID="player"/>
+            <texture filename="assets\img\GraveRobber\bruc.png" ID="player"/>
             <texture filename="assets\img\BelkarBarbarian\BelkarBarbarian_attack1.png" ID="enemy"/>
         </TEXTURES>
         <OBJECTS>
-            <object type="Player" x="100" y="100" width="48" height="48" textureID="player" numFrames="4"/>
+            <object type="Player" x="100" y="100" width="101" height="138" textureID="player" numFrames="1"/>
             <object type="Enemy" x="300" y="100" width="48" height="48" textureID="enemy" numFrames="6"/>
         </OBJECTS>
     </PLAY>

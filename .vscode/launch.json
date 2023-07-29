@@ -24,10 +24,10 @@
             "request": "launch",
             "preLaunchTask": "Build Release_x64",
             "linux" : {
-                "program": "${workspaceFolder}/debug/game"
+                "program": "${workspaceFolder}/game"
             },
             "windows": {
-                "program": "${workspaceFolder}/debug/game"
+                "program": "${workspaceFolder}/game.exe"
             },
             "args": [],
             "cwd": "${workspaceFolder}",

@@ -7,10 +7,10 @@
 
 class GameStateMachine{
     public:
-
-        GameStateMachine();
         
-        virtual ~GameStateMachine();
+        virtual ~GameStateMachine(){};
+
+        static GameStateMachine* Instance();
 
         void pushState(GameState* pState);
         void changeState(GameState* pState);
@@ -22,14 +22,17 @@ class GameStateMachine{
         void setStateChanged(bool change);
         bool getStateChanged();
 
-        void setPath(const char* path);
-
     private:
-        std::vector<GameState*> m_gameStates;
+
+        GameStateMachine(){};
+
+        static GameStateMachine* _instance;
+
+        static std::vector<GameState*> m_gameStates;
 
         bool m_bStateChanged;
-
-        char* m_path;
 };
+
+typedef GameStateMachine TheGameStateMachine;
 
 #endif

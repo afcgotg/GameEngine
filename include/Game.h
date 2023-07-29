@@ -1,11 +1,5 @@
 #include <vector>
 
-#if __SIZEOF_POINTER__ == 4
-    #include "SDL/x32/include/SDL2/SDL.h"
-#elif __SIZEOF_POINTER__ == 8
-    #include "SDL/x64/include/SDL2/SDL.h"
-#endif
-
 #include "GameWindow.h"
 #include "GameObject.h"
 #include "GameStateMachine.h"
@@ -17,34 +11,28 @@ class Game
 {
     public:
         static Game* Instance();
+        void SetExecutionPath(const char* path);
+        const char* GetExecutionPath() const;
         ~Game(){};
 
         void GameLoop();
-
         bool Init();
-        
         void Clean();
-
-        GameStateMachine* GetStateMachine();
 
     private:
         Game(){};
+
+        bool InitSDL();
 
         void Render();
         void Update();
         void HandleEvent();
 
-        bool InitSDL();
-
         static Game* _instance;
 
-        char** _argv;
+        char* _executionPath;
 
         bool _isRunning;
-
-        GameStateMachine* _gameStateMachine;
-
-        std::vector<GameObject*> _gameObjects;
 };
 
 typedef Game TheGame;
