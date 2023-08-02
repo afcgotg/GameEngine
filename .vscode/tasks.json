@@ -38,11 +38,11 @@
             "type": "shell",
             "label": "Clean",
             "windows": {
-                "command": "make clean",
+                "command": "make clean_windows",
                 "args": []
             },
             "linux": {
-                "command": "make clean",
+                "command": "make clean_linux",
                 "args": []
             },
             "group": "build",

@@ -10,7 +10,7 @@ SOURCES = $(wildcard $(SRC_DIR)/*.cpp) ./main.cpp
 OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
 
 # Default target
-../$(NAME): $(OBJECTS)
+$(NAME): $(OBJECTS)
 	mkdir  -p $(DEB_DIR)
 	$(CC) $^ -o $@ $(LIBFLAGS)
 
@@ -73,5 +73,8 @@ linux_x64_debug:
 copy: 
 	rsync -r --update ./assets $(DEB_DIR)
 
-clean:
-	rm -f $(OBJ_DIR)/*.o $(DEBUG_OBJ_DIR)/*.o /$(NAME) $(DEB_DIR)/* 2>/dev/null || :
+clean_windows:
+	rm -f $(OBJ_DIR)/*.o $(DEBUG_OBJ_DIR)/*.o $(NAME).exe $(DEB_DIR)/* 2>/dev/null || :
+
+clean_linux:
+	rm -f $(OBJ_DIR)/*.o $(DEBUG_OBJ_DIR)/*.o $(NAME).exe $(DEB_DIR)/* 2>/dev/null || :

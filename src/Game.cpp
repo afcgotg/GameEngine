@@ -31,7 +31,10 @@ void Game::SetExecutionPath(const char* path){
 #elif defined(__unix__) && defined(__x86_64__)
     const char* slash = "/";
 #endif
-    *strrchr(path, slash[0]) = '\0';
+    char* lastSlash = strrchr(path, slash[0]);
+    if(lastSlash != nullptr) 
+        *lastSlash = '\0';
+        
     _executionPath = static_cast<char*>(calloc(strlen(path) + 1, sizeof(char)));
     strcpy(_executionPath, path);
 }
