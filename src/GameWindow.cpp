@@ -28,8 +28,8 @@ bool GameWindow::Create()
 {
     _title = "Game title";
     _xpos, _ypos = SDL_WINDOWPOS_CENTERED;
-    _width = 800;
-    _height = 600;
+    _width = 200;
+    _height = 200;
     _isFullScreen = false;
 
     _fps = 60;

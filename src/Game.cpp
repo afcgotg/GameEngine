@@ -25,7 +25,7 @@ Game* Game::Instance(){
     return _instance;
 }
 
-void Game::SetExecutionPath(const char* path){
+void Game::SetExecutionPath(char* path){
 #if defined(_WIN64)
     const char* slash = "\\";
 #elif defined(__unix__) && defined(__x86_64__)

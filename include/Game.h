@@ -11,7 +11,7 @@ class Game
 {
     public:
         static Game* Instance();
-        void SetExecutionPath(const char* path);
+        void SetExecutionPath(char* path);
         const char* GetExecutionPath() const;
         ~Game(){};
 
