@@ -28,13 +28,13 @@ void GameOverState::render(){
     }
 }
 
-bool GameOverState::onEnter(const char* filePath){
+bool GameOverState::onEnter(std::string filePath){
+    std::cout << "OnEnter function GameOverState" << std::endl;
     StateParser stateParser;
 
-    char* fullPath;
-    fullPath = static_cast<char*>(calloc(strlen(filePath) + strlen("/states.xml") + 1, sizeof(char)));
-    strcpy(fullPath, filePath);
-    strcat(fullPath, "/states.xml");
+    std::string fullPath(filePath);
+
+    fullPath += "/states.xml";
 
     stateParser.parseState(fullPath, s_gameOverID, &m_gameObjects, &m_textureIDList);
 

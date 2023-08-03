@@ -39,7 +39,7 @@ $(DEBUG_OBJ_DIR)/main.o: ./main.cpp
 ##################################################
 
 windows_x64_release: CC = g++
-windows_x64_release: LIBFLAGS = -L ./include/SDL/x64/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows -m64 `sdl2-config --static-libs` -static
+windows_x64_release: LIBFLAGS = -L ./include/SDL/x64/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows
 windows_x64_release: INCFLAGS += -I ./include/SDL/x64/include
 windows_x64_release: ./$(NAME)
 
@@ -53,7 +53,7 @@ linux_x64_release: ./$(NAME)
 ##################################################
 
 windows_x64_debug: CC = g++
-windows_x64_debug: LIBFLAGS = -L ./include/SDL/x64/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows -m64 `sdl2-config --static-libs` -static -g
+windows_x64_debug: LIBFLAGS = -L ./include/SDL/x64/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -g
 windows_x64_debug: INCFLAGS += -I ./include/SDL/x64/include
 windows_x64_debug: CFLAGS +=  -g
 windows_x64_debug: $(DEB_DIR)/$(NAME)_debug

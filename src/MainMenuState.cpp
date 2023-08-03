@@ -29,19 +29,18 @@ void MainMenuState::render(){
     }
 }
 
-bool MainMenuState::onEnter(const char* filePath){
+bool MainMenuState::onEnter(std::string filePath){
     std::cout << "OnEnter function MainMenuState" << std::endl;
     StateParser stateParser;
 
-    char* fullPath;
-    fullPath = static_cast<char*>(calloc(strlen(filePath) + strlen("/states.xml") + 1, sizeof(char)));
-    strcpy(fullPath, filePath);
-    strcat(fullPath, "/states.xml");
+    std::string fullPath(filePath);
+
+    fullPath += "\\states.xml";
+
+    if (!stateParser.parseState(fullPath, s_menuID, &m_gameObjects, &m_textureIDList))
+        std::cout << "Error" << std::endl;
     
-    if(!stateParser.parseState(fullPath, s_menuID,  &m_gameObjects, &m_textureIDList)){
-        std::cout << "Error" << std::endl;     
-    }
-    
+        
     m_callbacks.push_back(0);
     m_callbacks.push_back(s_menuToPlay);
     m_callbacks.push_back(s_exitFromMenu);
@@ -54,7 +53,8 @@ bool MainMenuState::onEnter(const char* filePath){
 }
 
 bool MainMenuState::onExit(){
-    for(size_t i = 0; i > m_textureIDList.size(); i++){
+    for(size_t i = 0; i > m_textureIDList.size(); i++)
+    {
         TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
     }
     return true;

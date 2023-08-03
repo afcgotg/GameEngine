@@ -16,9 +16,11 @@ GameStateMachine* GameStateMachine::Instance()
 
 void GameStateMachine::pushState(GameState* pState){
     m_gameStates.push_back(pState);
-    char* assetsPath = static_cast<char*>(calloc(strlen(TheGame::Instance()->GetExecutionPath()) + strlen("/assets") + 1, sizeof(char)));
-    strcpy(assetsPath, TheGame::Instance()->GetExecutionPath());
-    strcat(assetsPath, "/assets");
+
+    std::string assetsPath(TheGame::Instance()->GetExecutionPath());
+
+    assetsPath += "\\assets";
+
     m_gameStates.back()->onEnter(assetsPath);
 }
 

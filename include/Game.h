@@ -12,7 +12,7 @@ class Game
     public:
         static Game* Instance();
         void SetExecutionPath(char* path);
-        const char* GetExecutionPath() const;
+        std::string GetExecutionPath() const;
         ~Game(){};
 
         void GameLoop();
@@ -30,7 +30,7 @@ class Game
 
         static Game* _instance;
 
-        char* _executionPath;
+        std::string _executionPath;
 
         bool _isRunning;
 };

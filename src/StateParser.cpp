@@ -4,12 +4,12 @@
 #include "GameObjectFactory.h"
 #include "LoaderParams.h"
 
-bool StateParser::parseState(const char* stateFile, std::string stateID, std::vector<GameObject*> *pObjects, std::vector<std::string> *pTextureIDs){
+bool StateParser::parseState(std::string stateFile, std::string stateID, std::vector<GameObject*> *pObjects, std::vector<std::string> *pTextureIDs){
     tinyxml2::XMLDocument xmlDoc;
 
     std::cout << stateFile << std::endl;
 
-    if(xmlDoc.LoadFile(stateFile)){
+    if(xmlDoc.LoadFile(stateFile.c_str())){
         std::cout << xmlDoc.ErrorStr() << std::endl;
         return false;
     }

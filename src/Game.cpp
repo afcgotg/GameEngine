@@ -34,12 +34,12 @@ void Game::SetExecutionPath(char* path){
     char* lastSlash = strrchr(path, slash[0]);
     if(lastSlash != nullptr) 
         *lastSlash = '\0';
-        
-    _executionPath = static_cast<char*>(calloc(strlen(path) + 1, sizeof(char)));
-    strcpy(_executionPath, path);
+
+    _executionPath = std::string(path);
+    
 }
 
-const char* Game::GetExecutionPath() const
+std::string Game::GetExecutionPath() const
 {
     return _executionPath;
 }
@@ -54,12 +54,12 @@ bool Game::Init() {
     if(!TheGameWindow::Instance()->Create())
         return false;
     
-    TheInputHandler::Instance()->InitialiseJoysticks();
-    
     TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
     TheGameObjectFactory::Instance()->registerType("Player", new PlayerCreator());
     TheGameObjectFactory::Instance()->registerType("Enemy", new EnemyCreator());
     TheGameObjectFactory::Instance()->registerType("AnimatedGraphic", new AnimatedGraphicCreator());
+
+    TheInputHandler::Instance()->InitialiseJoysticks();
 
     TheGameStateMachine::Instance()->changeState(new MainMenuState());
 

@@ -9,7 +9,7 @@ class GameState{
         virtual void update() = 0;
         virtual void render() = 0;
 
-        virtual bool onEnter(const char* filePath) = 0;
+        virtual bool onEnter(std::string filePath) = 0;
         virtual bool onExit() = 0;
 
         virtual std::string getStateID() const = 0;

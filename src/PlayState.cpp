@@ -34,13 +34,11 @@ void PlayState::render(){
     }
 }
 
-bool PlayState::onEnter(const char* filePath){
+bool PlayState::onEnter(std::string filePath){
     StateParser stateParser;
 
-    char* fullPath;
-    fullPath = static_cast<char*>(calloc(strlen(filePath) + strlen("/states.xml") + 1, sizeof(char)));
-    strcpy(fullPath, filePath);
-    strcat(fullPath, "/states.xml");
+    std::string fullPath(filePath);
+    fullPath += "\\states.xml";
 
     stateParser.parseState(fullPath, s_playID, &m_gameObjects, &m_textureIDList);
 

@@ -13,7 +13,7 @@ class MainMenuState : public MenuState {
         virtual void update();
         virtual void render();
 
-        virtual bool onEnter(const char* filePath);
+        virtual bool onEnter(std::string filePath);
         virtual bool onExit();
 
         virtual std::string getStateID() const;
