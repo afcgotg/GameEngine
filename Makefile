@@ -31,19 +31,19 @@ $(DEB_DIR)/$(NAME)_debug: $(OBJECTS:$(OBJ_DIR)/%.o=$(DEBUG_OBJ_DIR)/%.o)
 
 # Rule for compiling source files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@echo $<
+	@echo "> $(notdir $<)" | sed -e 's/^> src/>/g'
 	@$(CXX) $(INCFLAGS) -c $< -o $@ $(CXXFLAGS)
 
 $(OBJ_DIR)/main.o: $(SRC_DIR)/main.cpp
-	@echo $<
+	@echo "> $(notdir $<)" | sed -e 's/^> src/>/g'
 	@$(CXX) -c $(INCFLAGS) $< -o $@ $(CXXFLAGS)
 
 $(DEBUG_OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@echo $<
+	@echo "> $(notdir $<)" | sed -e 's/^> src/>/g'
 	@$(CXX) -c $(INCFLAGS) $< -o $@ $(CXXFLAGS)
 
 $(DEBUG_OBJ_DIR)/main.o: $(SRC_DIR)/main.cpp
-	@echo $<
+	@echo "> $(notdir $<)" | sed -e 's/^> src/>/g'
 	@$(CXX) -c $(INCFLAGS) $< -o $@ $(CXXFLAGS)
 
 ##################################################
