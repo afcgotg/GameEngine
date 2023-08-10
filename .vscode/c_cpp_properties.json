@@ -4,7 +4,7 @@
           "name": "Win64",
           "includePath": [
               "${workspaceFolder}/include",
-              "include/SDL/x64/include"
+              "SDL2/include"
           ],
           "defines": [],
           "intelliSenseMode": "clang-x64",
@@ -15,6 +15,7 @@
         "name": "linux",
         "includePath": [
             "${workspaceFolder}/include",
+            "${workspaceFolder}/SDL2/include/SDL2",
         ],
         "defines": [],
         "intelliSenseMode": "${default}",

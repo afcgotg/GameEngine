@@ -1,12 +1,7 @@
 #include <memory>
 #include <string>
 #include <iostream>
-
-#if __SIZEOF_POINTER__ == 4
-    #include "SDL/x32/include/SDL2/SDL.h"
-#elif __SIZEOF_POINTER__ == 8
-    #include "SDL/x64/include/SDL2/SDL.h"
-#endif
+#include <../SDL2/include/SDL2/SDL.h>
 
 #ifndef __GameWindow__
 #define __GameWindow__

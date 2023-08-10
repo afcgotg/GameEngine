@@ -16,7 +16,8 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": false
+            "externalConsole": false,
+            "MIMode": "gdb"
         },
         {
             "name": "Release",

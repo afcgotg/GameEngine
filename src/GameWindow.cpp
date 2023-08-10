@@ -27,7 +27,8 @@ SDL_Renderer* GameWindow::GetRenderer() const{
 bool GameWindow::Create()
 {
     _title = "Game title";
-    _xpos, _ypos = SDL_WINDOWPOS_CENTERED;
+    _xpos = SDL_WINDOWPOS_CENTERED;
+    _ypos = SDL_WINDOWPOS_CENTERED;
     _width = 600;
     _height = 400;
     _isFullScreen = false;

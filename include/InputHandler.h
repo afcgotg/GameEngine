@@ -1,4 +1,4 @@
-#include <SDL2/SDL.h>
+#include <../SDL2/include/SDL2/SDL.h>
 #include <vector>
 
 #include "Vector2D.h"
