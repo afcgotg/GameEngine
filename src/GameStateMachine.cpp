@@ -4,29 +4,29 @@
 #include <iostream>
 #include <cstring>
 
-GameStateMachine* GameStateMachine::_instance = nullptr;
-std::vector<GameState*> GameStateMachine::m_gameStates;
+GameStateMachine* GameStateMachine::mpInstance = nullptr;
+std::vector<GameState*> GameStateMachine::mGameStates;
 
 GameStateMachine* GameStateMachine::Instance()
 {
-    if(_instance == nullptr)
-        _instance = new GameStateMachine();
-    return _instance;
+    if(mpInstance == nullptr)
+        mpInstance = new GameStateMachine();
+    return mpInstance;
 }
 
 void GameStateMachine::pushState(GameState* pState){
-    m_gameStates.push_back(pState);
+    mGameStates.push_back(pState);
 
     std::string assetsPath(TheGame::Instance()->GetExecutionPath());
 
     assetsPath += "\\assets";
 
-    m_gameStates.back()->onEnter(assetsPath);
+    mGameStates.back()->onEnter(assetsPath);
 }
 
 void GameStateMachine::changeState(GameState* pState){
-    if(!m_gameStates.empty()){
-        if(m_gameStates.back()->getStateID() == pState->getStateID()){
+    if(!mGameStates.empty()){
+        if(mGameStates.back()->getStateID() == pState->getStateID()){
             return; // do nothing
         }
         GameStateMachine::popState();
@@ -35,28 +35,28 @@ void GameStateMachine::changeState(GameState* pState){
 }
 
 void GameStateMachine::popState(){
-    if(!m_gameStates.empty()){
-        if(m_gameStates.back()->onExit()){
-            //delete m_gameStates.back();
-            m_gameStates.pop_back();
+    if(!mGameStates.empty()){
+        if(mGameStates.back()->onExit()){
+            //delete mGameStates.back();
+            mGameStates.pop_back();
         }
     }
 }
 
 void GameStateMachine::update(){
-    if(!m_gameStates.empty()){
-        m_gameStates.back()->update();
+    if(!mGameStates.empty()){
+        mGameStates.back()->update();
     }
 }
 
 void GameStateMachine::render(){
-    if(!m_gameStates.empty()){
-        m_gameStates.back()->render();
+    if(!mGameStates.empty()){
+        mGameStates.back()->render();
     }
 }
 
 void GameStateMachine::setStateChanged(bool change){
-    m_bStateChanged = change;
+    mStateChanged = change;
 }
 
-bool GameStateMachine::getStateChanged(){return m_bStateChanged;}
+bool GameStateMachine::getStateChanged(){return mStateChanged;}

@@ -11,17 +11,17 @@ MenuButton::~MenuButton(){
 
 void MenuButton::load(const LoaderParams* pParams){
     SDLGameObject::load(pParams);
-    m_callbackID = pParams->getCallbackID();
-    m_currentFrame = MOUSE_OUT;
-    m_bPressed = false;
+    mCallbackID = pParams->getCallbackID();
+    mCurrentFrame = MOUSE_OUT;
+    mPressed = false;
 }
 
 void MenuButton::setCallback(void(*callback)()){
-    m_callback = callback;
+    mCallback = callback;
 }
 
 uint64_t MenuButton::getCallbackID(){
-    return m_callbackID;
+    return mCallbackID;
 }
 
 
@@ -32,22 +32,22 @@ void MenuButton::draw(){
 void MenuButton::update(){
     Vector2D* pMousePos = TheInputHandler::Instance()->getMousePosition();
 
-    if(pMousePos->getX() < (m_position.getX() + m_width) &&
-    pMousePos->getX() > m_position.getX() &&
-    pMousePos->getY() < (m_position.getY() + m_height) &&
-    pMousePos->getY() > m_position.getY()){
+    if(pMousePos->getX() < (mPosition.getX() + mWidth) &&
+    pMousePos->getX() > mPosition.getX() &&
+    pMousePos->getY() < (mPosition.getY() + mHeight) &&
+    pMousePos->getY() > mPosition.getY()){
 
-        m_currentFrame = MOUSE_OVER;
+        mCurrentFrame = MOUSE_OVER;
         if(TheInputHandler::Instance()->getMouseButtonState(LEFT)){
-            m_currentFrame = CLICKED;
-            m_bPressed = true;
-        }else if(!TheInputHandler::Instance()->getMouseButtonState(LEFT) && m_bPressed){
-            m_callback();
-            m_bPressed = false;
+            mCurrentFrame = CLICKED;
+            mPressed = true;
+        }else if(!TheInputHandler::Instance()->getMouseButtonState(LEFT) && mPressed){
+            mCallback();
+            mPressed = false;
         }
     }else{
-        m_currentFrame = MOUSE_OUT;
-        m_bPressed = false;
+        mCurrentFrame = MOUSE_OUT;
+        mPressed = false;
     }
 }
 

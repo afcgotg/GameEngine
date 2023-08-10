@@ -11,7 +11,7 @@
 #include "GameOverState.h"
 #include "StateParser.h"
 
-const std::string PlayState::s_playID = "PLAY";
+const std::string PlayState::mPlayID = "PLAY";
 
 void PlayState::update(){
 
@@ -19,18 +19,18 @@ void PlayState::update(){
         TheGameStateMachine::Instance()->pushState(new PauseState());
     }
 
-    for(uint64_t i = 0; i < m_gameObjects.size(); i++){
-        m_gameObjects[i]->update();
+    for(uint64_t i = 0; i < mGameObjects.size(); i++){
+        mGameObjects[i]->update();
     }
 
-    if(checkCollision(dynamic_cast<SDLGameObject*>(m_gameObjects[0]), dynamic_cast<SDLGameObject*>(m_gameObjects[1]))){
+    if(checkCollision(dynamic_cast<SDLGameObject*>(mGameObjects[0]), dynamic_cast<SDLGameObject*>(mGameObjects[1]))){
         TheGameStateMachine::Instance()->pushState(new GameOverState());
     }
 }
 
 void PlayState::render(){
-    for(uint64_t i = 0; i < m_gameObjects.size(); i++){
-        m_gameObjects[i]->draw();
+    for(uint64_t i = 0; i < mGameObjects.size(); i++){
+        mGameObjects[i]->draw();
     }
 }
 
@@ -40,22 +40,22 @@ bool PlayState::onEnter(std::string filePath){
     std::string fullPath(filePath);
     fullPath += "\\states.xml";
 
-    stateParser.parseState(fullPath, s_playID, &m_gameObjects, &m_textureIDList);
+    stateParser.parseState(fullPath, mPlayID, &mGameObjects, &mTextureIDList);
 
     std::cout << "entering PlayState" << std::endl;
     return true;
 }
 
 bool PlayState::onExit(){
-    for(uint64_t i = 0; i < m_textureIDList.size(); i++){
-        TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
+    for(uint64_t i = 0; i < mTextureIDList.size(); i++){
+        TheTextureManager::Instance()->clearFromTextureMap(mTextureIDList[i]);
     }
 
     return true;
 }
 
 std::string PlayState::getStateID() const{
-    return s_playID;
+    return mPlayID;
 }
 
 bool PlayState::checkCollision(SDLGameObject* p1, SDLGameObject* p2){

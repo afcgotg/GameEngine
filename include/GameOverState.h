@@ -25,9 +25,9 @@ class GameOverState : public MenuState {
         static void s_gameOverToMain();
         static void s_restartPlay();
 
-        static const std::string s_gameOverID;
+        static const std::string mGameOverID;
 
-        std::vector<GameObject*> m_gameObjects;
+        std::vector<GameObject*> mGameObjects;
 };
 
 #endif

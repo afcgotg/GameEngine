@@ -8,36 +8,36 @@ SDLGameObject::SDLGameObject() : GameObject(){
 
 void SDLGameObject::load(const LoaderParams* pParams)
 {
-    m_position = Vector2D(pParams->getX(), pParams->getY());
-    m_velocity = Vector2D(0,0);
-    m_acceleration = Vector2D(0,0);
-    m_width = pParams->getWidth();
-    m_height = pParams->getHeight();
-    m_textureID = pParams->getTextureID();
-    m_currentRow = 1;
-    m_currentFrame = 1;
-    m_numFrames = pParams->getNumFrames();
+    mPosition = Vector2D(pParams->getX(), pParams->getY());
+    mVelocity = Vector2D(0,0);
+    mAcceleration = Vector2D(0,0);
+    mWidth = pParams->getWidth();
+    mHeight = pParams->getHeight();
+    mTextureID = pParams->getTextureID();
+    mCurrentRow = 1;
+    mCurrentFrame = 1;
+    mNumFrames = pParams->getNumFrames();
 }
 
 void SDLGameObject::draw(){
-    TheTextureManager::Instance()->drawFrame(m_textureID, static_cast<int>(m_position.getX()), static_cast<int>(m_position.getY()), m_width, m_height, m_currentRow, m_currentFrame, TheGameWindow::Instance()->GetRenderer());
+    TheTextureManager::Instance()->drawFrame(mTextureID, static_cast<int>(mPosition.getX()), static_cast<int>(mPosition.getY()), mWidth, mHeight, mCurrentRow, mCurrentFrame, TheGameWindow::Instance()->GetRenderer());
 }
 
 void SDLGameObject::update(){
-    m_position += m_velocity;
-    m_velocity += m_acceleration;
+    mPosition += mVelocity;
+    mVelocity += mAcceleration;
 }
 
 void SDLGameObject::clean(){}
 
 Vector2D& SDLGameObject::getPosition(){
-    return m_position;
+    return mPosition;
 }
 
 int SDLGameObject::getWidth(){
-    return m_width;
+    return mWidth;
 }
 
 int SDLGameObject::getHeight(){
-    return m_height;
+    return mHeight;
 }

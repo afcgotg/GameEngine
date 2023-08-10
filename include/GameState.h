@@ -15,7 +15,7 @@ class GameState{
         virtual std::string getStateID() const = 0;
     
     protected:
-        std::vector<std::string> m_textureIDList;
+        std::vector<std::string> mTextureIDList;
 };
 
 #endif

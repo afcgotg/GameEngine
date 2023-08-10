@@ -27,9 +27,9 @@ class MenuButton : public SDLGameObject{
             CLICKED = 2
         };
 
-        void (*m_callback)();
+        void (*mCallback)();
 
-        bool m_bPressed;
+        bool mPressed;
 };
 
 class MenuButtonCreator : public BaseCreator

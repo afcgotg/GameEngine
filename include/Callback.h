@@ -10,15 +10,15 @@ public:
 class StaticCallback : public Callback{
     public:
         
-        StaticCallback(void (*func)()) : m_func(func){
+        StaticCallback(void (*func)()) : mFunc(func){
         }
         
         virtual void call(){
-            m_func();
+            mFunc();
         }
         
     private:
-        void (*m_func)();
+        void (*mFunc)();
 };
 
 #endif

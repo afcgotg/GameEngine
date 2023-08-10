@@ -23,18 +23,18 @@ class SDLGameObject : public GameObject{
 
     protected:
 
-        Vector2D m_position;
-        Vector2D m_velocity;
-        Vector2D m_acceleration;
+        Vector2D mPosition;
+        Vector2D mVelocity;
+        Vector2D mAcceleration;
 
-        int m_width;
-        int m_height;
-        uint32_t m_currentRow;
-        uint32_t m_currentFrame;
-        uint32_t m_numFrames;
-        uint64_t m_callbackID;
+        int mWidth;
+        int mHeight;
+        uint32_t mCurrentRow;
+        uint32_t mCurrentFrame;
+        uint32_t mNumFrames;
+        uint64_t mCallbackID;
 
-        std::string m_textureID;
+        std::string mTextureID;
 };
 
 #endif

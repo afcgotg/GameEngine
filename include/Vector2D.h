@@ -33,8 +33,8 @@ class Vector2D{
 
 
     private:
-        float m_x;
-        float m_y;
+        float mX;
+        float mY;
 };
 
 #endif

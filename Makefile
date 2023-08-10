@@ -20,12 +20,12 @@ OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
 
 # Default target
 $(NAME): $(OBJECTS)
-	@echo Building...
+	@echo -n Building...
 	@$(CXX) $^ -o $@ $(INCFLAGS) $(LIBFLAGS)
 	@echo Done.
 
 $(DEB_DIR)/$(NAME)_debug: $(OBJECTS:$(OBJ_DIR)/%.o=$(DEBUG_OBJ_DIR)/%.o)
-	@echo Building...
+	@echo -n Building...
 	@$(CXX) $^ -o $@ $(INCFLAGS) $(LIBFLAGS) 
 	@echo Done.
 
@@ -77,9 +77,11 @@ copy:
 	rsync -r --update ./assets $(DEB_DIR)
 
 clean_windows:
+	@echo -n Cleaning...
 	@rm -f $(OBJ_DIR)/*.o $(DEBUG_OBJ_DIR)/*.o $(NAME).exe $(DEB_DIR)/*.exe $(DEB_DIR)/assets 2>/dev/null || :
-	@echo Clean.
+	@echo Done.
 
 clean_linux:
+	@echo Cleaning...
 	@rm -f $(OBJ_DIR)/*.o $(DEBUG_OBJ_DIR)/*.o $(NAME) $(DEB_DIR)/*.exe $(DEB_DIR)/assets 2>/dev/null || :
-	@echo Clean.
+	@echo Done.

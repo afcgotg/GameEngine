@@ -26,11 +26,11 @@ class GameStateMachine{
 
         GameStateMachine(){};
 
-        static GameStateMachine* _instance;
+        static GameStateMachine* mpInstance;
 
-        static std::vector<GameState*> m_gameStates;
+        static std::vector<GameState*> mGameStates;
 
-        bool m_bStateChanged;
+        bool mStateChanged;
 };
 
 typedef GameStateMachine TheGameStateMachine;

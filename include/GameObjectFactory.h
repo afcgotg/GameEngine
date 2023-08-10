@@ -25,10 +25,10 @@ class GameObjectFactory{
 
 
     private: 
-        static GameObjectFactory* s_pInstance;
+        static GameObjectFactory* mpInstance;
 
         GameObjectFactory(){};
-        std::map<std::string, BaseCreator*> m_creators;
+        std::map<std::string, BaseCreator*> mCreators;
 };
 
 typedef GameObjectFactory TheGameObjectFactory;

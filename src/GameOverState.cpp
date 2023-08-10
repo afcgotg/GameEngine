@@ -9,12 +9,12 @@
 #include "MainMenuState.h"
 #include "PlayState.h"
 
-const std::string GameOverState::s_gameOverID = "GAMEOVER";
+const std::string GameOverState::mGameOverID = "GAMEOVER";
 
 void GameOverState::update(){
-    for(size_t i = 0; i < m_gameObjects.size(); i++){
+    for(size_t i = 0; i < mGameObjects.size(); i++){
         if(!TheGameStateMachine::Instance()->getStateChanged()){
-            m_gameObjects[i]->update();
+            mGameObjects[i]->update();
         }else{
             TheGameStateMachine::Instance()->setStateChanged(false);
             break;
@@ -23,8 +23,8 @@ void GameOverState::update(){
 }
 
 void GameOverState::render(){
-    for(size_t i = 0; i < m_gameObjects.size(); i++){
-        m_gameObjects[i]->draw();
+    for(size_t i = 0; i < mGameObjects.size(); i++){
+        mGameObjects[i]->draw();
     }
 }
 
@@ -36,13 +36,13 @@ bool GameOverState::onEnter(std::string filePath){
 
     fullPath += "/states.xml";
 
-    stateParser.parseState(fullPath, s_gameOverID, &m_gameObjects, &m_textureIDList);
+    stateParser.parseState(fullPath, mGameOverID, &mGameObjects, &mTextureIDList);
 
-    m_callbacks.push_back(0);
-    m_callbacks.push_back(s_gameOverToMain);
-    m_callbacks.push_back(s_restartPlay);
+    mCallbacks.push_back(0);
+    mCallbacks.push_back(s_gameOverToMain);
+    mCallbacks.push_back(s_restartPlay);
 
-    setCallbacks(m_callbacks);
+    setCallbacks(mCallbacks);
 
     std::cout << "entering gameOver State" << std::endl;
     
@@ -50,14 +50,14 @@ bool GameOverState::onEnter(std::string filePath){
 }
 
 bool GameOverState::onExit(){
-        for(size_t i = 0; i < m_textureIDList.size(); i++){
-        TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
+        for(size_t i = 0; i < mTextureIDList.size(); i++){
+        TheTextureManager::Instance()->clearFromTextureMap(mTextureIDList[i]);
     }
     return true;
 }
 
 std::string GameOverState::getStateID() const{
-    return s_gameOverID;
+    return mGameOverID;
 }
 
 void GameOverState::s_gameOverToMain(){
@@ -69,9 +69,9 @@ void GameOverState::s_restartPlay(){
 }
 
 void GameOverState::setCallbacks(const std::vector<Callback>& callbacks){
-    for(size_t i = 0; i < m_gameObjects.size(); i++){
-        if(dynamic_cast<MenuButton*>(m_gameObjects[i])){
-            MenuButton* pButton = dynamic_cast<MenuButton*>(m_gameObjects[i]);
+    for(size_t i = 0; i < mGameObjects.size(); i++){
+        if(dynamic_cast<MenuButton*>(mGameObjects[i])){
+            MenuButton* pButton = dynamic_cast<MenuButton*>(mGameObjects[i]);
             pButton->setCallback(callbacks[pButton->getCallbackID()]);
         }
     }

@@ -2,18 +2,18 @@
 #include "Player.h"
 #include "Enemy.h"
 
-GameObjectFactory* GameObjectFactory::s_pInstance = 0;
+GameObjectFactory* GameObjectFactory::mpInstance = 0;
 
 GameObjectFactory* GameObjectFactory::Instance(){
-    if(s_pInstance == 0){
-        s_pInstance = new GameObjectFactory();
+    if(mpInstance == 0){
+        mpInstance = new GameObjectFactory();
     }
-    return s_pInstance;
+    return mpInstance;
 }
 GameObject* GameObjectFactory::createGameObject(std::string typeID)
 {
-    std::map<std::string, BaseCreator*>::iterator it = m_creators.find(typeID);
-    if(it == m_creators.end())
+    std::map<std::string, BaseCreator*>::iterator it = mCreators.find(typeID);
+    if(it == mCreators.end())
     {
         std::cout << "could not find type: " << typeID << std::endl;
         return 0;
@@ -24,12 +24,12 @@ GameObject* GameObjectFactory::createGameObject(std::string typeID)
 
 bool GameObjectFactory::registerType(std::string typeID, BaseCreator* pCreator)
 {
-    std::map<std::string, BaseCreator*>::iterator it = m_creators.find(typeID);
-    if(it != m_creators.end())
+    std::map<std::string, BaseCreator*>::iterator it = mCreators.find(typeID);
+    if(it != mCreators.end())
     {
         delete pCreator;
         return false;
     }
-    m_creators[typeID] = pCreator;
+    mCreators[typeID] = pCreator;
     return true;
 }

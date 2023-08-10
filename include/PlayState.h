@@ -19,9 +19,9 @@ class PlayState : public GameState{
         virtual std::string getStateID() const;
 
     private:
-        static const std::string s_playID;
+        static const std::string mPlayID;
 
-        std::vector<GameObject*> m_gameObjects;
+        std::vector<GameObject*> mGameObjects;
 
         bool checkCollision(SDLGameObject* p1, SDLGameObject* p2);
 };

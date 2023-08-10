@@ -21,12 +21,12 @@ class MainMenuState : public MenuState {
     private:
         virtual void setCallbacks(const std::vector<Callback> &callbacks);
         
-        static const std::string s_menuID;
+        static const std::string mMenuID;
 
-        std::vector<GameObject*> m_gameObjects;
+        std::vector<GameObject*> mGameObjects;
 
-        static void s_menuToPlay();
-        static void s_exitFromMenu();
+        static void mMenuToPlay();
+        static void mExitFromMenu();
 
 };
 

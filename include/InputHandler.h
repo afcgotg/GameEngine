@@ -45,24 +45,24 @@ class InputHandler{
         InputHandler();
         ~InputHandler(){};
 
-        std::vector<SDL_Joystick*> m_joysticks;
-        bool m_bJoysticksInitialised;
+        std::vector<SDL_Joystick*> mJoysticks;
+        bool mJoysticksInitialised;
 
-        std::vector<std::pair<Vector2D*, Vector2D*>> m_joystickValues;
-        const int m_joystickDeadZone = 10000;
+        std::vector<std::pair<Vector2D*, Vector2D*>> mJoystickValues;
+        const int mJoystickDeadZone = 10000;
 
-        std::vector<std::pair<int*, int*>> m_triggerValues;
-        const uint32_t m_triggerDeadZone = 10000;
+        std::vector<std::pair<int*, int*>> mTriggerValues;
+        const uint32_t mTriggerDeadZone = 10000;
 
-        std::vector<std::pair<int*, int*>> m_dpadValues;
+        std::vector<std::pair<int*, int*>> mDpadValues;
 
-        std::vector<std::vector<bool>> m_buttonStates;
+        std::vector<std::vector<bool>> mButtonStates;
 
-        std::vector<bool> m_mouseButtonStates;
+        std::vector<bool> mMouseButtonStates;
 
-        Vector2D* m_mousePosition;
+        Vector2D* mMousePosition;
 
-        const Uint8* m_keystates;
+        const Uint8* mKeystates;
 
         // functions to handle different event types
 

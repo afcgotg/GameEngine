@@ -25,9 +25,9 @@ class PauseState : public MenuState{
         static void s_pauseToMain();
         static void s_resumePlay();
 
-        static const std::string s_pauseID;
+        static const std::string mPauseID;
 
-        std::vector<GameObject*> m_gameObjects;
+        std::vector<GameObject*> mGameObjects;
 };
 
 #endif

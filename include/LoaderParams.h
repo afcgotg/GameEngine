@@ -18,18 +18,18 @@ class LoaderParams{
         uint32_t getAnimSpeed() const;
 
     private:
-        int m_x;
-        int m_y;
+        int mX;
+        int mY;
 
-        int m_width;
-        int m_height;
+        int mWidth;
+        int mHeight;
 
-        std::string m_textureID;
+        std::string mTextureID;
 
-        uint32_t m_numFrames;
-        uint32_t m_animSpeed;
+        uint32_t mNumFrames;
+        uint32_t mAnimSpeed;
 
-        uint64_t m_callbackID;
+        uint64_t mCallbackID;
 };
 
 #endif

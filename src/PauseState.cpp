@@ -8,7 +8,7 @@
 #include <cstring>
 
 
-const std::string PauseState::s_pauseID = "PAUSE";
+const std::string PauseState::mPauseID = "PAUSE";
 
 void PauseState::s_pauseToMain(){
     TheGameStateMachine::Instance()->changeState(new MainMenuState());
@@ -19,9 +19,9 @@ void PauseState::s_resumePlay(){
 }
 
 void PauseState::update(){
-    for(uint64_t i = 0; i < m_gameObjects.size(); i++){
+    for(uint64_t i = 0; i < mGameObjects.size(); i++){
         if(!TheGameStateMachine::Instance()->getStateChanged()){
-            m_gameObjects[i]->update();
+            mGameObjects[i]->update();
         }else{
             TheGameStateMachine::Instance()->setStateChanged(false);
             break;
@@ -30,8 +30,8 @@ void PauseState::update(){
 }
 
 void PauseState::render(){
-    for(uint64_t i = 0; i < m_gameObjects.size(); i++){
-        m_gameObjects[i]->draw();
+    for(uint64_t i = 0; i < mGameObjects.size(); i++){
+        mGameObjects[i]->draw();
     }
 }
 
@@ -41,13 +41,13 @@ bool PauseState::onEnter(std::string filePath){
     std::string fullPath(filePath);
     fullPath += "\\states.xml";
 
-    stateParser.parseState(fullPath, s_pauseID, &m_gameObjects, &m_textureIDList);
+    stateParser.parseState(fullPath, mPauseID, &mGameObjects, &mTextureIDList);
 
-    m_callbacks.push_back(0);
-    m_callbacks.push_back(s_pauseToMain);
-    m_callbacks.push_back(s_resumePlay);
+    mCallbacks.push_back(0);
+    mCallbacks.push_back(s_pauseToMain);
+    mCallbacks.push_back(s_resumePlay);
 
-    setCallbacks(m_callbacks);
+    setCallbacks(mCallbacks);
 
     std::cout << "entering PauseState" << std::endl;
 
@@ -55,20 +55,20 @@ bool PauseState::onEnter(std::string filePath){
 }
 
 bool PauseState::onExit(){
-    for(uint64_t i = 0; i < m_textureIDList.size(); i++){
-        TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
+    for(uint64_t i = 0; i < mTextureIDList.size(); i++){
+        TheTextureManager::Instance()->clearFromTextureMap(mTextureIDList[i]);
     }
     return true;
 }
 
 std::string PauseState::getStateID() const{
-    return s_pauseID;
+    return mPauseID;
 }
 
 void PauseState::setCallbacks(const std::vector<Callback>& callbacks){
-    for(uint64_t i = 0; i < m_gameObjects.size(); i++){
-        if(dynamic_cast<MenuButton*>(m_gameObjects[i])){
-            MenuButton* pButton = dynamic_cast<MenuButton*>(m_gameObjects[i]);
+    for(uint64_t i = 0; i < mGameObjects.size(); i++){
+        if(dynamic_cast<MenuButton*>(mGameObjects[i])){
+            MenuButton* pButton = dynamic_cast<MenuButton*>(mGameObjects[i]);
             pButton->setCallback(callbacks[pButton->getCallbackID()]);
         }
     }

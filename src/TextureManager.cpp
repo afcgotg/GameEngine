@@ -1,12 +1,12 @@
 #include "TextureManager.h"
 
-TextureManager* TextureManager::s_pInstance = 0;
+TextureManager* TextureManager::mpInstance = 0;
 
 TextureManager* TextureManager::Instance(){
-    if(s_pInstance == 0){
-        s_pInstance = new TextureManager();
+    if(mpInstance == 0){
+        mpInstance = new TextureManager();
     }
-    return s_pInstance;
+    return mpInstance;
 }
 
 TextureManager::TextureManager(){
@@ -28,7 +28,7 @@ bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pR
     SDL_FreeSurface(pTempSurface);
 
     if(pTexture != 0){
-        m_textureMap[id] = pTexture;
+        mTextureMap[id] = pTexture;
         return true;
     }
 
@@ -45,7 +45,7 @@ void TextureManager::draw(std::string id, int x, int y, int width, int height, S
     destRect.x = x;
     destRect.y = y;
 
-    SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+    SDL_RenderCopyEx(pRenderer, mTextureMap[id], &srcRect, &destRect, 0, 0, flip);
 }
 
 void TextureManager::drawFrame(std::string id, int x, int y, int width, int height, uint32_t currentRow, uint32_t currentFrame, SDL_Renderer* pRenderer, SDL_RendererFlip flip){
@@ -58,9 +58,9 @@ void TextureManager::drawFrame(std::string id, int x, int y, int width, int heig
     destRect.x = x;
     destRect.y = y;
 
-    SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+    SDL_RenderCopyEx(pRenderer, mTextureMap[id], &srcRect, &destRect, 0, 0, flip);
 }
 
 void TextureManager::clearFromTextureMap(std::string id){
-    m_textureMap.erase(id);
+    mTextureMap.erase(id);
 }

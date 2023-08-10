@@ -17,9 +17,8 @@ class AnimatedGraphic : public SDLGameObject{
         virtual void clean();
 
     private:
-        uint32_t m_animSpeed;
-
-        uint32_t m_numFrames = 2;
+        uint32_t mAnimSpeed;
+        uint32_t mNumFrames = 1;
 };
 
 class AnimatedGraphicCreator : public BaseCreator {
