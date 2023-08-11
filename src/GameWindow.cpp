@@ -29,8 +29,8 @@ bool GameWindow::Create()
     _title = "Game title";
     _xpos = SDL_WINDOWPOS_CENTERED;
     _ypos = SDL_WINDOWPOS_CENTERED;
-    _width = 600;
-    _height = 400;
+    _width = 800;
+    _height = 600;
     _isFullScreen = false;
 
     _fps = 60;
@@ -38,7 +38,7 @@ bool GameWindow::Create()
 
     ApplyFlags();
 
-    _window = SDL_CreateWindow(_title.c_str(), _xpos, _ypos, _height, _width, _flags);
+    _window = SDL_CreateWindow(_title.c_str(), _xpos, _ypos, _width, _height, _flags);
 
     if(_window != nullptr)
     {
