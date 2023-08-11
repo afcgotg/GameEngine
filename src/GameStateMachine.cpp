@@ -1,10 +1,12 @@
 #include "GameStateMachine.h"
 #include "Game.h"
+#include "PathManager.h"
 
 #include <iostream>
 #include <cstring>
 
 GameStateMachine* GameStateMachine::mpInstance = nullptr;
+
 std::vector<GameState*> GameStateMachine::mGameStates;
 
 GameStateMachine* GameStateMachine::Instance()
@@ -16,12 +18,7 @@ GameStateMachine* GameStateMachine::Instance()
 
 void GameStateMachine::pushState(GameState* pState){
     mGameStates.push_back(pState);
-
-    std::string assetsPath(TheGame::Instance()->GetExecutionPath());
-
-    assetsPath += "\\assets";
-
-    mGameStates.back()->onEnter(assetsPath);
+    mGameStates.back()->onEnter(ThePathManager::Instance()->GetAssetsPath());
 }
 
 void GameStateMachine::changeState(GameState* pState){

@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstring>
 
 #include "Game.h"
 
@@ -16,37 +15,17 @@
 
 #include "MenuButton.h"
 
-Game* Game::_instance = 0;
+Game* Game::mInstance = nullptr;
 
 Game* Game::Instance(){
-    if(_instance == 0){
-        _instance = new Game();
-    }
-    return _instance;
-}
-
-void Game::SetExecutionPath(char* path){
-#if defined(_WIN64)
-    const char* slash = "\\";
-#elif defined(__unix__) && defined(__x86_64__)
-    const char* slash = "/";
-#endif
-    char* lastSlash = strrchr(path, slash[0]);
-    if(lastSlash != nullptr) 
-        *lastSlash = '\0';
-
-    _executionPath = std::string(path);
-    
-}
-
-std::string Game::GetExecutionPath() const
-{
-    return _executionPath;
+    if(!mInstance)
+        mInstance = new Game();
+    return mInstance;
 }
 
 bool Game::Init() {
 
-    _isRunning = false;
+    mIsRunning = false;
 
     if(!InitSDL())
         return false;
@@ -63,7 +42,7 @@ bool Game::Init() {
 
     TheGameStateMachine::Instance()->changeState(new MainMenuState());
 
-    _isRunning = true;
+    mIsRunning = true;
 
     return true;
 }
@@ -85,7 +64,7 @@ bool Game::InitSDL()
 void Game::GameLoop()
 {
     uint32_t frameStart, frameTime;
-    while(_isRunning)
+    while(mIsRunning)
     {
         frameStart = SDL_GetTicks();
 
@@ -114,7 +93,7 @@ void Game::HandleEvent(){
 }
 
 void Game::Clean(){
-    _isRunning = false;
+    mIsRunning = false;
     std::cout << "cleaning game..." << std::endl;
     TheInputHandler::Instance()->clean();
     TheGameWindow::Instance()->Destroy();

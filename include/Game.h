@@ -11,8 +11,6 @@ class Game
 {
     public:
         static Game* Instance();
-        void SetExecutionPath(char* path);
-        std::string GetExecutionPath() const;
         ~Game(){};
 
         void GameLoop();
@@ -28,11 +26,9 @@ class Game
         void Update();
         void HandleEvent();
 
-        static Game* _instance;
+        static Game* mInstance;
 
-        std::string _executionPath;
-
-        bool _isRunning;
+        bool mIsRunning;
 };
 
 typedef Game TheGame;
