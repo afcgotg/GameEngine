@@ -27,14 +27,16 @@ bool StateParser::parseState(std::string stateFile, std::string stateID, std::ve
 
     tinyxml2::XMLElement* pTextureRoot = 0;
     for(tinyxml2::XMLElement* e = pStateRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement()){
-        if(e->Value() == std::string("TEXTURES")) pTextureRoot = e;
+        if(e->Value() == std::string("TEXTURES")) 
+            pTextureRoot = e;
     }
     parseTextures(pTextureRoot, pTextureIDs);
     std::cout << "Texturas cargadas" << std::endl;
 
     tinyxml2::XMLElement* pObjectRoot = 0;
     for(tinyxml2::XMLElement* e = pStateRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement()){
-        if(e->Value() == std::string("OBJECTS")) pObjectRoot = e;
+        if(e->Value() == std::string("OBJECTS")) 
+            pObjectRoot = e;
     }
     parseObjects(pObjectRoot, pObjects);
         std::cout << "Objetos cargados" << std::endl;

@@ -6,27 +6,38 @@
 #ifndef __GameWindow__
 #define __GameWindow__
 
+struct RGBa
+{
+    int red;
+    int green;
+    int blue;
+    int alpha;
+};
+
 class GameWindow
 {
     private:
         GameWindow(){};
-        static GameWindow* _instance;
+        static GameWindow* mInstance;
 
-        std::string _title;
-        int _xpos;
-        int _ypos;
-        int _height;
-        int _width;
-        uint32_t _flags;
-        bool _isFullScreen;
+        std::string mTitle;
+        int mX;
+        int mY;
+        int mHeight;
+        int mWidth;
+        uint32_t mFlags;
+        bool mIsFullScreen;
+        RGBa mBackgroundColor;
 
-        uint8_t _fps;
-        uint32_t _delayTime;
+        int mFps;
+        uint32_t mDelayTime;
 
-        static SDL_Window* _window;
-        static SDL_Renderer* _renderer;
+        static SDL_Window* mWindow;
+        static SDL_Renderer* mRenderer;
 
         void ApplyFlags();
+
+
 
     public:
         ~GameWindow(){};
@@ -35,6 +46,8 @@ class GameWindow
 
         bool Create();
         void Destroy();
+
+        bool LoadSettings();
 
         uint32_t GetDelayTime() const;
         

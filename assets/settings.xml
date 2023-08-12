@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <SETTINGS>
-    <SCREEN>
-        <size width="300" height="400"/>
-    </SCREEN>
+    <WINDOW>
+        <values width="800" height="600" title="Asteroids" fps="60" fullScreen="false"/>
+        <backgroundColor red="0" green="0" blue="0" alpha="255" />
+    </WINDOW>
 </SETTINGS>

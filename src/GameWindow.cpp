@@ -1,53 +1,98 @@
 #include "GameWindow.h"
+#include "PathManager.h"
+#include "tinyxml2.h"
 
-GameWindow* GameWindow::_instance = nullptr;
-SDL_Window* GameWindow::_window = nullptr;
-SDL_Renderer* GameWindow::_renderer = nullptr;
+GameWindow* GameWindow::mInstance = nullptr;
+SDL_Window* GameWindow::mWindow = nullptr;
+SDL_Renderer* GameWindow::mRenderer = nullptr;
 
 GameWindow* GameWindow::Instance()
 {
-    if(_instance == nullptr)
+    if(mInstance == nullptr)
     {
-        _instance = new GameWindow();
+        mInstance = new GameWindow();
     }
-    return _instance;
+    return mInstance;
 }
 
 void GameWindow::ApplyFlags()
 {
-    _flags = 0;
-    if(_isFullScreen)
-        _flags = SDL_WINDOW_FULLSCREEN;
+    mFlags = 0;
+    if(mIsFullScreen)
+        mFlags = SDL_WINDOW_FULLSCREEN;
 }
 
 SDL_Renderer* GameWindow::GetRenderer() const{
-    return _renderer;
+    return mRenderer;
+}
+
+bool GameWindow::LoadSettings()
+{
+    tinyxml2::XMLDocument xmlDoc;
+    std::string settingsFile = ThePathManager::Instance()->GetExecutionPath() + "\\assets\\settings.xml";
+
+    std::cout << "GameWindow::LoadSettings" << std::endl;
+
+    if(xmlDoc.LoadFile(settingsFile.c_str())){
+        std::cout << xmlDoc.ErrorStr() << std::endl;
+        return false;
+    }
+
+    tinyxml2::XMLElement* pRoot = xmlDoc.RootElement(); // <SETTINGS>
+    tinyxml2::XMLElement* pWindowRoot = 0;
+
+    for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement()){
+        if(e->Value() == std::string("WINDOW")){
+            std::cout << "Window settings found" << std::endl;
+            pWindowRoot = e;
+            break;
+        }
+    }
+
+    tinyxml2::XMLElement* e = pWindowRoot->FirstChildElement();
+
+    mX = SDL_WINDOWPOS_CENTERED;
+    mY = SDL_WINDOWPOS_CENTERED;
+    
+    e->QueryIntAttribute("width", &mWidth);
+    e->QueryIntAttribute("height", &mHeight);
+    mTitle = std::string(e->Attribute("title"));
+    e->QueryIntAttribute("fps", &mFps);
+    e->QueryBoolAttribute("fullScreen", &mIsFullScreen);
+
+    e = e->NextSiblingElement();
+
+    e->QueryIntAttribute("red", &mBackgroundColor.red);
+    e->QueryIntAttribute("green", &mBackgroundColor.green);
+    e->QueryIntAttribute("blue", &mBackgroundColor.blue);
+    e->QueryIntAttribute("alpha", &mBackgroundColor.alpha);
+
+    return true;
 }
 
 bool GameWindow::Create()
 {
-    _title = "Game title";
-    _xpos = SDL_WINDOWPOS_CENTERED;
-    _ypos = SDL_WINDOWPOS_CENTERED;
-    _width = 800;
-    _height = 600;
-    _isFullScreen = false;
+    LoadSettings();
 
-    _fps = 60;
-    _delayTime = 1000 / _fps;
+    mDelayTime = 1000 / mFps;
+    
+    mFlags = 0;
+    if(mIsFullScreen)
+        mFlags = SDL_WINDOW_FULLSCREEN;
+
 
     ApplyFlags();
 
-    _window = SDL_CreateWindow(_title.c_str(), _xpos, _ypos, _width, _height, _flags);
+    mWindow = SDL_CreateWindow(mTitle.c_str(), mX, mY, mWidth, mHeight, mFlags);
 
-    if(_window != nullptr)
+    if(mWindow != nullptr)
     {
         std::cout << "Window creation succed" << std::endl;
-        _renderer = SDL_CreateRenderer(_window, -1, 0);
-        if(_renderer != nullptr)
+        mRenderer = SDL_CreateRenderer(mWindow, -1, 0);
+        if(mRenderer != nullptr)
         {
             std::cout << "Renderer creation succed" << std::endl;
-            SDL_SetRenderDrawColor(_renderer, 110, 160, 180, 255);
+            SDL_SetRenderDrawColor(mRenderer, mBackgroundColor.red, mBackgroundColor.green, mBackgroundColor.blue, mBackgroundColor.alpha);
         }
         else
         {
@@ -65,11 +110,11 @@ bool GameWindow::Create()
 
 void GameWindow::Destroy()
 {
-    SDL_DestroyWindow(_window);
-    SDL_DestroyRenderer(_renderer);
+    SDL_DestroyWindow(mWindow);
+    SDL_DestroyRenderer(mRenderer);
 }
 
 uint32_t GameWindow::GetDelayTime() const
 {
-    return _delayTime;
+    return mDelayTime;
 }
