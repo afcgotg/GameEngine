@@ -1,11 +1,11 @@
 #include <iostream>
 
 #include "Game.h"
-#include "PathManager.h"
+#include "FileManager.h"
 
 int main(int argc, char* argv[])
 {
-    ThePathManager::Instance()->SetExecutionPath(argv[0]);
+    TheFileManager::Instance()->SetExecutionPath(argv[0]);
     if(TheGame::Instance()->Init())
     {
         TheGame::Instance()->GameLoop();

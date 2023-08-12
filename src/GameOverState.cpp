@@ -4,6 +4,7 @@
 #include "MenuButton.h"
 #include "StateParser.h"
 #include "Game.h"
+#include "FileManager.h"
 
 #include "GameOverState.h"
 #include "MainMenuState.h"
@@ -28,24 +29,17 @@ void GameOverState::render(){
     }
 }
 
-bool GameOverState::onEnter(std::string filePath){
-    std::cout << "OnEnter function GameOverState" << std::endl;
+bool GameOverState::onEnter(){
+    std::string filePath = TheFileManager::Instance()->GetStatesFilePath();
+
     StateParser stateParser;
-
-    std::string fullPath(filePath);
-
-    fullPath += "/states.xml";
-
-    stateParser.parseState(fullPath, mGameOverID, &mGameObjects, &mTextureIDList);
+    stateParser.parseState(filePath, mGameOverID, &mGameObjects, &mTextureIDList);
 
     mCallbacks.push_back(0);
     mCallbacks.push_back(s_gameOverToMain);
     mCallbacks.push_back(s_restartPlay);
-
     setCallbacks(mCallbacks);
 
-    std::cout << "entering gameOver State" << std::endl;
-    
     return true;
 }
 

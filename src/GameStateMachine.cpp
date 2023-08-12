@@ -1,6 +1,6 @@
 #include "GameStateMachine.h"
 #include "Game.h"
-#include "PathManager.h"
+#include "FileManager.h"
 
 #include <iostream>
 #include <cstring>
@@ -18,7 +18,7 @@ GameStateMachine* GameStateMachine::Instance()
 
 void GameStateMachine::pushState(GameState* pState){
     mGameStates.push_back(pState);
-    mGameStates.back()->onEnter(ThePathManager::Instance()->GetAssetsPath());
+    mGameStates.back()->onEnter();
 }
 
 void GameStateMachine::changeState(GameState* pState){

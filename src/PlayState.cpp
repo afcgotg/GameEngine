@@ -10,6 +10,7 @@
 #include "PauseState.h"
 #include "GameOverState.h"
 #include "StateParser.h"
+#include "FileManager.h"
 
 const std::string PlayState::mPlayID = "PLAY";
 
@@ -34,15 +35,12 @@ void PlayState::render(){
     }
 }
 
-bool PlayState::onEnter(std::string filePath){
+bool PlayState::onEnter(){
+    std::string filePath = TheFileManager::Instance()->GetStatesFilePath();
+
     StateParser stateParser;
+    stateParser.parseState(filePath, mPlayID, &mGameObjects, &mTextureIDList);
 
-    std::string fullPath(filePath);
-    fullPath += "\\states.xml";
-
-    stateParser.parseState(fullPath, mPlayID, &mGameObjects, &mTextureIDList);
-
-    std::cout << "entering PlayState" << std::endl;
     return true;
 }
 

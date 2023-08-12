@@ -8,6 +8,7 @@
 #include "MenuButton.h"
 #include "StateParser.h"
 #include "Callback.h"
+#include "FileManager.h"
 
 const std::string MainMenuState::mMenuID = "MENU";
 
@@ -29,25 +30,17 @@ void MainMenuState::render(){
     }
 }
 
-bool MainMenuState::onEnter(std::string filePath){
-    std::cout << "OnEnter function MainMenuState" << std::endl;
-    StateParser stateParser;
-
-    std::string fullPath(filePath);
-
-    fullPath += "\\states.xml";
-
-    if (!stateParser.parseState(fullPath, mMenuID, &mGameObjects, &mTextureIDList))
-        std::cout << "Error" << std::endl;
+bool MainMenuState::onEnter(){
     
+    std::string filepath = TheFileManager::Instance()->GetStatesFilePath();
+
+    StateParser stateParser;
+    stateParser.parseState(filepath, mMenuID, &mGameObjects, &mTextureIDList);    
         
     mCallbacks.push_back(0);
     mCallbacks.push_back(mMenuToPlay);
     mCallbacks.push_back(mExitFromMenu);
-
     setCallbacks(mCallbacks);
-
-    std::cout << "entering MainMenuState" << std::endl;
 
     return true;
 }

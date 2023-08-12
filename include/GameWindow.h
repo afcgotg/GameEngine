@@ -32,8 +32,8 @@ class GameWindow
         int mFps;
         uint32_t mDelayTime;
 
-        static SDL_Window* mWindow;
-        static SDL_Renderer* mRenderer;
+        SDL_Window* mWindow;
+        SDL_Renderer* mRenderer;
 
         void ApplyFlags();
 

@@ -1,17 +1,13 @@
 #include "GameWindow.h"
-#include "PathManager.h"
+#include "FileManager.h"
 #include "tinyxml2.h"
 
 GameWindow* GameWindow::mInstance = nullptr;
-SDL_Window* GameWindow::mWindow = nullptr;
-SDL_Renderer* GameWindow::mRenderer = nullptr;
 
 GameWindow* GameWindow::Instance()
 {
     if(mInstance == nullptr)
-    {
         mInstance = new GameWindow();
-    }
     return mInstance;
 }
 
@@ -19,7 +15,7 @@ void GameWindow::ApplyFlags()
 {
     mFlags = 0;
     if(mIsFullScreen)
-        mFlags = SDL_WINDOW_FULLSCREEN;
+        mFlags |= SDL_WINDOW_FULLSCREEN;
 }
 
 SDL_Renderer* GameWindow::GetRenderer() const{
@@ -29,11 +25,9 @@ SDL_Renderer* GameWindow::GetRenderer() const{
 bool GameWindow::LoadSettings()
 {
     tinyxml2::XMLDocument xmlDoc;
-    std::string settingsFile = ThePathManager::Instance()->GetExecutionPath() + "\\assets\\settings.xml";
+    std::string filePath = TheFileManager::Instance()->GetSettingsFilePath();
 
-    std::cout << "GameWindow::LoadSettings" << std::endl;
-
-    if(xmlDoc.LoadFile(settingsFile.c_str())){
+    if(xmlDoc.LoadFile(filePath.c_str())){
         std::cout << xmlDoc.ErrorStr() << std::endl;
         return false;
     }
@@ -75,11 +69,6 @@ bool GameWindow::Create()
     LoadSettings();
 
     mDelayTime = 1000 / mFps;
-    
-    mFlags = 0;
-    if(mIsFullScreen)
-        mFlags = SDL_WINDOW_FULLSCREEN;
-
 
     ApplyFlags();
 
