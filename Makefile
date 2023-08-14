@@ -70,6 +70,22 @@ linux_x64_debug: $(DEB_DIR)/$(NAME)_debug
 linux_x64_debug: 
 	cp -r ./assets $(DEB_DIR)/assets
 
+
+##################################################
+################## tinyxml2 ######################
+##################################################
+
+./tinyxml2/obj/tinyxml2.o: 
+	@echo "> $(notdir tinyxml2.cpp)" | sed -e 's/^> src/>/g'
+	@$(CXX) -I ./tinyxml2/include/ -c ./tinyxml2/src/tinyxml2.cpp -o ./tinyxml2/obj/tinyxml2.o $(CXXFLAGS)
+
+./tinyxml2/obj/debug/tinyxml2.o: 
+	@echo "> $(notdir tinyxml2.cpp)" | sed -e 's/^> src/>/g'
+	@$(CXX) -I ./tinyxml2/include/ -c ./tinyxml2/src/tinyxml2.cpp -o ./tinyxml2/obj/debug/tinyxml2.o $(CXXFLAGS)
+
+tinyxml2: ./tinyxml2/obj/tinyxml2.o ./tinyxml2/obj/debug/tinyxml2.o
+
+
 ##################################################
 ################### EXTRAS #######################
 ##################################################

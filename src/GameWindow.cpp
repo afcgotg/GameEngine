@@ -1,6 +1,6 @@
 #include "GameWindow.h"
 #include "FileManager.h"
-#include "tinyxml2.h"
+#include "../tinyxml2/include/tinyxml2.h"
 
 GameWindow* GameWindow::mInstance = nullptr;
 
@@ -33,8 +33,8 @@ bool GameWindow::LoadSettings()
     }
 
     tinyxml2::XMLElement* pRoot = xmlDoc.RootElement(); // <SETTINGS>
+    
     tinyxml2::XMLElement* pWindowRoot = 0;
-
     for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement()){
         if(e->Value() == std::string("WINDOW")){
             std::cout << "Window settings found" << std::endl;
