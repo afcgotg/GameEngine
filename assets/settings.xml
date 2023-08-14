@@ -2,6 +2,7 @@
 <SETTINGS>
     <WINDOW>
         <values width="800" height="600" title="Asteroids" fps="60" fullScreen="false"/>
-        <backgroundColor red="255" green="122" blue="0" alpha="255" />
+        <flags fullScreen="false"/>
+        <backgroundColor red="122" green="122" blue="122" alpha="255" />
     </WINDOW>
 </SETTINGS>

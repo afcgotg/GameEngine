@@ -29,7 +29,7 @@ $(NAME): $(OBJECTS) $(TINYXML2_OBJ)
 
 $(DEB_DIR)/$(NAME)_debug: $(OBJECTS:$(OBJ_DIR)/%.o=$(DEBUG_OBJ_DIR)/%.o) $(TINYXML2_OBJ_DEB)
 	@echo -n Building...
-	@$(CXX) $^ tinyxml2/obj/debug/tinyxml2.o -o $@ $(INCFLAGS) $(LIBFLAGS) 
+	@$(CXX) $^ -o $@ $(INCFLAGS) $(LIBFLAGS) 
 	@echo Done.
 
 # Rule for compiling source files
@@ -88,7 +88,7 @@ tinyxml2/obj/tinyxml2.o:
 tinyxml2/obj/debug/tinyxml2.o:
 	@mkdir tinyxml2/obj/debug
 	@echo "> $(notdir tinyxml2.cpp)" | sed -e 's/^> src/>/g'
-	@$(CXX) -I tinyxml2/include/ -c tinyxml2/src/tinyxml2.cpp -o tinyxml2/obj/debug/tinyxml2.o $(CXXFLAGS) -g
+	@$(CXX) -I tinyxml2/include/ -c tinyxml2/src/tinyxml2.cpp -o tinyxml2/obj/debug/tinyxml2.o $(CXXFLAGS)
 
 ##################################################
 ################### EXTRAS #######################

@@ -6,7 +6,7 @@
 #ifndef __GameWindow__
 #define __GameWindow__
 
-struct RGBa
+struct RGBaColor
 {
     int red;
     int green;
@@ -27,7 +27,7 @@ class GameWindow
         int mWidth;
         uint32_t mFlags;
         bool mIsFullScreen;
-        RGBa mBackgroundColor;
+        RGBaColor mBackgroundColor;
 
         int mFps;
         uint32_t mDelayTime;
@@ -36,8 +36,7 @@ class GameWindow
         SDL_Renderer* mRenderer;
 
         void ApplyFlags();
-
-
+        void CenterWindow();
 
     public:
         ~GameWindow(){};
@@ -51,7 +50,6 @@ class GameWindow
 
         uint32_t GetDelayTime() const;
         
-        SDL_Window* GetWindow() const;
         SDL_Renderer* GetRenderer() const;
 };
 

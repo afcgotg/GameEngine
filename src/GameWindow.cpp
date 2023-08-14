@@ -1,6 +1,6 @@
 #include "GameWindow.h"
 #include "FileManager.h"
-#include "../tinyxml2/include/tinyxml2.h"
+#include "XMLFile.h"
 
 GameWindow* GameWindow::mInstance = nullptr;
 
@@ -22,50 +22,50 @@ SDL_Renderer* GameWindow::GetRenderer() const{
     return mRenderer;
 }
 
-bool GameWindow::LoadSettings()
+void GameWindow::CenterWindow()
 {
-    tinyxml2::XMLDocument xmlDoc;
-    std::string filePath = TheFileManager::Instance()->GetSettingsFilePath();
-
-    if(xmlDoc.LoadFile(filePath.c_str())){
-        std::cout << xmlDoc.ErrorStr() << std::endl;
-        return false;
-    }
-
-    tinyxml2::XMLElement* pRoot = xmlDoc.RootElement(); // <SETTINGS>
-    
-    tinyxml2::XMLElement* pWindowRoot = 0;
-    for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement()){
-        if(e->Value() == std::string("WINDOW")){
-            std::cout << "Window settings found" << std::endl;
-            pWindowRoot = e;
-            break;
-        }
-    }
-
-    tinyxml2::XMLElement* e = pWindowRoot->FirstChildElement();
-
     mX = SDL_WINDOWPOS_CENTERED;
     mY = SDL_WINDOWPOS_CENTERED;
+}
+
+bool GameWindow::LoadSettings()
+{
+    XMLFile xml(TheFileManager::Instance()->GetSettingsFilePath());
+    xml.LoadDocument();
     
-    e->QueryIntAttribute("width", &mWidth);
-    e->QueryIntAttribute("height", &mHeight);
-    mTitle = std::string(e->Attribute("title"));
-    e->QueryIntAttribute("fps", &mFps);
-    e->QueryBoolAttribute("fullScreen", &mIsFullScreen);
+    if(xml.GoToElement("WINDOW"))
+    {
+        if(xml.GoToElement("values"))
+        {
+            xml.GetIntAttribute("width", &mWidth);
+            xml.GetIntAttribute("height", &mHeight);
+            xml.GetStringAttribute("title", &mTitle);
+            xml.GetIntAttribute("fps", &mFps);
+        }
+    }
+    
+    xml.GoBack();
+    if(xml.GoToElement("flags"))
+    {
+        xml.GetBoolAttribute("fullScreen", &mIsFullScreen);
+    }
+    
 
-    e = e->NextSiblingElement();
-
-    e->QueryIntAttribute("red", &mBackgroundColor.red);
-    e->QueryIntAttribute("green", &mBackgroundColor.green);
-    e->QueryIntAttribute("blue", &mBackgroundColor.blue);
-    e->QueryIntAttribute("alpha", &mBackgroundColor.alpha);
+    xml.GoBack();
+    if(xml.GoToElement("backgroundColor"))
+    {
+        xml.GetIntAttribute("red", &mBackgroundColor.red);
+        xml.GetIntAttribute("green", &mBackgroundColor.green);
+        xml.GetIntAttribute("blue", &mBackgroundColor.blue);
+        xml.GetIntAttribute("alpha", &mBackgroundColor.alpha);
+    }
 
     return true;
 }
 
 bool GameWindow::Create()
 {
+    CenterWindow();
     LoadSettings();
 
     mDelayTime = 1000 / mFps;
