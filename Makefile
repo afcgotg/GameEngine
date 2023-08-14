@@ -2,7 +2,7 @@ NAME = game
 
 CXX = g++
 CXXFLAGS = -pedantic -Wall
-INCFLAGS = -I ./include/ 
+INCFLAGS = -I ./include/ -I ./tinyxml2/include/
 
 SRC_DIR = ./src
 DEB_DIR = ./debug
@@ -18,15 +18,18 @@ debdir:
 SOURCES = $(wildcard $(SRC_DIR)/*.cpp) $(SRC_DIR)/main.cpp
 OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
 
+TINYXML2_OBJ = tinyxml2/obj/tinyxml2.o
+TINYXML2_OBJ_DEB = tinyxml2/obj/debug/tinyxml2.o
+
 # Default target
-$(NAME): $(OBJECTS)
+$(NAME): $(OBJECTS) $(TINYXML2_OBJ)
 	@echo -n Building...
-	@$(CXX) $^ -o $@ $(INCFLAGS) $(LIBFLAGS)
+	@$(CXX) $^ -o $@  $(INCFLAGS) $(LIBFLAGS)
 	@echo Done.
 
-$(DEB_DIR)/$(NAME)_debug: $(OBJECTS:$(OBJ_DIR)/%.o=$(DEBUG_OBJ_DIR)/%.o)
+$(DEB_DIR)/$(NAME)_debug: $(OBJECTS:$(OBJ_DIR)/%.o=$(DEBUG_OBJ_DIR)/%.o) $(TINYXML2_OBJ_DEB)
 	@echo -n Building...
-	@$(CXX) $^ -o $@ $(INCFLAGS) $(LIBFLAGS) 
+	@$(CXX) $^ tinyxml2/obj/debug/tinyxml2.o -o $@ $(INCFLAGS) $(LIBFLAGS) 
 	@echo Done.
 
 # Rule for compiling source files
@@ -53,6 +56,7 @@ $(DEBUG_OBJ_DIR)/main.o: $(SRC_DIR)/main.cpp
 windows_x64_release: LIBFLAGS = `./SDL2/bin/sdl2-config --libs --cflags`
 windows_x64_release: ./$(NAME)
 
+linux_x64_release:	LIBFLAGS = -lSDL2_image `sdl2-config --libs --cflags`
 linux_x64_release: ./$(NAME)
 
 ##################################################
@@ -66,6 +70,7 @@ windows_x64_debug:
 	xcopy ".\assets" ".\debug\assets" //e //y //q //A
 
 linux_x64_debug: CXXFLAGS += -g 
+linux_x64_debug: LIBFLAGS = -lSDL2_image `sdl2-config --libs --cflags`
 linux_x64_debug: $(DEB_DIR)/$(NAME)_debug
 linux_x64_debug: 
 	cp -r ./assets $(DEB_DIR)/assets
@@ -75,22 +80,23 @@ linux_x64_debug:
 ################## tinyxml2 ######################
 ##################################################
 
-./tinyxml2/obj/tinyxml2.o: 
+tinyxml2/obj/tinyxml2.o:
+	@mkdir tinyxml2/obj
 	@echo "> $(notdir tinyxml2.cpp)" | sed -e 's/^> src/>/g'
-	@$(CXX) -I ./tinyxml2/include/ -c ./tinyxml2/src/tinyxml2.cpp -o ./tinyxml2/obj/tinyxml2.o $(CXXFLAGS)
+	@$(CXX) -I tinyxml2/include/ -c tinyxml2/src/tinyxml2.cpp -o tinyxml2/obj/tinyxml2.o $(CXXFLAGS)
 
-./tinyxml2/obj/debug/tinyxml2.o: 
+tinyxml2/obj/debug/tinyxml2.o:
+	@mkdir tinyxml2/obj/debug
 	@echo "> $(notdir tinyxml2.cpp)" | sed -e 's/^> src/>/g'
-	@$(CXX) -I ./tinyxml2/include/ -c ./tinyxml2/src/tinyxml2.cpp -o ./tinyxml2/obj/debug/tinyxml2.o $(CXXFLAGS)
-
-tinyxml2: ./tinyxml2/obj/tinyxml2.o ./tinyxml2/obj/debug/tinyxml2.o
-
+	@$(CXX) -I tinyxml2/include/ -c tinyxml2/src/tinyxml2.cpp -o tinyxml2/obj/debug/tinyxml2.o $(CXXFLAGS) -g
 
 ##################################################
 ################### EXTRAS #######################
 ##################################################
 copy: 
-	rsync -r --update ./assets $(DEB_DIR)
+	@echo -n Copiying assets folder...
+	@rsync -r --update ./assets $(DEB_DIR)
+	@echo Done.
 
 clean_windows:
 	@echo -n Cleaning...
@@ -98,6 +104,6 @@ clean_windows:
 	@echo Done.
 
 clean_linux:
-	@echo Cleaning...
+	@echo -n Cleaning...
 	@rm -f $(OBJ_DIR)/*.o $(DEBUG_OBJ_DIR)/*.o $(NAME) $(DEB_DIR)/*.exe $(DEB_DIR)/assets 2>/dev/null || :
 	@echo Done.

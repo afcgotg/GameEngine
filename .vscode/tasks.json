@@ -3,7 +3,7 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "Build Release_x64",
+            "label": "Build Release",
             "windows": {
                 "command": "make windows_x64_release",
                 "args": []
@@ -21,7 +21,7 @@
         },
         {
             "type": "shell",
-            "label": "Build Debug_x64",
+            "label": "Build Debug",
             "windows": {
                 "command": "make windows_x64_debug",
                 "args": []
