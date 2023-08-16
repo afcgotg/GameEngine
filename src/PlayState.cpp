@@ -39,7 +39,7 @@ bool PlayState::onEnter(){
     std::string filePath = TheFileManager::Instance()->GetStatesFilePath();
 
     StateParser stateParser;
-    stateParser.parseState(filePath, mPlayID, &mGameObjects, &mTextureIDList);
+    stateParser.parseState(mPlayID, &mGameObjects, &mTextureIDList);
 
     return true;
 }

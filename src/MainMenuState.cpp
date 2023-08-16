@@ -35,7 +35,7 @@ bool MainMenuState::onEnter(){
     std::string filepath = TheFileManager::Instance()->GetStatesFilePath();
 
     StateParser stateParser;
-    stateParser.parseState(filepath, mMenuID, &mGameObjects, &mTextureIDList);    
+    stateParser.parseState(mMenuID, &mGameObjects, &mTextureIDList);    
         
     mCallbacks.push_back(0);
     mCallbacks.push_back(mMenuToPlay);

@@ -2,3 +2,6 @@ obj/
 debug/
 game.exe
 game
+.vscode/configurationCache.log
+.vscode/dryrun.log
+.vscode/targets.log

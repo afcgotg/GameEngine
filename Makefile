@@ -73,7 +73,7 @@ linux_x64_debug: CXXFLAGS += -g
 linux_x64_debug: LIBFLAGS = -lSDL2_image `sdl2-config --libs --cflags`
 linux_x64_debug: $(DEB_DIR)/$(NAME)_debug
 linux_x64_debug: 
-	cp -r ./assets $(DEB_DIR)/assets
+	cp -r ./assets $(DEB_DIR)/
 
 
 ##################################################

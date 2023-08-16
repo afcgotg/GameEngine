@@ -33,7 +33,7 @@ bool GameOverState::onEnter(){
     std::string filePath = TheFileManager::Instance()->GetStatesFilePath();
 
     StateParser stateParser;
-    stateParser.parseState(filePath, mGameOverID, &mGameObjects, &mTextureIDList);
+    stateParser.parseState(mGameOverID, &mGameObjects, &mTextureIDList);
 
     mCallbacks.push_back(0);
     mCallbacks.push_back(s_gameOverToMain);

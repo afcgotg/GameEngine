@@ -4,16 +4,16 @@
 #include <iostream>
 #include <vector>
 
-#include "../tinyxml2/include/tinyxml2.h"
+#include "XMLFile.h"
 #include "GameObject.h"
 
 class StateParser{
     public:
-        bool parseState(std::string stateFile, std::string stateID, std::vector<GameObject*> *pObjects, std::vector<std::string> *pTextureIDs);
+        bool parseState(std::string stateID, std::vector<GameObject*> *pObjects, std::vector<std::string> *pTextureIDs);
     
     private:
-        void parseObjects(tinyxml2::XMLElement* pStateRoot, std::vector<GameObject*>* pObjects);
-        void parseTextures(tinyxml2::XMLElement* pTextureRoot, std::vector<std::string>* pTextureIDs);
+        void parseObjects(XMLFile &xml, std::vector<GameObject*>* pObjects);
+        void parseTextures(XMLFile &xml, std::vector<std::string>* pTextureIDs);
 };
 
 #endif

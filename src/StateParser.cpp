@@ -3,82 +3,85 @@
 #include "TextureManager.h"
 #include "GameObjectFactory.h"
 #include "LoaderParams.h"
+#include "FileManager.h"
 
-bool StateParser::parseState(std::string stateFile, std::string stateID, std::vector<GameObject*> *pObjects, std::vector<std::string> *pTextureIDs){
-    tinyxml2::XMLDocument xmlDoc;
-
-    std::cout << stateFile << std::endl;
-
-    if(xmlDoc.LoadFile(stateFile.c_str())){
-        std::cout << xmlDoc.ErrorStr() << std::endl;
-        return false;
-    }
-
-    tinyxml2::XMLElement* pRoot = xmlDoc.RootElement(); // <STATES>
-    tinyxml2::XMLElement* pStateRoot = 0;
-
-    for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement()){
-        if(e->Value() == stateID){
-            std::cout << "State encontrado" << std::endl;
-            pStateRoot = e;
-            break;
+bool StateParser::parseState(std::string stateID, std::vector<GameObject*> *pObjects, std::vector<std::string> *pTextureIDs){
+    XMLFile xml;
+    
+    if(xml.LoadDocument(TheFileManager::Instance()->GetStatesFilePath()))
+    {
+        if(xml.GoToElement(stateID))
+        {
+            if(xml.GoToElement("TEXTURES"))
+            {
+                parseTextures(xml, pTextureIDs);
+                xml.GoBack();
+                if(xml.GoToElement("OBJECTS"))
+                {
+                    parseObjects(xml, pObjects);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
         }
     }
-
-    tinyxml2::XMLElement* pTextureRoot = 0;
-    for(tinyxml2::XMLElement* e = pStateRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement()){
-        if(e->Value() == std::string("TEXTURES")) 
-            pTextureRoot = e;
+    else
+    {
+        return false;
     }
-    parseTextures(pTextureRoot, pTextureIDs);
-    std::cout << "Texturas cargadas" << std::endl;
-
-    tinyxml2::XMLElement* pObjectRoot = 0;
-    for(tinyxml2::XMLElement* e = pStateRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement()){
-        if(e->Value() == std::string("OBJECTS")) 
-            pObjectRoot = e;
-    }
-    parseObjects(pObjectRoot, pObjects);
-        std::cout << "Objetos cargados" << std::endl;
 
     return true;
 }
     
-void StateParser::parseTextures(tinyxml2::XMLElement* pTextureRoot, std::vector<std::string>* pTextureIDs){
-    for(tinyxml2::XMLElement* e = pTextureRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement()){
-        std::cout << "Entra" << std::endl;
-        std::string filenameAttribute = e->Attribute("filename");
-        std::string idAttribute = e->Attribute("ID");
-        pTextureIDs->push_back(idAttribute);
-        if(!TheTextureManager::Instance()->load(filenameAttribute, idAttribute, TheGameWindow::Instance()->GetRenderer())){
-            std::cout << "Error al cargar la textura " << idAttribute << " located in: " << filenameAttribute << std::endl;
-        }else{
-            pTextureIDs->push_back(idAttribute);
-        }
+void StateParser::parseTextures(XMLFile &xml, std::vector<std::string>* pTextureIDs){
+    while(xml.IterateOverElement("texture"))
+    {
+        std::string fileName;
+        xml.GetStringAttribute("filename", &fileName);
+        
+        std::string id;
+        xml.GetStringAttribute("ID", &id);
+
+        if(!TheTextureManager::Instance()->load(fileName, id, TheGameWindow::Instance()->GetRenderer()))
+            std::cout << "Error al cargar la textura " << id << " located in: " << fileName << std::endl;
+        else
+            pTextureIDs->push_back(id);        
     }
+    xml.GoBack();
 }
 
-void StateParser::parseObjects(tinyxml2::XMLElement* pObjectRoot, std::vector<GameObject*>* pObjects){
-    for(tinyxml2::XMLElement* e = pObjectRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement()){
+void StateParser::parseObjects(XMLFile &xml, std::vector<GameObject*>* pObjects){
+    while(xml.IterateOverElement("object"))
+    {
         int x, y, width, height;
-        uint32_t numFrames, callbackID, animSpeed;
-        std::string textureID;
+        int numFrames, callbackID, animSpeed;
+        std::string textureID, type;
 
-        e->QueryIntAttribute("x", &x);
-        e->QueryIntAttribute("y", &y);
-        e->QueryIntAttribute("width", &width);
-        e->QueryIntAttribute("height", &height);
-        e->QueryUnsignedAttribute("numFrames", &numFrames);
-        e->QueryUnsignedAttribute("callbackID", &callbackID);
-        e->QueryUnsignedAttribute("animSpeed", &animSpeed);
+        xml.GetIntAttribute("x", &x);
+        xml.GetIntAttribute("y", &y);
+        xml.GetIntAttribute("width", &width);
+        xml.GetIntAttribute("height", &height);
+        xml.GetIntAttribute("numFrames", &numFrames);
+        xml.GetIntAttribute("callbackID", &callbackID);
+        xml.GetIntAttribute("animSpeed", &animSpeed);
+        xml.GetStringAttribute("textureID", &textureID);
+        xml.GetStringAttribute("type", &type);
 
-        textureID = e->Attribute("textureID");
-
-        GameObject* pGameObject = TheGameObjectFactory::Instance()->createGameObject(e->Attribute("type"));
+        GameObject* pGameObject = TheGameObjectFactory::Instance()->createGameObject(type);
 
         pGameObject->load(new LoaderParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed));
         pObjects->push_back(pGameObject);
-        
     }
+    xml.GoBack();
 }
 

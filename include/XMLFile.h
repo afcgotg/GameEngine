@@ -8,21 +8,22 @@
 class XMLFile
 {
     public:
-        XMLFile(std::string filePath);
+        XMLFile();
 
-        bool LoadDocument();
+        bool LoadDocument(std::string filePath);
         bool GoToElement(std::string elementName);
+        bool IterateOverElement(std::string elementName);
         void GoBack();
         bool GetIntAttribute(std::string attributeName, int* num);
         bool GetStringAttribute(std::string attributeName, std::string* string);
         bool GetBoolAttribute(std::string attributeName, bool* boolean);
 
     private:
-        std::string mFilePath;
-
         tinyxml2::XMLDocument mXMLDocument;
         tinyxml2::XMLElement* mpParentRoot;
         std::list<tinyxml2::XMLElement*> mElementsStack;
+
+        bool mIterationMode;
 };
 
 #endif

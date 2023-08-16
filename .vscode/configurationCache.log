@@ -1,1 +1,1 @@
-{"buildTargets":["make"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
+{"buildTargets":["clean_linux","clean_windows","copy","debdir","debug/game_debug","game","linux_x64_debug","linux_x64_release","obj/debug/main.o","obj/main.o","objdir","tinyxml2/obj/debug/tinyxml2.o","tinyxml2/obj/tinyxml2.o","windows_x64_debug","windows_x64_release"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}

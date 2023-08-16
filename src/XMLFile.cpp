@@ -1,14 +1,14 @@
 #include "XMLFile.h"
 #include <iostream>
 
-XMLFile::XMLFile(std::string filePath)
+XMLFile::XMLFile()
 {
-    mFilePath = filePath;
+    mIterationMode = false;
 }
 
-bool XMLFile::LoadDocument()
+bool XMLFile::LoadDocument(std::string filePath)
 {
-    if(mXMLDocument.LoadFile(mFilePath.c_str())){
+    if(mXMLDocument.LoadFile(filePath.c_str())){
         std::cout << mXMLDocument.ErrorStr() << std::endl;
         return false;
     }
@@ -18,12 +18,43 @@ bool XMLFile::LoadDocument()
 
 bool XMLFile::GoToElement(std::string elementName)
 {
-    for(tinyxml2::XMLElement* e = mElementsStack.back()->FirstChildElement(); e != 0; e = e->NextSiblingElement()){
+    for(tinyxml2::XMLElement* e = mElementsStack.back()->FirstChildElement(); e != 0; e = e->NextSiblingElement())
+    {
         if(e->Value() == elementName){
             mElementsStack.push_back(e);
             return true;
         }
     }    
+    return false;
+}
+
+bool XMLFile::IterateOverElement(std::string elementName)
+{
+    if(!mIterationMode)
+    {
+        for(tinyxml2::XMLElement* e = mElementsStack.back()->FirstChildElement(); e != 0; e = e->NextSiblingElement())
+        {
+            if(e->Value() == elementName){
+                mElementsStack.push_back(e);
+                mIterationMode = true;
+                return true;
+            }
+        }   
+    }
+    else
+    {
+        for(tinyxml2::XMLElement* e = mElementsStack.back()->NextSiblingElement(); e != 0; e = e->NextSiblingElement())
+        {
+            if(e->Value() == elementName){
+                mElementsStack.back() = e;
+                return true;
+            }
+        }
+
+        mIterationMode = false;
+        return false;
+    }
+ 
     return false;
 }
 

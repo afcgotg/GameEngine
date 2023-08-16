@@ -30,36 +30,52 @@ void GameWindow::CenterWindow()
 
 bool GameWindow::LoadSettings()
 {
-    XMLFile xml(TheFileManager::Instance()->GetSettingsFilePath());
-    xml.LoadDocument();
-    
-    if(xml.GoToElement("WINDOW"))
+    XMLFile xml;
+    if(xml.LoadDocument(TheFileManager::Instance()->GetSettingsFilePath()))
     {
-        if(xml.GoToElement("values"))
+        if(xml.GoToElement("WINDOW"))
         {
-            xml.GetIntAttribute("width", &mWidth);
-            xml.GetIntAttribute("height", &mHeight);
-            xml.GetStringAttribute("title", &mTitle);
-            xml.GetIntAttribute("fps", &mFps);
+            if(xml.GoToElement("values"))
+            {
+                xml.GetIntAttribute("width", &mWidth);
+                xml.GetIntAttribute("height", &mHeight);
+                xml.GetStringAttribute("title", &mTitle);
+                xml.GetIntAttribute("fps", &mFps);
+                xml.GoBack();
+            }
+            else
+            {
+                return false;
+            }
+
+            if(xml.GoToElement("flags"))
+            {
+                xml.GetBoolAttribute("fullScreen", &mIsFullScreen);
+                xml.GoBack();
+            }
+            else
+            {
+                return false;
+            }
+
+            if(xml.GoToElement("backgroundColor"))
+            {
+                xml.GetIntAttribute("red", &mBackgroundColor.red);
+                xml.GetIntAttribute("green", &mBackgroundColor.green);
+                xml.GetIntAttribute("blue", &mBackgroundColor.blue);
+                xml.GetIntAttribute("alpha", &mBackgroundColor.alpha);
+            }
+            else
+            {
+                return false;
+            }
         }
     }
-    
-    xml.GoBack();
-    if(xml.GoToElement("flags"))
+    else
     {
-        xml.GetBoolAttribute("fullScreen", &mIsFullScreen);
+        return false;
     }
     
-
-    xml.GoBack();
-    if(xml.GoToElement("backgroundColor"))
-    {
-        xml.GetIntAttribute("red", &mBackgroundColor.red);
-        xml.GetIntAttribute("green", &mBackgroundColor.green);
-        xml.GetIntAttribute("blue", &mBackgroundColor.blue);
-        xml.GetIntAttribute("alpha", &mBackgroundColor.alpha);
-    }
-
     return true;
 }
 

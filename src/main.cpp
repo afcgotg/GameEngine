@@ -5,7 +5,7 @@
 
 int main(int argc, char* argv[])
 {
-    TheFileManager::Instance()->SetExecutionPath(argv[0]);
+     TheFileManager::Instance()->SetExecutionPath(argv[0]);
     if(TheGame::Instance()->Init())
     {
         TheGame::Instance()->GameLoop();
