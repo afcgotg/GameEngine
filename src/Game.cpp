@@ -38,7 +38,7 @@ bool Game::Init() {
     TheGameObjectFactory::Instance()->registerType("Enemy", new EnemyCreator());
     TheGameObjectFactory::Instance()->registerType("AnimatedGraphic", new AnimatedGraphicCreator());
 
-    TheInputHandler::Instance()->InitialiseJoysticks();
+    TheInputHandler::Instance()->AddXBOXController();
 
     TheGameStateMachine::Instance()->changeState(new MainMenuState());
 

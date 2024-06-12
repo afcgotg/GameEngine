@@ -4,63 +4,39 @@
 #include "InputHandler.h"
 #include "Game.h"
  
-InputHandler* InputHandler::s_pInstance = 0;
+InputHandler* InputHandler::s_pInstance = nullptr;
  
 InputHandler* InputHandler::Instance(){
-    if(s_pInstance == 0){
+    if(!s_pInstance){
         s_pInstance = new InputHandler();
     }
     return s_pInstance;
 }
 
-void InputHandler::InitialiseJoysticks(){
-    if(SDL_WasInit(SDL_INIT_JOYSTICK) == 0){
+void InputHandler::AddXBOXController(){
+    if(SDL_WasInit(SDL_INIT_JOYSTICK) == 0)
+    {
         SDL_InitSubSystem(SDL_INIT_JOYSTICK);
     }
 
     if(SDL_NumJoysticks() > 0){
-        for(int i = 0; i < SDL_NumJoysticks(); i++){
-            SDL_Joystick* joy = SDL_JoystickOpen(i);
-            if(joy != NULL){
-                mJoysticks.push_back(joy);
-                mJoystickValues.push_back(std::make_pair(new Vector2D(0,0), new Vector2D(0,0)));
-                mTriggerValues.push_back(std::make_pair(new int(0), new int(0)));
-                mDpadValues.push_back(std::make_pair(new int(0), new int(0)));
-
-                std::vector<bool> tempButtons;
-                for(int j = 0; j < SDL_JoystickNumButtons(joy); j++){
-                    tempButtons.push_back(false);
-                }
-                mButtonStates.push_back(tempButtons);
-
-                std::cout << "Joystick " << i + 1 << " has " << SDL_JoystickNumButtons(joy) << " buttons." << std::endl;
-            }else{
-                std::cout << "Error to add a controler: " << SDL_GetError() << std::endl;
+        do{
+            XBOXController XBOXController(mXBOXControllersVector.size());
+            SDL_JoystickEventState(SDL_ENABLE);
+            if(XBOXController.Initialise()){
+                mXBOXControllersVector.push_back(XBOXController);
             }
-        }
-
-        SDL_JoystickEventState(SDL_ENABLE);
-        mJoysticksInitialised = true;
-
-        std::cout << "Initialised " << mJoysticks.size() << " joysticks(s)" << std::endl;
-    }else{
-        mJoysticksInitialised = false;
+        }while(static_cast<int>(mXBOXControllersVector.size()) < SDL_NumJoysticks());
     }
 }
 
-bool InputHandler::joysticksInitialised(){
-    return mJoysticksInitialised;
-}
-
-bool InputHandler::getButtonState(size_t joy, size_t buttonNumber){
-    return mButtonStates[joy][buttonNumber];
-}
-
-void InputHandler::HandleEvent(){
+void InputHandler::HandleEvent()
+{
     SDL_Event event;
-    while(SDL_PollEvent(&event)){
-        
-        switch(event.type){
+    while(SDL_PollEvent(&event))
+    {    
+        switch(event.type)
+        {
             case SDL_QUIT:
                 TheGame::Instance()->Clean();
                 break;
@@ -100,62 +76,8 @@ void InputHandler::HandleEvent(){
 }
 
 void InputHandler::clean(){
-    if(mJoysticksInitialised){
-        for(unsigned int i = 0; i < mJoysticks.size(); i++){
-            SDL_JoystickClose(mJoysticks[i]);
-        }
-    }
-}
-
-int InputHandler::xValue(size_t joy, int stick){
-    if(mJoystickValues.size() > 0){
-        if(stick == 1){
-            return mJoystickValues[joy].first->getX();
-        }else if(stick == 2){
-            return mJoystickValues[joy].second->getX();
-        }
-    }
-    return 0;
-}
-int InputHandler::yValue(size_t joy, int stick){
-    if(mJoystickValues.size() > 0){
-        if(stick == 1){
-            return mJoystickValues[joy].first->getY();
-        }else if(stick == 2){
-            return mJoystickValues[joy].second->getY();
-        }
-    }
-    return 0;
-}
-
-int InputHandler::dpad_xValue(size_t joy){
-    if(mJoystickValues.size() > 0){
-        return *mDpadValues[joy].first;
-    }
-    return 0;
-}
-
-int InputHandler::dpad_yValue(size_t joy){
-    if(mJoystickValues.size() > 0){
-        return *mDpadValues[joy].second;
-    }
-    return 0;
-}
-
-int InputHandler::ltValue(size_t joy){
-    if(mTriggerValues.size() > 0){
-        return *mTriggerValues[joy].first;
-    }else{
-        return 0;
-    }
-}
-
-
-int InputHandler::rtValue(size_t joy){
-    if(mTriggerValues.size() > 0){
-        return *mTriggerValues[joy].second;
-    }else{
-        return 0;
+    for(unsigned int i = 0; i < mXBOXControllersVector.size(); i++){
+        mXBOXControllersVector[i].Close();
     }
 }
 
@@ -167,171 +89,169 @@ void InputHandler::reset(){
 
 }
 
-Vector2D* InputHandler::getMousePosition(){
+Vector2D* InputHandler::getMousePosition()
+{
     return mMousePosition;
 }
 
-bool InputHandler::isKeyDown(SDL_Scancode key){
-    if(mKeystates != NULL){
+bool InputHandler::isKeyDown(SDL_Scancode key)
+{
+    if(mKeystates != NULL)
         return mKeystates[key] == 1;
-    }
     return false;
 }
 
-void InputHandler::onMouseMove(SDL_Event& event){
+void InputHandler::onMouseMove(SDL_Event& event)
+{
     mMousePosition->setX(event.motion.x);
     mMousePosition->setY(event.motion.y);
 }
 
-void InputHandler::onMouseButtonDown(SDL_Event& event){
-    if(event.button.button == SDL_BUTTON_LEFT){
+void InputHandler::onMouseButtonDown(SDL_Event& event)
+{
+    if(event.button.button == SDL_BUTTON_LEFT)
         mMouseButtonStates[LEFT] = true;
-    }
-
-    if(event.button.button == SDL_BUTTON_MIDDLE){
-        mMouseButtonStates[MIDDLE] = true;
-    }
     
-    if(event.button.button == SDL_BUTTON_RIGHT){
+    if(event.button.button == SDL_BUTTON_MIDDLE)
+        mMouseButtonStates[MIDDLE] = true;
+    
+    if(event.button.button == SDL_BUTTON_RIGHT)
         mMouseButtonStates[RIGHT] = true;
-    }
 }
 
 void InputHandler::onMouseButtonUp(SDL_Event& event){
-    if(event.button.button == SDL_BUTTON_LEFT){
+    if(event.button.button == SDL_BUTTON_LEFT)
         mMouseButtonStates[LEFT] = false;
-    }
 
-    if(event.button.button == SDL_BUTTON_MIDDLE){
+    if(event.button.button == SDL_BUTTON_MIDDLE)
         mMouseButtonStates[MIDDLE] = false;
-    }
     
-    if(event.button.button == SDL_BUTTON_RIGHT){
+    if(event.button.button == SDL_BUTTON_RIGHT)
         mMouseButtonStates[RIGHT] = false;
-    }
 }
 
-void InputHandler::onJoystickAxisMove(SDL_Event& event){
-    size_t whichOne = static_cast<size_t>(event.jaxis.which); //get which controller
-    // std::cout << (int)event.jaxis.axis << ": " << event.jaxis.value << std::endl;
-
+void InputHandler::onJoystickAxisMove(SDL_Event& event)
+{
+    XBOXController controller = mXBOXControllersVector[event.jaxis.which]; //get which controller
+    
     // left stick move left or right
-    if(static_cast<size_t>(event.jaxis.axis) == SDL_CONTROLLER_AXIS_LEFTX){
-        if(event.jaxis.value > mJoystickDeadZone){
-            mJoystickValues[whichOne].first->setX(1);
-        }else if(event.jaxis.value < -mJoystickDeadZone){
-            mJoystickValues[whichOne].first->setX(-1);
-        }else{
-            mJoystickValues[whichOne].first->setX(0);
-        }
+    if(static_cast<size_t>(event.jaxis.axis) == SDL_CONTROLLER_AXIS_LEFTX)
+    {
+        if(event.jaxis.value > controller.GetJoystickDeadZone())
+            controller.SetLXValue(1);
+        else if(event.jaxis.value < -controller.GetJoystickDeadZone())
+            controller.SetLXValue(-1);
+        else
+            controller.SetLXValue(0);
     }
 
     // left stick move up or down
     if(static_cast<int>(event.jaxis.axis) == SDL_CONTROLLER_AXIS_LEFTY){
-        if(event.jaxis.value > mJoystickDeadZone){
-            mJoystickValues[whichOne].first->setY(1);
-        }else if(event.jaxis.value < -mJoystickDeadZone){
-            mJoystickValues[whichOne].first->setY(-1);
+        if(event.jaxis.value > controller.GetJoystickDeadZone()){
+            controller.SetLYValue(1);
+        }else if(event.jaxis.value < -controller.GetJoystickDeadZone()){
+            controller.SetLYValue(-1);
         }else{
-            mJoystickValues[whichOne].first->setY(0);
+            controller.SetLYValue(0);
         }
     }
 
     // right stick move left or right
     if(static_cast<int>(event.jaxis.axis) == SDL_CONTROLLER_AXIS_RIGHTX){
-        if(event.jaxis.value > mJoystickDeadZone){
-            mJoystickValues[whichOne].second->setX(1);
-        }else if(event.jaxis.value < -mJoystickDeadZone){
-            mJoystickValues[whichOne].second->setX(-1);
+        if(event.jaxis.value > controller.GetJoystickDeadZone()){
+            controller.SetRXValue(1);
+        }else if(event.jaxis.value < -controller.GetJoystickDeadZone()){
+            controller.SetRXValue(-1);
         }else{
-            mJoystickValues[whichOne].second->setX(0);
+            controller.SetRXValue(0);
         }
     }
 
     // right stick move up or down
     if(static_cast<int>(event.jaxis.axis) == SDL_CONTROLLER_AXIS_RIGHTY){
-        if(event.jaxis.value > mJoystickDeadZone){
-            mJoystickValues[whichOne].second->setY(1);
-        }else if(event.jaxis.value < -mJoystickDeadZone){
-            mJoystickValues[whichOne].second->setY(-1);
+        if(event.jaxis.value > controller.GetJoystickDeadZone()){
+            controller.SetRYValue(1);
+        }else if(event.jaxis.value < -controller.GetJoystickDeadZone()){
+            controller.SetRYValue(-1);
         }else{
-            mJoystickValues[whichOne].second->setY(0);
+            controller.SetRYValue(0);
         }
     }
 
     // LT
     if(static_cast<int>(event.jaxis.axis) == SDL_CONTROLLER_AXIS_TRIGGERLEFT){
         Uint32 tempValue = event.jaxis.value + pow(2, 15);
-        if(tempValue > mTriggerDeadZone){
-            *(mTriggerValues[whichOne].first) = 1;
+        if(tempValue > controller.GetTriggerDeadZone()){
+            controller.SetLTValue(1);
         }else{
-            *(mTriggerValues[whichOne].first) = 0;
+            controller.SetLTValue(0);
         }
     }
 
     // RT
     if(static_cast<int>(event.jaxis.axis) == SDL_CONTROLLER_AXIS_TRIGGERRIGHT){
         uint32_t tempValue = event.jaxis.value + pow(2, 15);
-        if(tempValue > mTriggerDeadZone){
-            *(mTriggerValues[whichOne].second) = 1;
+        if(tempValue > controller.GetTriggerDeadZone()){
+            controller.SetRTValue(1);
         }else{
-            *(mTriggerValues[whichOne].second) = 0;
+            controller.SetRTValue(0);
         }
     }
 }
 
-void InputHandler::onJoystickHatMove(SDL_Event& event){
-    size_t whichOne = static_cast<size_t>(event.jhat.which);
+void InputHandler::onJoystickHatMove(SDL_Event& event)
+{
+    XBOXController controller = mXBOXControllersVector[event.jhat.which]; //get which controller
     switch (event.jhat.value){
         case SDL_HAT_LEFT:
-            *(mDpadValues[whichOne].first) = -1;
-            *(mDpadValues[whichOne].second) = 0;
+            controller.SetDpadXValue(-1);
+            controller.SetDpadYValue(0);
             break;
         case SDL_HAT_LEFTDOWN:
-            *(mDpadValues[whichOne].first) = -1;
-            *(mDpadValues[whichOne].second) = 1;
+            controller.SetDpadXValue(-1);
+            controller.SetDpadYValue(1);
             break;
         case SDL_HAT_DOWN:
-            *(mDpadValues[whichOne].first) = 0;
-            *(mDpadValues[whichOne].second) = 1;
+            controller.SetDpadXValue(0);
+            controller.SetDpadYValue(1);
             break;
         case SDL_HAT_RIGHTDOWN:
-            *(mDpadValues[whichOne].first) = 1;
-            *(mDpadValues[whichOne].second) = 1;
+            controller.SetDpadXValue(1);
+            controller.SetDpadYValue(1);
             break;
         case SDL_HAT_RIGHT:
-            *(mDpadValues[whichOne].first) = 1;
-            *(mDpadValues[whichOne].second) = 0;
+            controller.SetDpadXValue(1);
+            controller.SetDpadYValue(0);
             break;
         case SDL_HAT_RIGHTUP:
-            *(mDpadValues[whichOne].first) = 1;
-            *(mDpadValues[whichOne].second) = -1;
+            controller.SetDpadXValue(1);
+            controller.SetDpadYValue(-1);
             break;
         case SDL_HAT_UP:
-            *(mDpadValues[whichOne].first) = 0;
-            *(mDpadValues[whichOne].second) = -1;
+            controller.SetDpadXValue(0);
+            controller.SetDpadYValue(-1);
             break;
         case SDL_HAT_LEFTUP:
-            *(mDpadValues[whichOne].first) = 0;
-            *(mDpadValues[whichOne].second) = -1;
+            controller.SetDpadXValue(-1);
+            controller.SetDpadYValue(-1);
             break;
         case SDL_HAT_CENTERED:
-            *(mDpadValues[whichOne].first) = 0;
-            *(mDpadValues[whichOne].second) = 0;
+            controller.SetDpadXValue(0);
+            controller.SetDpadYValue(0);
             break;
         default:
             break;
     }
 }
 
-void InputHandler::onJoystickButtonDown(SDL_Event& event){
-    // std::cout << "Button down: " << (int)event.jbutton.button << std::endl;
-    mButtonStates[static_cast<size_t>(event.jbutton.which)][static_cast<size_t>(event.jbutton.button)] = true;
+void InputHandler::onJoystickButtonDown(SDL_Event& event)
+{
+    mXBOXControllersVector[event.jbutton.which].SetButtonState(static_cast<size_t>(event.jbutton.button), true);
 }
 
-void InputHandler::onJoystickButtonUp(SDL_Event& event){
-    // std::cout << "Button up: " << (int)event.jbutton.button << std::endl;
-    mButtonStates[static_cast<size_t>(event.jbutton.which)][static_cast<size_t>(event.jbutton.button)] = false;
+void InputHandler::onJoystickButtonUp(SDL_Event& event)
+{
+    mXBOXControllersVector[event.jbutton.which].SetButtonState(static_cast<size_t>(event.jbutton.button), false);
 }
 
 InputHandler::InputHandler(){

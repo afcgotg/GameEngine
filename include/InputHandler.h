@@ -1,7 +1,7 @@
-#include <../SDL2/include/SDL2/SDL.h>
 #include <vector>
 
 #include "Vector2D.h"
+#include "XBOXController.h"
 
 #ifndef __InputHandler__
 #define __InputHandler__
@@ -16,22 +16,10 @@ class InputHandler{
     public:
         static InputHandler* Instance();
 
+        void AddXBOXController();
+
         void HandleEvent();
         void clean();
-
-        void InitialiseJoysticks();
-        bool joysticksInitialised();
-
-        bool getButtonState(size_t joy, size_t buttonNumber);
-
-        int xValue(size_t joy, int stick);
-        int yValue(size_t joy, int stick);
-
-        int dpad_xValue(size_t joy);
-        int dpad_yValue(size_t joy);
-
-        int ltValue(size_t joy);
-        int rtValue(size_t joy);
 
         bool getMouseButtonState(size_t buttonNumber);
         void reset();
@@ -45,18 +33,7 @@ class InputHandler{
         InputHandler();
         ~InputHandler(){};
 
-        std::vector<SDL_Joystick*> mJoysticks;
-        bool mJoysticksInitialised;
-
-        std::vector<std::pair<Vector2D*, Vector2D*>> mJoystickValues;
-        const int mJoystickDeadZone = 10000;
-
-        std::vector<std::pair<int*, int*>> mTriggerValues;
-        const uint32_t mTriggerDeadZone = 10000;
-
-        std::vector<std::pair<int*, int*>> mDpadValues;
-
-        std::vector<std::vector<bool>> mButtonStates;
+        std::vector<XBOXController> mXBOXControllersVector;
 
         std::vector<bool> mMouseButtonStates;
 
